@@ -1,7 +1,0 @@
-@import '../../scss/variables';
-@import '../../scss/mixins';
-
-.settings {
-    @include box-size(100%, 100%);
-    background-color: $lightGray;
-}

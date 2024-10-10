@@ -1,5 +1,0 @@
-
-Todo:
-  ✔ Folder icons on desktop are above first parallax background layer @done(20-03-15 10:33)
-  ✔ Already open windows should not dispatch OpenWindowAndSetFocused action @done(20-03-15 10:33)
-  ☐ Fix spacing between top bar icons 
