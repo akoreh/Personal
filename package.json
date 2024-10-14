@@ -2,7 +2,14 @@
   "name": "@personal/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "npx nx serve personal",
+    "build": "npx nx build personal",
+    "lint": "nx run-many --all --target=lint --fix --verbose",
+    "ng": "nx",
+    "format-all": "nx format:write --all",
+    "prep": "npm run lint && npm run format-all"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~18.2.0",
@@ -35,6 +42,7 @@
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
     "@typescript-eslint/utils": "^8.0.0",
@@ -45,11 +53,13 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-preset-angular": "~14.1.0",
     "nx": "20.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-attributes": "^1.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
     "typescript": "~5.5.2",
-    "typescript-eslint": "^8.0.0"
+    "typescript-eslint": "8.8.0"
   }
 }

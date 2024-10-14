@@ -1,0 +1,67 @@
+module.exports = {
+  semi: true,
+  bracketSameLine: false,
+  bracketSpacing: true,
+  singleQuote: true,
+  arrowParens: 'always',
+  plugins: [
+    require.resolve('@trivago/prettier-plugin-sort-imports'),
+    require.resolve('prettier-plugin-organize-attributes'),
+    require.resolve('prettier-plugin-tailwindcss'),
+  ],
+  importOrderParserPlugins: ['typescript', 'decorators-legacy'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
+  importOrder: [
+    'jest-preset-angular/setup-jest',
+    '<THIRD_PARTY_MODULES>',
+    // '^@as/ss/(.*)$',
+    // '^@as/ss/(.*)$',
+    '^[./]',
+  ],
+  overrides: [
+    {
+      files: [
+        '*.page.html',
+        '*.component.html',
+        '*.dialog.html',
+        '*.layout.html',
+      ],
+      options: {
+        parser: 'angular',
+      },
+    },
+  ],
+  attributeGroups: [
+    '^(id|name)$',
+    '$ANGULAR_STRUCTURAL_DIRECTIVE',
+    '$ANGULAR_ELEMENT_REF',
+    '$CLASS',
+    '$STYLE',
+    '^aw', // Directives
+    '^po', // Directives
+    '^cdk', // Directives
+    'ngClass',
+    '^\\[style',
+    'data-testid',
+    'data-cy',
+    '$DEFAULT',
+    'tabindex',
+    '$ALT',
+    '$ARIA',
+    '$ROLE',
+    '$TYPE',
+    '$ANGULAR_ANIMATION',
+    '$ANGULAR_ANIMATION_INPUT',
+    '^\\[attr',
+    '$ANGULAR_INPUT',
+    '$ANGULAR_TWO_WAY_BINDING',
+    '$ANGULAR_OUTPUT',
+    '^(\\(blur\\)|\\(focus\\)|)$',
+    '^(\\(click\\)|\\(dbclick\\)|\\(submit\\))$',
+    '^(\\(cut\\)|\\(copy\\)|\\(paste\\))$',
+    '^(\\(keyup\\)|\\(keypress\\)|\\(keydown\\))$',
+    '^(\\(mouseup\\)|\\(mousedown\\)|\\(mouseenter\\)|\\(scroll\\))$',
+    '^(\\(drag\\)|\\(drop\\)|\\(dragover\\))$',
+  ],
+};
