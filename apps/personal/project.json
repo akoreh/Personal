@@ -20,6 +20,12 @@
           {
             "glob": "**/*",
             "input": "apps/personal/public"
+          },
+          {
+            "glob": "**/*",
+            "ignore": ["fonts/*"],
+            "input": "libs/assets",
+            "output": "assets"
           }
         ],
         "styles": ["apps/personal/src/styles.scss"],
