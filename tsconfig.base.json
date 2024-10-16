@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@po/shared/services/local-storage": [
+        "libs/shared/services/local-storage/src/index.ts"
+      ],
+      "@po/shared/testing": ["libs/shared/testing/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
