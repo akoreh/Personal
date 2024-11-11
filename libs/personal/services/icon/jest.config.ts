@@ -1,8 +1,8 @@
 export default {
-  displayName: 'services-icon',
-  preset: '../../../jest.preset.js',
+  displayName: 'personal-services-icon',
+  preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/services/icon',
+  coverageDirectory: '../../../../coverage/libs/personal/services/icon',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
