@@ -15,10 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@po/personal/components/menubar": [
+        "libs/personal/components/menubar/src/index.ts"
+      ],
       "@po/shared/services/local-storage": [
         "libs/shared/services/local-storage/src/index.ts"
       ],
-      "@po/shared/testing": ["libs/shared/testing/src/index.ts"]
+      "@po/shared/services/query-param": [
+        "libs/shared/services/query-param/src/index.ts"
+      ],
+      "@po/shared/testing": ["libs/shared/testing/src/index.ts"],
+      "@po/shared/utilities": ["libs/shared/utilities/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
