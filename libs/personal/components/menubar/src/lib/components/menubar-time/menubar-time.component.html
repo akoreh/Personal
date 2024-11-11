@@ -1,0 +1,12 @@
+<div class="text-base font-normal flex items-center gap-x-2" data-testid="dateTime">
+  <span data-testid="date">
+    {{ now | date: 'EEE dd MMM' }}
+  </span>
+  <span class="flex items-center" data-testid="time">
+    <span>{{ now | date: 'HH' }}</span>
+    <span [class.invisible]="!showColons">:</span>
+    <span>{{ now | date: 'mm' }}</span>
+    <span [class.invisible]="!showColons">:</span>
+    <span>{{ now | date: 'ss' }}</span>
+  </span>
+</div>

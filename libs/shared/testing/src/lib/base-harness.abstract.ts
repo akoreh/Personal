@@ -5,7 +5,8 @@ import {
   TestElement,
 } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { last } from 'lodash-es';
+import { replaceAll } from '@po/shared/utilities';
+import { last, words } from 'lodash-es';
 
 export abstract class BaseHarness extends ComponentHarness {
   async getContent<T extends (HarnessQuery<any> | string)[]>(
@@ -65,10 +66,19 @@ export abstract class BaseHarness extends ComponentHarness {
     return (await this.locatorFor(selector)()).click();
   }
 
-  protected async _getText(selector: string): Promise<string> {
+  protected async _getText(
+    selector: string,
+    options?: { normaliseWhitespace: boolean },
+  ): Promise<string> {
     const locator = this.locatorFor(selector);
 
-    return (await locator()).text();
+    const text = await (await locator()).text();
+
+    if (options?.normaliseWhitespace) {
+      return replaceAll(text, '  ', '');
+    }
+
+    return text;
   }
 
   protected async _getOptionalText(

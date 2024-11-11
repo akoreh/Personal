@@ -10,7 +10,8 @@
     "format-all": "nx format:write --all",
     "prep": "npm run lint && npm run format-all",
     "test-all": "cross-env TZ=UTC nx run-many --target=test --all --parallel=5 --coverage=false --passWithNoTests",
-    "refresh": "rm -rf ./node_modules && rm -f package-lock.json && rm -rf .angular/ && npm install && nx reset"
+    "refresh": "rm -rf ./node_modules && rm -f package-lock.json && rm -rf .angular/ && npm install && nx reset",
+    "test": "npm run test-all"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +26,7 @@
     "@angular/router": "~18.2.0",
     "@ngneat/until-destroy": "^10.0.0",
     "@ngrx/component-store": "^18.1.0",
+    "date-fns": "^4.1.0",
     "gsap": "^3.12.5",
     "lodash-es": "^4.17.21",
     "rxjs": "~7.8.0",

@@ -15,8 +15,7 @@ module.exports = {
   importOrder: [
     'jest-preset-angular/setup-jest',
     '<THIRD_PARTY_MODULES>',
-    // '^@as/ss/(.*)$',
-    // '^@as/ss/(.*)$',
+    '^@po/personal/(.*)$',
     '^[./]',
   ],
   overrides: [
@@ -38,8 +37,7 @@ module.exports = {
     '$ANGULAR_ELEMENT_REF',
     '$CLASS',
     '$STYLE',
-    '^aw', // Directives
-    '^po', // Directives
+    '^ps', // Directives
     '^cdk', // Directives
     'ngClass',
     '^\\[style',
