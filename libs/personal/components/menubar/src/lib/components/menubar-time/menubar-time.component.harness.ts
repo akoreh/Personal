@@ -1,4 +1,5 @@
 import { BaseHarness, byTestId } from '@po/shared/testing';
+import { replaceAll } from '@po/shared/utilities';
 
 export class MenuBarTimeHarness extends BaseHarness {
   static hostSelector = 'ps-menubar-time';
@@ -8,12 +9,18 @@ export class MenuBarTimeHarness extends BaseHarness {
   }
 
   async getTime(): Promise<string> {
-    return this._getText(byTestId('time'), { normaliseWhitespace: true });
+    const text = await this._getText(byTestId('time'), {
+      normaliseWhitespace: true,
+    });
+
+    return replaceAll(text, ' : ', ':');
   }
 
   async getDateTime(): Promise<string> {
-    return this._getText(byTestId('dateTime'), {
+    const text = await this._getText(byTestId('dateTime'), {
       normaliseWhitespace: true,
     });
+
+    return replaceAll(text, ' : ', ':');
   }
 }

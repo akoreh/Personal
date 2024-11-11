@@ -1,9 +1,16 @@
-<div class="h-[22px] w-screen bg-red-400 text-white px-2.5 flex items-center justify-between">
-  <div class="flex-1">
+<div class="relative h-[24px] w-screen">
+  <div
+    class="absolute bottom-0 h-[10px] w-full bg-black"
+    aria-hidden="true"
+  ></div>
 
-  </div>
+  <div
+    class="bg-window-light text-window-border absolute flex h-[22px] w-full items-center justify-between border-b-2 border-solid border-black px-2.5"
+  >
+    <div class="flex-1"></div>
 
-  <div>
-    <ps-menubar-time />
+    <div>
+      <ps-menubar-time />
+    </div>
   </div>
 </div>

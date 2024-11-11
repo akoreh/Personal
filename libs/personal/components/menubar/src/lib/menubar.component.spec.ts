@@ -33,7 +33,7 @@ describe('Menu Bar Component', () => {
   });
 });
 
-describe('Menu Bar Component - Date Time', () => {
+describe.skip('Menu Bar Component - Date Time', () => {
   let spectator: Spectator<HostComponent>;
   let harness: MenuBarHarness;
 

@@ -1,1 +1,1 @@
-export * from './lib/menubar.component'
+export * from './lib/menubar.component';
