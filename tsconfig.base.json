@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@po/personal/services/icon": ["libs/services/icon/src/index.ts"],
       "@po/personal/components/menubar": [
         "libs/personal/components/menubar/src/index.ts"
       ],
