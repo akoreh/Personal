@@ -1,1 +1,1 @@
-export const SVG_ICON_NAMES = [''] as const;
+export const SVG_ICON_NAMES = ['', 'trash', 'battery-50'] as const;

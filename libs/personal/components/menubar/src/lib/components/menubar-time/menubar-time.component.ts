@@ -1,18 +1,8 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IS_TEST } from '@po/shared/testing';
-import { interval } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { MenuBarTimeStore } from './menubar-time.component.store';
 
-@UntilDestroy()
 @Component({
   standalone: true,
   selector: 'ps-menubar-time',

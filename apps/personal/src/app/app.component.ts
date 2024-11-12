@@ -2,16 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { gsap } from 'gsap';
 
+import { DockComponent } from '@po/personal/components/dock';
+import { IconComponent } from '@po/personal/components/icon';
 import { MenuBarComponent } from '@po/personal/components/menubar';
 
 @Component({
   standalone: true,
   selector: 'ps-root',
   templateUrl: './app.component.html',
-  imports: [RouterOutlet, MenuBarComponent],
+  imports: [RouterOutlet, MenuBarComponent, DockComponent],
 })
 export class AppComponent implements OnInit {
-  private readonly isDev = true;
+  protected readonly isDev = true;
 
   private readonly loadingProgressDuration = this.isDev ? 0 : 1.5; //1.5s
 
@@ -20,10 +22,12 @@ export class AppComponent implements OnInit {
   }
 
   private hideLoadingScreen(): void {
-    gsap.to('#loading', {
-      autoAlpha: 0,
-      delay: this.loadingProgressDuration + (this.isDev ? 0 : 0.1),
-      duration: this.isDev ? 0 : 0.6,
-    });
+    if (!this.isDev) {
+      gsap.to('#loading', {
+        autoAlpha: 0,
+        delay: this.loadingProgressDuration + (this.isDev ? 0 : 0.1),
+        duration: this.isDev ? 0 : 0.6,
+      });
+    }
   }
 }

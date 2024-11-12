@@ -6,7 +6,7 @@ import {
 } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { replaceAll } from '@po/shared/utilities';
-import { last, words } from 'lodash-es';
+import { last } from 'lodash-es';
 
 export abstract class BaseHarness extends ComponentHarness {
   async getContent<T extends (HarnessQuery<any> | string)[]>(

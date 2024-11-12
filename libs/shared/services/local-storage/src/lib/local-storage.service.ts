@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isObject } from 'lodash-es';
+import { isObject, noop } from 'lodash-es';
 
 @Injectable()
 export class LocalStorageService {
@@ -42,6 +42,7 @@ export class LocalStorageService {
 
       return type === '[object Object]';
     } catch (err) {
+      noop(err);
       return false;
     }
   }

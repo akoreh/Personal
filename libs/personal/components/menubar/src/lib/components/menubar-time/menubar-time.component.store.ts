@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { IS_TEST } from '@po/shared/testing';
-import { filter, iif, interval, of, switchMap, tap } from 'rxjs';
+import { filter, interval, of, switchMap, tap } from 'rxjs';
 
 interface MenuBarTimeState {
   now: Date;

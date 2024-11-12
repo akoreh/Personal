@@ -23,7 +23,6 @@
           },
           {
             "glob": "**/*",
-            "ignore": ["fonts/*"],
             "input": "libs/assets",
             "output": "assets"
           }

@@ -1,4 +1,5 @@
 const nx = require('@nx/eslint-plugin');
+const unusedImports = require('eslint-plugin-unused-imports');
 
 module.exports = [
   ...nx.configs['flat/base'],
@@ -6,10 +7,14 @@ module.exports = [
   ...nx.configs['flat/javascript'],
   ...nx.configs['flat/angular'],
   ...nx.configs['flat/angular-template'],
+
   {
     ignores: ['**/dist'],
   },
   {
+    plugins: {
+      'unused-imports': unusedImports,
+    },
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
       'no-restricted-imports': [
@@ -24,8 +29,19 @@ module.exports = [
           ],
         },
       ],
+      'no-unused-vars': ['off'], // or "@typescript-eslint/no-unused-vars": "off",
+      'unused-imports/no-unused-imports': ['error'],
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
       '@typescript-eslint/no-explicit-any': ['off'],
-      '@typescript-eslint/no-unused-vars': ['warn'],
+      '@typescript-eslint/no-unused-vars': ['off'],
       '@angular-eslint/component-selector': [
         'error',
         {

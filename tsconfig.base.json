@@ -15,9 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@po/personal/services/icon": ["libs/services/icon/src/index.ts"],
+      "@po/personal/components/dock": [
+        "libs/personal/components/dock/src/index.ts"
+      ],
+      "@po/personal/components/icon": [
+        "libs/personal/components/icon/src/index.ts"
+      ],
       "@po/personal/components/menubar": [
         "libs/personal/components/menubar/src/index.ts"
+      ],
+      "@po/personal/services/icon": [
+        "libs/personal/services/icon/src/index.ts"
       ],
       "@po/shared/services/local-storage": [
         "libs/shared/services/local-storage/src/index.ts"
