@@ -3,6 +3,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
 import { TestingModule } from '@po/shared/testing';
 
+import { IconTestingModule } from '@po/personal/components/icon/testing';
+
 import { MenuBarComponent } from './menubar.component';
 import { MenuBarHarness } from './menubar.component.harness';
 
@@ -15,7 +17,7 @@ class HostComponent {}
 
 const createComponent = createComponentFactory({
   component: HostComponent,
-  imports: [MenuBarComponent, TestingModule],
+  imports: [MenuBarComponent, TestingModule, IconTestingModule],
 });
 
 describe('Menu Bar Component', () => {

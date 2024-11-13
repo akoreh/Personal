@@ -4,9 +4,9 @@ import { IconComponent } from '@po/personal/components/icon';
 
 @Component({
   standalone: true,
-  selector: 'ps-dock',
-  templateUrl: 'dock.component.html',
+  selector: 'ps-menubar-icons',
+  templateUrl: 'menubar-icons.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IconComponent],
 })
-export class DockComponent {}
+export class MenuBarIconsComponent {}

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { IconComponent } from '@po/personal/components/icon';
-
+import { MenuBarIconsComponent } from './components/menubar-icons/menubar-icons.component';
 import { MenuBarTimeComponent } from './components/menubar-time/menubar-time.component';
 
 @Component({
@@ -9,6 +8,6 @@ import { MenuBarTimeComponent } from './components/menubar-time/menubar-time.com
   selector: 'ps-menubar',
   templateUrl: 'menubar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MenuBarTimeComponent, IconComponent],
+  imports: [MenuBarTimeComponent, MenuBarIconsComponent],
 })
 export class MenuBarComponent {}

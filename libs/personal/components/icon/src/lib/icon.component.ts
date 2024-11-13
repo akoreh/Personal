@@ -23,6 +23,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent {
+  @HostBinding('class.block')
+  readonly block = true;
+
   @HostBinding('attr.aria-hidden')
   readonly ariaHidden = 'true';
 

@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 import { gsap } from 'gsap';
 
 import { DockComponent } from '@po/personal/components/dock';
-import { IconComponent } from '@po/personal/components/icon';
 import { MenuBarComponent } from '@po/personal/components/menubar';
 
 @Component({

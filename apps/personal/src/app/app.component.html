@@ -1,14 +1,18 @@
-<main class="h-dscreen flex w-screen flex-col overflow-hidden">
-  <ps-menubar />
+<main
+  class="h-dscreen text-window-border flex w-screen flex-col overflow-hidden"
+>
+  <div class="fixed top-0 w-screen">
+    <ps-menubar />
+  </div>
 
   <div class="flex flex-1 flex-col">
-    <!--    @if (isDev) {-->
-    <!--      <div-->
-    <!--        class="pointer-events-none flex h-full w-full select-none items-center justify-center font-semibold text-white"-->
-    <!--      >-->
-    <!--        <h1 class="text-3xl xl:text-5xl">Under Maintenance</h1>-->
-    <!--      </div>-->
-    <!--    }-->
+    @if (isDev) {
+      <div
+        class="text-window-border pointer-events-none flex h-full w-full select-none items-center justify-center font-semibold"
+      >
+        <h1 class="text-3xl xl:text-5xl">Under Maintenance</h1>
+      </div>
+    }
 
     <router-outlet />
   </div>

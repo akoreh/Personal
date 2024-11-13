@@ -28,6 +28,7 @@ module.exports = {
       },
       colors: {
         background: '#f7ecda',
+        folder: '#fece7b',
         window: {
           light: '#F1EDE6',
           border: '#4e402d',

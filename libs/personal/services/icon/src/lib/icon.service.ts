@@ -12,10 +12,11 @@ import {
   of,
 } from 'rxjs';
 
+import { IconServiceBase } from './abstracts/icon-service-base.abstract';
 import { SvgIconName } from './types/types';
 
 @Injectable({ providedIn: 'root' })
-export class IconService {
+export class IconService implements IconServiceBase {
   constructor() {
     this.initLoadingBufferHandler();
   }
