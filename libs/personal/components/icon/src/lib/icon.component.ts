@@ -17,7 +17,6 @@ import {
 
 @UntilDestroy()
 @Component({
-  standalone: true,
   selector: 'ps-icon',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,

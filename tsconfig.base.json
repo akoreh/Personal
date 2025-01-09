@@ -27,6 +27,9 @@
       "@po/personal/components/menubar": [
         "libs/personal/components/menubar/src/index.ts"
       ],
+      "@po/personal/components/window": [
+        "libs/personal/components/window/src/index.ts"
+      ],
       "@po/personal/services/icon": [
         "libs/personal/services/icon/src/index.ts"
       ],

@@ -4,7 +4,6 @@ import { MenuBarIconsComponent } from './components/menubar-icons/menubar-icons.
 import { MenuBarTimeComponent } from './components/menubar-time/menubar-time.component';
 
 @Component({
-  standalone: true,
   selector: 'ps-menubar',
   templateUrl: 'menubar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

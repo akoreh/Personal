@@ -6,7 +6,6 @@ import { DockComponent } from '@po/personal/components/dock';
 import { MenuBarComponent } from '@po/personal/components/menubar';
 
 @Component({
-  standalone: true,
   selector: 'ps-root',
   templateUrl: './app.component.html',
   imports: [RouterOutlet, MenuBarComponent, DockComponent],

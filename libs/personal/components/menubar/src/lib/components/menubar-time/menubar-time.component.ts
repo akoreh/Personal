@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MenuBarTimeStore } from './menubar-time.component.store';
 
 @Component({
-  standalone: true,
   selector: 'ps-menubar-time',
   templateUrl: 'menubar-time.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
