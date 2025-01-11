@@ -9,7 +9,6 @@ import { IconTestingModule } from './icon-testing.module';
 import { IconHarness } from './icon.component.harness';
 
 @Component({
-  standalone: false,
   selector: 'ps-host',
   template: ` <ps-icon [icon]="icon" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,

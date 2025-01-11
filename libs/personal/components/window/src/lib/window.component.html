@@ -1,0 +1,30 @@
+<div class="relative flex min-h-96 min-w-96 flex-col">
+  <div
+    class="border-window-border relative z-20 flex flex-1 flex-col overflow-hidden rounded-xl border-[3px] border-solid"
+  >
+    <div
+      class="bg-primary-red border-window-border flex h-6 w-full border-b-2 border-solid px-1"
+      data-testid="windowToolbar"
+    >
+      <div class="flex-1"></div>
+
+      @if (closable) {
+        <div class="flex h-full items-center">
+          @if (closable) {
+            <button type="button">
+              <ps-icon class="h-5 w-5" icon="x-mark" />
+            </button>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="bg-window-light flex flex-1 flex-col">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <div
+    class="bg-window-border pointer-events-none absolute left-1.5 top-1.5 z-10 h-full w-full rounded-xl"
+  ></div>
+</div>

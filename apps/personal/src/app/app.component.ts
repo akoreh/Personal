@@ -4,11 +4,12 @@ import { gsap } from 'gsap';
 
 import { DockComponent } from '@po/personal/components/dock';
 import { MenuBarComponent } from '@po/personal/components/menubar';
+import { WindowComponent } from '@po/personal/components/window';
 
 @Component({
   selector: 'ps-root',
   templateUrl: './app.component.html',
-  imports: [RouterOutlet, MenuBarComponent, DockComponent],
+  imports: [RouterOutlet, MenuBarComponent, DockComponent, WindowComponent],
 })
 export class AppComponent implements OnInit {
   protected readonly isDev = true;
@@ -20,12 +21,10 @@ export class AppComponent implements OnInit {
   }
 
   private hideLoadingScreen(): void {
-    if (!this.isDev) {
-      gsap.to('#loading', {
-        autoAlpha: 0,
-        delay: this.loadingProgressDuration + (this.isDev ? 0 : 0.1),
-        duration: this.isDev ? 0 : 0.6,
-      });
-    }
+    gsap.to('#loading', {
+      autoAlpha: 0,
+      delay: this.loadingProgressDuration + (this.isDev ? 0 : 0.1),
+      duration: this.isDev ? 0 : 0.6,
+    });
   }
 }

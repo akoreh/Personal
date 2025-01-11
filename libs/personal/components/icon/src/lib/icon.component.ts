@@ -3,17 +3,15 @@ import {
   Component,
   ElementRef,
   HostBinding,
-  Input,
+  effect,
   inject,
+  input,
+  resource,
 } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { isNil } from 'lodash-es';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { lastValueFrom } from 'rxjs';
 
-import {
-  IconService,
-  SVG_ICON_NAMES,
-  SvgIconName,
-} from '@po/personal/services/icon';
+import { IconService, SvgIconName } from '@po/personal/services/icon';
 
 @UntilDestroy()
 @Component({
@@ -28,39 +26,30 @@ export class IconComponent {
   @HostBinding('attr.aria-hidden')
   readonly ariaHidden = 'true';
 
-  @Input({ required: true })
-  set icon(_icon: SvgIconName) {
-    this._icon = _icon;
+  readonly icon = input.required<SvgIconName>();
+  readonly fill = input<string>('');
 
-    if (!isNil(_icon) && SVG_ICON_NAMES.includes(_icon)) {
-      this.onIconChange(_icon);
+  private readonly iconResource = resource({
+    request: () => ({ icon: this.icon() }),
+    loader: ({ request }) =>
+      lastValueFrom(this.iconService.getSvgIcon(request.icon)),
+  });
+
+  private readonly onIconChange = effect(() => {
+    const icon = this.iconResource.value();
+
+    if (icon) {
+      if (this.fill()) {
+        icon.setAttribute('fill', this.fill());
+      }
+
+      this.setSvg(icon);
     }
-  }
-
-  get icon(): SvgIconName {
-    return this._icon;
-  }
-
-  @Input({ required: false }) fill!: string;
+  });
 
   private readonly elementRef = inject(ElementRef) as ElementRef<HTMLElement>;
 
   private readonly iconService = inject(IconService);
-
-  private _icon: SvgIconName = '' as any;
-
-  private onIconChange(iconName: SvgIconName): void {
-    this.iconService
-      .getSvgIcon(iconName)
-      .pipe(untilDestroyed(this))
-      .subscribe((icon) => {
-        if (this.fill) {
-          icon.setAttribute('fill', this.fill);
-        }
-
-        this.setSvg(icon);
-      });
-  }
 
   private setSvg(svg: SVGElement): void {
     const host = this.elementRef.nativeElement;

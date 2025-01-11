@@ -60,7 +60,7 @@
       "unitTestRunner": "jest"
     }
   },
-  "useLegacyCache": true,
+  "useLegacyCache": false,
   "plugins": [
     {
       "plugin": "@nx/eslint/plugin",

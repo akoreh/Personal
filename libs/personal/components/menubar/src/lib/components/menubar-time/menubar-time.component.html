@@ -2,30 +2,28 @@
   class="flex select-none items-center gap-x-2 text-xs font-normal md:text-base"
   data-testid="dateTime"
 >
-  @if (store.now$ | async; as now) {
-    <span data-testid="date">
-      {{ now | date: 'EEE dd MMM' }}
+  <span data-testid="date">
+    {{ now() | date: 'EEE dd MMM' }}
+  </span>
+  <span class="flex items-center" data-testid="time">
+    <span>{{ now() | date: 'HH' }}</span>
+
+    <span
+      class="mb-0.5 transform opacity-0 transition-all duration-100 ease-in"
+      [class.opacity-100]="showColons()"
+    >
+      :
     </span>
-    <span class="flex items-center" data-testid="time">
-      <span>{{ now | date: 'HH' }}</span>
 
-      <span
-        class="mb-0.5 transform opacity-0 transition-all duration-100 ease-in"
-        [class.opacity-100]="store.showColons$ | async"
-      >
-        :
-      </span>
+    <span>{{ now() | date: 'mm' }}</span>
 
-      <span>{{ now | date: 'mm' }}</span>
-
-      <span
-        class="mb-0.5 transform opacity-0 transition-all duration-100 ease-in"
-        [class.opacity-100]="store.showColons$ | async"
-      >
-        :
-      </span>
-
-      <span>{{ now | date: 'ss' }}</span>
+    <span
+      class="mb-0.5 transform opacity-0 transition-all duration-100 ease-in"
+      [class.opacity-100]="showColons()"
+    >
+      :
     </span>
-  }
+
+    <span>{{ now() | date: 'ss' }}</span>
+  </span>
 </div>

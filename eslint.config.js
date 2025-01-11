@@ -42,6 +42,7 @@ module.exports = [
       ],
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/no-unused-vars': ['off'],
+      '@angular-eslint/prefer-standalone': ['warn'],
       '@angular-eslint/component-selector': [
         'error',
         {
