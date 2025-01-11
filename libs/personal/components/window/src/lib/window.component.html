@@ -6,12 +6,18 @@
       class="bg-primary-red border-window-border flex h-6 w-full border-b-2 border-solid px-1"
       data-testid="windowToolbar"
     >
-      <div class="flex-1"></div>
+      <div class="flex flex-1 items-center justify-center">
+        @if (title()) {
+          <span class="text-sm">
+            {{ title() }}
+          </span>
+        }
+      </div>
 
-      @if (closable) {
+      @if (hasControls()) {
         <div class="flex h-full items-center">
-          @if (closable) {
-            <button type="button">
+          @if (closable()) {
+            <button type="button" (click)="onClose($event)">
               <ps-icon class="h-5 w-5" icon="x-mark" />
             </button>
           }

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@po/personal/state/window": ["libs/personal/state/window/src/index.ts"],
       "@po/personal/components/dock": [
         "libs/personal/components/dock/src/index.ts"
       ],
