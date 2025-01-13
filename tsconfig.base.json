@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@po/personal/state/window": ["libs/personal/state/window/src/index.ts"],
+      "@personal/personal-components-window-manager": [
+        "libs/personal/components/window-manager/src/index.ts"
+      ],
       "@po/personal/components/dock": [
         "libs/personal/components/dock/src/index.ts"
       ],
@@ -37,6 +39,7 @@
       "@po/personal/services/icon/testing": [
         "libs/personal/services/icon/testing/src/index.ts"
       ],
+      "@po/personal/state/window": ["libs/personal/state/window/src/index.ts"],
       "@po/shared/services/local-storage": [
         "libs/shared/services/local-storage/src/index.ts"
       ],

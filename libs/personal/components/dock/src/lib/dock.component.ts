@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
+import { WindowManagerService } from '@po/personal/state/window';
 
 @Component({
   selector: 'ps-dock',
@@ -8,4 +9,6 @@ import { IconComponent } from '@po/personal/components/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IconComponent],
 })
-export class DockComponent {}
+export class DockComponent {
+  protected readonly windowManagerService = inject(WindowManagerService);
+}

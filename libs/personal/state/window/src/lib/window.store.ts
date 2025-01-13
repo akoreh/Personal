@@ -1,4 +1,5 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { remove } from 'lodash-es';
 
 import { WindowConfig } from './window-config.model';
 
@@ -26,6 +27,15 @@ export const WindowsStore = signalStore(
         ...state,
         windows: [...state.windows, window],
       }));
+    },
+    closeWindow(id: string): void {
+      patchState(store, (state) => {
+        const windows = [...state.windows];
+
+        remove(windows, { id });
+
+        return { ...state, windows };
+      });
     },
   })),
 );

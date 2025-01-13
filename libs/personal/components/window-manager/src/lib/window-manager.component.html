@@ -1,0 +1,20 @@
+@for (window of windowManagerService.windows(); track window.id) {
+  <ps-window
+    [title]="window.title"
+    [minimizable]="window.minimizable"
+    [maximizable]="window.maximizable"
+    [closable]="window.closable"
+    [dragBoundary]="boundary()"
+    (close)="windowManagerService.closeWindow(window.id)"
+  >
+    <ng-container *ngTemplateOutlet="window.content"></ng-container>
+  </ps-window>
+}
+
+<ng-template #underMaintenanceContent>
+  <div
+    class="pointer-events-none flex h-full w-full flex-1 select-none items-center justify-center px-4 font-semibold xl:px-12"
+  >
+    <h1 class="text-window-border text-3xl xl:text-5xl">Under Maintenance</h1>
+  </div>
+</ng-template>

@@ -24,10 +24,21 @@
 
   <div class="bg-window-border mx-4 h-full w-0.5"></div>
 
-  <button class="mb-0.5" type="button">
-    <ps-icon
-      class="text-folder stroke-window-border w-9 stroke-1"
-      icon="trash"
-    />
-  </button>
+  <div class="flex items-center gap-x-3">
+    <!--    @for (window of windowManagerService.windows(); track window.id) {-->
+    <!--      <button class="mb-0.5" type="button">-->
+    <!--        <ps-icon-->
+    <!--          class="text-folder stroke-window-border w-9 stroke-1"-->
+    <!--          icon="trash"-->
+    <!--        />-->
+    <!--      </button>-->
+    <!--    }-->
+
+    <button class="mb-0.5" type="button">
+      <ps-icon
+        class="text-folder stroke-window-border w-9 stroke-1"
+        icon="trash"
+      />
+    </button>
+  </div>
 </div>

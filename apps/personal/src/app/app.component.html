@@ -5,22 +5,10 @@
     <ps-menubar />
   </div>
 
-  <ng-template #underMaintenanceContent>
-    <div
-      class="pointer-events-none flex h-full w-full flex-1 select-none items-center justify-center px-4 font-semibold xl:px-12"
-    >
-      <h1 class="text-window-border text-3xl xl:text-5xl">Under Maintenance</h1>
+  <div #boundary class="relative flex flex-1 flex-col">
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <ps-window-manager [boundary]="boundary" />
     </div>
-  </ng-template>
-
-  <div class="relative flex flex-1 flex-col">
-    @for (window of windowManagerService.windows(); track window.id) {
-      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <ps-window [title]="window.title">
-          <ng-container *ngTemplateOutlet="window.content"></ng-container>
-        </ps-window>
-      </div>
-    }
 
     <router-outlet />
   </div>

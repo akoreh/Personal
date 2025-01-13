@@ -34,6 +34,7 @@ export class WindowManagerService {
   }
 
   closeWindow(id: string): void {
+    this.windowsStore.closeWindow(id);
     this.templateCache.delete(id);
   }
 }

@@ -62,7 +62,7 @@ export class IconService implements IconServiceBase {
       )
       .subscribe({
         next: ({ svg, iconName }) => {
-          this.cache[iconName] = svg;
+          this.cache[iconName] = this.cloneSvg(svg);
 
           this.svgLoaded$.next({
             iconName,

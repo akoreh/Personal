@@ -1,9 +1,14 @@
-<div class="relative flex min-h-96 min-w-96 flex-col">
+<div
+  class="relative flex min-h-96 min-w-96 flex-col"
+  cdkDrag
+  [cdkDragBoundary]="dragBoundary()"
+>
   <div
     class="border-window-border relative z-20 flex flex-1 flex-col overflow-hidden rounded-xl border-[3px] border-solid"
   >
     <div
       class="bg-primary-red border-window-border flex h-6 w-full border-b-2 border-solid px-1"
+      cdkDragHandle
       data-testid="windowToolbar"
     >
       <div class="flex flex-1 items-center justify-center">
