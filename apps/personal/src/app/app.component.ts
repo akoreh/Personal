@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { WindowManagerComponent } from '@personal/personal-components-window-manager';
 import { gsap } from 'gsap';
 
+import { DesktopManagerComponent } from '@po/personal/components/desktop-manager';
 import { DockComponent } from '@po/personal/components/dock';
 import { MenuBarComponent } from '@po/personal/components/menubar';
+import { WindowManagerComponent } from '@po/personal/components/window-manager';
 
 @Component({
   selector: 'ps-root',
@@ -14,6 +15,7 @@ import { MenuBarComponent } from '@po/personal/components/menubar';
     MenuBarComponent,
     DockComponent,
     WindowManagerComponent,
+    DesktopManagerComponent,
   ],
 })
 export class AppComponent implements OnInit {

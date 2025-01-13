@@ -1,16 +1,27 @@
 <main
   class="h-dscreen text-window-border flex w-screen flex-col overflow-hidden"
 >
-  <div class="fixed top-0 w-screen">
+  <div class="fixed top-0 h-[23px] w-screen">
     <ps-menubar />
   </div>
 
-  <div #boundary class="relative flex flex-1 flex-col">
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-      <ps-window-manager [boundary]="boundary" />
-    </div>
+  <div
+    class="flex w-full flex-col"
+    style="height: calc(100vh - 23px); margin-top: 23px"
+  >
+    <div #boundary class="relative h-full w-full">
+      <div class="absolute z-10 h-full w-full p-8">
+        <ps-desktop-manager />
+      </div>
 
-    <router-outlet />
+      <div
+        class="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
+      >
+        <ps-window-manager [boundary]="boundary" />
+      </div>
+
+      <router-outlet />
+    </div>
   </div>
 
   <div class="fixed bottom-5 left-1/2 -translate-x-1/2">
