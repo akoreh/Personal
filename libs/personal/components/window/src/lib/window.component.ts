@@ -18,13 +18,15 @@ import { IconComponent } from '@po/personal/components/icon';
   imports: [IconComponent, CdkDrag, CdkDragHandle],
 })
 export class WindowComponent {
-  title = input<string | undefined>();
-  closable = input(false, { transform: booleanAttribute });
-  minimizable = input(false, { transform: booleanAttribute });
-  maximizable = input(false, { transform: booleanAttribute });
-  dragBoundary = input.required<ElementRef<HTMLElement> | HTMLElement>();
+  readonly title = input<string | undefined>();
+  readonly closable = input(false, { transform: booleanAttribute });
+  readonly minimizable = input(false, { transform: booleanAttribute });
+  readonly maximizable = input(false, { transform: booleanAttribute });
+  readonly dragBoundary = input.required<
+    ElementRef<HTMLElement> | HTMLElement
+  >();
 
-  close = output<void>();
+  readonly closeWindow = output<void>();
 
   protected readonly hasControls = computed(
     () => this.minimizable() || this.maximizable() || this.closable(),
@@ -33,6 +35,6 @@ export class WindowComponent {
   onClose(event: MouseEvent | TouchEvent): void {
     event.stopPropagation();
 
-    this.close.emit();
+    this.closeWindow.emit();
   }
 }

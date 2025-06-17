@@ -24,7 +24,7 @@ export class WindowManagerComponent implements OnInit {
 
   protected readonly windowManagerService = inject(WindowManagerService);
 
-  protected readonly isDev = true;
+  protected readonly isDev = false;
 
   readonly underMaintenanceTemplate = viewChild<TemplateRef<any>>(
     'underMaintenanceContent',
