@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -33,10 +34,6 @@ export class IconComponent {
     effect(() => {
       const icon = this.iconResource.value();
 
-      if (this.icon() === 'trash') {
-        console.log('icon', icon);
-      }
-
       if (icon) {
         if (this.fill()) {
           icon.setAttribute('fill', this.fill());
@@ -59,15 +56,12 @@ export class IconComponent {
 
   private setSvg(svg: SVGElement): void {
     const host = this.elementRef.nativeElement;
-
-    if (this.icon() === 'trash') {
-      console.log('host', host);
-    }
+    const clone = svg.cloneNode(true);
 
     if (host.firstChild) {
-      host.replaceChild(svg, host.firstChild);
+      host.replaceChild(clone, host.firstChild);
     }
 
-    host.appendChild(svg);
+    host.appendChild(clone);
   }
 }

@@ -53,6 +53,15 @@ module.exports = {
       boxShadow: {
         dark: '0 4px 12px rgba(0, 0, 0, 0.6)', // Dark, deep shadow for windows
       },
+      animation: {
+        blink: 'blink 1s steps(1) infinite',
+      },
+      keyframes: {
+        blink: {
+          '0%, 50%': { opacity: '1' },
+          '50.01%, 100%': { opacity: '0' },
+        },
+      },
     },
   },
   plugins: [],

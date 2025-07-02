@@ -1,0 +1,40 @@
+<div class="ps-terminal-app flex h-full w-full flex-1 flex-col overflow-y-auto">
+  <ul class="flex flex-col gap-4">
+    @for (execution of executions(); track execution.id) {
+      <li>
+        <ps-terminal-app-status-bar
+          class="pointer-events-none select-none"
+          [path]="execution.path"
+        />
+
+        @if (execution.stdout) {
+          <div class="flex flex-col gap-2">
+            <span class="px-2">{{ execution.command }}</span>
+            <pre class="px-1 text-sm">{{ execution.stdout }}</pre>
+          </div>
+        }
+      </li>
+    }
+  </ul>
+
+  <div class="px-2" cdkTrapFocus>
+    <div class="relative w-full max-w-md">
+      <input
+        #input
+        class="w-full cursor-default bg-transparent caret-transparent outline-none"
+        type="text"
+        [(ngModel)]="command"
+        (input)="onUpdateCursorPosition()"
+        (click)="onUpdateCursorPosition()"
+        (keyup)="onUpdateCursorPosition()"
+        (keydown.enter)="onExecCommand()"
+      />
+      <div
+        class="animate-blink pointer-events-none absolute left-0 top-1 h-[1em] w-[1ch] bg-black"
+        [style.left]="cursorPos() + 'ch'"
+      ></div>
+    </div>
+  </div>
+
+  <div class="flex-1" (click)="onFocusInput()"></div>
+</div>

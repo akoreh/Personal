@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@po/personal/components/apps/terminal-app": [
+        "libs/personal/components/apps/terminal-app/src/index.ts"
+      ],
       "@po/personal/components/app-shell": [
         "libs/personal/components/app-shell/src/index.ts"
       ],
