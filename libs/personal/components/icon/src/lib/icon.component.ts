@@ -34,20 +34,23 @@ export class IconComponent {
     effect(() => {
       const icon = this.iconResource.value();
 
-      if (icon) {
-        if (this.fill()) {
-          icon.setAttribute('fill', this.fill());
-        }
-
-        this.setSvg(icon);
+      if (!icon) {
+        return;
       }
+
+      if (this.fill()) {
+        icon.setAttribute('fill', this.fill());
+      }
+
+      this.setSvg(icon);
     });
   }
 
   private readonly iconResource = resource({
     request: () => ({ icon: this.icon() }),
-    loader: ({ request }) =>
-      lastValueFrom(this.iconService.getSvgIcon(request.icon)),
+    loader: ({ request }) => {
+      return lastValueFrom(this.iconService.getSvgIcon(request.icon));
+    },
   });
 
   private readonly elementRef = inject(ElementRef) as ElementRef<HTMLElement>;

@@ -15,11 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@po/personal/components/apps/terminal-app": [
-        "libs/personal/components/apps/terminal-app/src/index.ts"
-      ],
+      "@po/shared/models": ["libs/shared/models/src/index.ts"],
       "@po/personal/components/app-shell": [
         "libs/personal/components/app-shell/src/index.ts"
+      ],
+      "@po/personal/components/apps/terminal-app": [
+        "libs/personal/components/apps/terminal-app/src/index.ts"
       ],
       "@po/personal/components/desktop-manager": [
         "libs/personal/components/desktop-manager/src/index.ts"

@@ -1,8 +1,11 @@
 <div class="ps-terminal-app-status-bar relative">
   <div class="line"></div>
-  <div class="flex flex-col">
-    <span>
-      {{ path() }}
-    </span>
+  <div class="flex justify-between pr-2">
+    <div class="flex flex-col">
+      <span>
+        {{ path() }}
+      </span>
+    </div>
+    <span> at {{ date() | date: 'HH:mm:ss' }} </span>
   </div>
 </div>

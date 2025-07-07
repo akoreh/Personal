@@ -5,6 +5,7 @@
         <ps-terminal-app-status-bar
           class="pointer-events-none select-none"
           [path]="execution.path"
+          [date]="execution.createdAt"
         />
 
         @if (execution.stdout) {

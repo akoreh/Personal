@@ -12,6 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ISODateString } from '@po/shared/models';
 import { intervalToDuration } from 'date-fns';
 import { noop } from 'lodash-es';
 import { v4 as uuid } from 'uuid';
@@ -30,7 +31,13 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   protected readonly currentPath = signal<string>('~/Desktop');
 
   protected readonly executions = signal<
-    Array<{ id: string; path: string; stdout?: string; command?: string }>
+    Array<{
+      id: string;
+      path: string;
+      stdout?: string;
+      command?: string;
+      createdAt: ISODateString;
+    }>
   >([]);
 
   protected readonly availableCommands = [
@@ -187,6 +194,7 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
         id: uuid(),
         path: this.currentPath(),
         stdout: undefined,
+        createdAt: new Date().toISOString(),
       },
     ]);
   }
