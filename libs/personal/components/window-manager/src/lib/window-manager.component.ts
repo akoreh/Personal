@@ -53,6 +53,7 @@ export class WindowManagerComponent implements OnInit {
         maximizable: false,
         minimizable: false,
         closable: false,
+        iconImg: '/assets/img/terminal.png',
       });
     }
   }

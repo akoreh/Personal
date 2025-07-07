@@ -10,10 +10,6 @@
     style="height: calc(100vh - 23px); margin-top: 23px"
   >
     <div #boundary class="relative h-full w-full">
-      <div class="absolute z-10 h-full w-full p-8">
-        <ps-desktop-manager />
-      </div>
-
       <div
         class="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
       >
@@ -24,7 +20,7 @@
     </div>
   </div>
 
-  <div class="fixed bottom-5 left-1/2 -translate-x-1/2">
+  <div class="z-cover fixed bottom-5 left-1/2 -translate-x-1/2">
     <ps-dock />
   </div>
 </main>

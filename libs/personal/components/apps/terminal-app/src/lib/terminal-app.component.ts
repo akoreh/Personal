@@ -2,10 +2,8 @@ import { DecimalPipe } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
   OnInit,
   inject,
   signal,

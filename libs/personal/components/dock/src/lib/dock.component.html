@@ -2,32 +2,27 @@
   class="bg-background border-window-border flex h-14 items-center rounded-lg border-2 border-solid px-6 py-2"
 >
   <ul class="flex flex-1 items-center justify-end gap-x-3">
-    <li>
-      <a href="https://github.com/akoreh/Personal/tree/main" target="_blank">
-        <ps-icon class="w-9" icon="github" />
+    @for (dockItem of dockItems; track dockItem.icon) {
+      <a target="_blank" [attr.href]="dockItem.link">
+        <div class="h-9 w-9">
+          <ps-icon class="w-full" [icon]="dockItem.icon" />
+        </div>
       </a>
-    </li>
-    <li>
-      <a
-        href="https://www.linkedin.com/in/andrei-koreh-71084b169/"
-        target="_blank"
-      >
-        <ps-icon class="w-9" icon="linkedin" />
-      </a>
-    </li>
-    <li>
-      <a href="mailto:korehdev@gmail.com" target="_blank">
-        <ps-icon class="w-11" icon="envelope" />
-      </a>
-    </li>
+    }
 
     @for (window of windowManagerService.windows(); track window.id) {
       <li>
         <button type="button">
-          <ps-icon
-            class="text-folder stroke-window-border w-9 stroke-1"
-            icon="trash"
-          />
+          <div class="relative h-9 w-9">
+            @if (window.icon) {
+              <ps-icon
+                class="text-folder stroke-window-border h-full w-full stroke-1"
+                [icon]="window.icon"
+              />
+            } @else if (window.iconImg) {
+              <img fill alt="app icon" [ngSrc]="window.iconImg" />
+            }
+          </div>
         </button>
       </li>
     }
