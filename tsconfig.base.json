@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@po/shared/models": ["libs/shared/models/src/index.ts"],
+      "@po/personal/state/auth": ["libs/personal/state/auth/src/index.ts"],
       "@po/personal/components/app-shell": [
         "libs/personal/components/app-shell/src/index.ts"
       ],
@@ -50,6 +50,7 @@
         "libs/personal/services/icon/testing/src/index.ts"
       ],
       "@po/personal/state/window": ["libs/personal/state/window/src/index.ts"],
+      "@po/shared/models": ["libs/shared/models/src/index.ts"],
       "@po/shared/services/local-storage": [
         "libs/shared/services/local-storage/src/index.ts"
       ],
