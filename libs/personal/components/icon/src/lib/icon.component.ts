@@ -31,7 +31,7 @@ export class IconComponent {
 
   constructor() {
     effect(() => {
-      const icon = this.iconResource.value();
+      const icon = this.iconResource.value() as SVGElement;
 
       if (!icon) {
         return;
@@ -46,9 +46,9 @@ export class IconComponent {
   }
 
   private readonly iconResource = resource({
-    request: () => ({ icon: this.icon() }),
-    loader: ({ request }) => {
-      return lastValueFrom(this.iconService.getSvgIcon(request.icon));
+    params: () => ({ icon: this.icon() }),
+    loader: ({ params }) => {
+      return lastValueFrom(this.iconService.getSvgIcon(params.icon));
     },
   });
 

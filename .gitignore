@@ -44,4 +44,6 @@ Thumbs.db
 .angular
 apps/backend/.env
 .cursor/rules/nx-rules.mdc
+.github/instructions
 .github/instructions/nx.instructions.md
+.github/copilot-instructions.md
