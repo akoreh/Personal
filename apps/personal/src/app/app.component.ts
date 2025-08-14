@@ -6,11 +6,13 @@ import { DesktopManagerComponent } from '@po/personal/components/desktop-manager
 import { DockComponent } from '@po/personal/components/dock';
 import { MenuBarComponent } from '@po/personal/components/menubar';
 import { WindowManagerComponent } from '@po/personal/components/window-manager';
+import { AuthStateModule } from '@po/personal/state/auth';
 
 @Component({
   selector: 'ps-root',
   templateUrl: './app.component.html',
   imports: [
+    AuthStateModule,
     RouterOutlet,
     MenuBarComponent,
     DockComponent,

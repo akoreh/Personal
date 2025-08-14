@@ -1,17 +1,16 @@
 <div class="ps-terminal-app flex h-full w-full flex-1 flex-col overflow-y-auto">
   <ul class="flex flex-col gap-4">
-    @for (execution of executions(); track execution.id) {
+    @for (event of terminalEvents(); track event.id) {
       <li>
         <ps-terminal-app-status-bar
           class="pointer-events-none select-none"
-          [path]="execution.path"
-          [date]="execution.createdAt"
+          [path]="event.path"
+          [date]="event.createdAt"
         />
 
-        @if (execution.stdout) {
+        @if (event.stdOut; as stdout) {
           <div class="flex flex-col gap-2">
-            <span class="px-2">{{ execution.command }}</span>
-            <pre class="px-1 text-sm">{{ execution.stdout }}</pre>
+            <pre class="px-1 text-sm">{{ stdout }}</pre>
           </div>
         }
       </li>
@@ -28,6 +27,7 @@
         (input)="onUpdateCursorPosition()"
         (click)="onUpdateCursorPosition()"
         (keyup)="onUpdateCursorPosition()"
+        (keydown)="onKeyDown($event)"
         (keydown.enter)="onExecCommand()"
       />
       <div

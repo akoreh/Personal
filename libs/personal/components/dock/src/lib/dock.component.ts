@@ -1,7 +1,13 @@
 import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
+import { AuthStore } from '@po/personal/state/auth';
 import { WindowManagerService } from '@po/personal/state/window';
 
 import { dockItems } from './const/dock-items.const';

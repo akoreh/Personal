@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isObject, noop } from 'lodash-es';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalStorageService {
   get<T>(key: string): T | undefined {
     const data = window.localStorage.getItem(key);
