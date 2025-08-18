@@ -1,4 +1,4 @@
-const TERMINAL_COMMANDS = ['clear', 'auth'] as const;
+const TERMINAL_COMMANDS = ['clear', 'auth', 'ls', 'hello'] as const;
 
 export interface TerminalCommand {
   command: (typeof TERMINAL_COMMANDS)[number];

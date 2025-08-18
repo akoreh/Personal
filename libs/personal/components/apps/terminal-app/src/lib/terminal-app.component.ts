@@ -10,10 +10,8 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ISODateString } from '@po/shared/models';
 import { intervalToDuration } from 'date-fns';
-import { get, noop } from 'lodash-es';
-import { v4 as uuid } from 'uuid';
+import { find, noop } from 'lodash-es';
 
 import { AuthStore } from '@po/personal/state/auth';
 
@@ -33,9 +31,7 @@ import { TerminalEvent } from './models/terminal-event.model';
 export class TerminalAppComponent implements OnInit, AfterViewInit {
   protected readonly currentPath = signal<string>('~/Desktop');
 
-  protected readonly terminalEvents = signal<TerminalEvent[]>([
-    new TerminalEvent(this.currentPath()),
-  ]);
+  protected readonly terminalEvents = signal<TerminalEvent[]>([]);
 
   protected readonly command = signal<string>('');
   protected readonly cursorPos = signal<number>(0);
@@ -62,16 +58,20 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     this.onFocusInput();
   }
 
-  onExecCommand(): void {
-    const fullCommand = this.command().toLowerCase();
-    const split = fullCommand.split(' ');
-    const typedCommand = split[0].trim();
-    const command = terminalCommands.find(
-      ({ command }) => command === typedCommand,
+  async onExecCommand(): Promise<void> {
+    const fullCommand = this.command();
+
+    const { baseCommand, args: split } = this.parseCommand(fullCommand);
+
+    this.printToStdOut(`$ ${fullCommand}\n\n`);
+
+    const command = find(
+      terminalCommands,
+      ({ command }) => command === baseCommand,
     );
 
     if (!command) {
-      this.printToStdOut(typedCommand, `command not found: ${typedCommand}`);
+      this.printToStdOut(`command not found: ${baseCommand}`);
     } else {
       const args = split.slice(1);
 
@@ -79,12 +79,12 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
         case 'clear':
           this.onClear();
           break;
-        // case 'ls':
-        //   this.onList(command);
-        //   break;
-        // case 'hello':
-        //   this.printToStdOut(command, 'Hi there, friend. 🐧');
-        //   break;
+        case 'ls':
+          this.onList();
+          break;
+        case 'hello':
+          this.printToStdOut('Hi there, friend. 🐧');
+          break;
         // case 'uptime':
         //   this.onUptime(command);
         //   break;
@@ -95,7 +95,7 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
         //   this.onHelp(command);
         //   break;
         case 'auth':
-          this.onAuth(fullCommand, command, args);
+          await this.onAuth(fullCommand, command, args);
           break;
         default:
           noop();
@@ -130,16 +130,14 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private onHelp(command: string): void {
+  private onHelp(): void {
     this.printToStdOut(
-      command,
       `available commands: \n\n${this.availableCommands.join('\n')}`,
     );
   }
 
-  private onCowSay(command: string, args: Array<string>): void {
+  private onCowSay(args: Array<string>): void {
     this.printToStdOut(
-      command,
       ` ________
 < ${args.join(' ')} >
  --------
@@ -151,32 +149,63 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private onAuth(
+  private async onAuth(
     typedCommand: string,
     command: TerminalCommand,
     args: Array<string>,
-  ): void {
+  ): Promise<void> {
     if (!args.length) {
-      this.printToStdOut(typedCommand, 'Invalid number of arguments');
+      this.printToStdOut('Invalid number of arguments');
 
       return;
     }
 
     const argument = args[0];
 
-    if (argument === 'status') {
-      this.printToStdOut(
-        typedCommand,
-        `Authentication status: ${this.authStore.isAuthenticated() ? 'authenticated' : 'unauthenticated'}`,
-      );
+    // if (argument === 'status') {
+    //   this.printToStdOut(
+    //     typedCommand,
+    //     `Authentication status: ${this.authStore.isAuthenticated() ? 'authenticated' : 'unauthenticated'}`,
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
-    this.printToStdOut(typedCommand, `Unknown argument: ${argument}`);
+    // if (argument === 'login') {
+    //   if (args.length < 3) {
+    //     this.printToStdOut(
+    //       typedCommand,
+    //       'Usage: auth login <email> <password>',
+    //     );
+    //     return;
+    //   }
+
+    //   const email = args[1];
+    //   const password = args[2];
+
+    //   try {
+    //     this.printToStdOut(typedCommand, 'Authenticating...');
+    //     await this.authStore.login({ email, password });
+
+    //     if (this.authStore.isAuthenticated()) {
+    //       this.printToStdOut('', 'Authentication successful');
+    //     } else {
+    //       this.printToStdOut('', 'Authentication failed');
+    //     }
+    //   } catch (error) {
+    //     this.printToStdOut(
+    //       '',
+    //       `Authentication error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+    //     );
+    //   }
+
+    //   return;
+    // }
+
+    this.printToStdOut(`Unknown argument: ${argument}`);
   }
 
-  private onUptime(command: string): void {
+  private onUptime(): void {
     const date = new Date(-8_640_000_000_000_000);
     const duration = intervalToDuration({ start: date, end: new Date() });
     const parts: Array<string> = [];
@@ -216,15 +245,15 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
       );
     }
 
-    this.printToStdOut(command, parts.join(', '));
+    this.printToStdOut(parts.join(', '));
   }
 
   private onClear(): void {
-    this.terminalEvents.set([new TerminalEvent(this.currentPath())]);
+    this.terminalEvents.set([]);
   }
 
-  private onList(command: string): void {
-    this.printToStdOut(command, `Projects`);
+  private onList(): void {
+    this.printToStdOut(`Projects`);
   }
 
   private pushEmptyExecution(): void {
@@ -234,7 +263,7 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     ]);
   }
 
-  private printToStdOut(command: string, stdout: string): void {
+  private printToStdOut(stdout: string): void {
     this.terminalEvents.update((events) => {
       const clone = [...events];
 
@@ -247,4 +276,14 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   private get isMacOS(): boolean {
     return /macintosh|mac os x/i.test(navigator.userAgent);
   }
+
+  private readonly parseCommand = (
+    command: string,
+  ): { baseCommand: string; args: string[] } => {
+    const fullCommand = command;
+    const split = fullCommand.split(' ');
+    const baseCommand = split[0].trim().toLowerCase();
+
+    return { baseCommand, args: [...split.slice(1)] };
+  };
 }

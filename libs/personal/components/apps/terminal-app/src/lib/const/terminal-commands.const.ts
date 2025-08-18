@@ -11,4 +11,12 @@ export const terminalCommands: TerminalCommand[] = [
       },
     ],
   },
+  {
+    command: 'ls',
+    shortHelpDescription: 'Lists the contents of the current directory',
+  },
+  {
+    command: 'hello',
+    shortHelpDescription: 'Say hello',
+  },
 ];

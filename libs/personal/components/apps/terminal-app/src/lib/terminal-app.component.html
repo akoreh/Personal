@@ -9,9 +9,7 @@
         />
 
         @if (event.stdOut; as stdout) {
-          <div class="flex flex-col gap-2">
-            <pre class="px-1 text-sm">{{ stdout }}</pre>
-          </div>
+          <pre class="px-1 text-sm">{{ stdout }}</pre>
         }
       </li>
     }

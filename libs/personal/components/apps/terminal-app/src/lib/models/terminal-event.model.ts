@@ -17,6 +17,6 @@ export class TerminalEvent {
   private _stdOut = '';
 
   pushToStdOut(stdOut: string): void {
-    this._stdOut += `\n${stdOut}`;
+    this._stdOut += `${stdOut}`;
   }
 }
