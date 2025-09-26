@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@po/personal/environment": ["libs/personal/environment/src/index.ts"],
       "@po/personal/components/app-shell": [
         "libs/personal/components/app-shell/src/index.ts"
       ],
@@ -43,6 +42,7 @@
       "@po/personal/components/window-manager": [
         "libs/personal/components/window-manager/src/index.ts"
       ],
+      "@po/personal/environment": ["libs/personal/environment/src/index.ts"],
       "@po/personal/models": ["libs/personal/models/src/index.ts"],
       "@po/personal/services/icon": [
         "libs/personal/services/icon/src/index.ts"
