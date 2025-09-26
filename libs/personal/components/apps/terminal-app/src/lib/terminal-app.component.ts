@@ -61,7 +61,7 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   async onExecCommand(): Promise<void> {
     const fullCommand = this.command();
 
-    const { baseCommand, args: split } = this.parseCommand(fullCommand);
+    const { baseCommand, args } = this.parseCommand(fullCommand);
 
     this.printToStdOut(`$ ${fullCommand}\n\n`);
 
@@ -73,8 +73,6 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     if (!command) {
       this.printToStdOut(`command not found: ${baseCommand}`);
     } else {
-      const args = split.slice(1);
-
       switch (command.command) {
         case 'clear':
           this.onClear();
@@ -85,17 +83,20 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
         case 'hello':
           this.printToStdOut('Hi there, friend. 🐧');
           break;
-        // case 'uptime':
-        //   this.onUptime(command);
-        //   break;
-        // case 'cowsay':
-        //   this.onCowSay(fullCommand, args);
-        //   break;
-        // case 'help':
-        //   this.onHelp(command);
-        //   break;
+        case 'whoami':
+          this.onWhoAmI();
+          break;
+        case 'uptime':
+          this.onUptime();
+          break;
+        case 'cowsay':
+          this.onCowSay(args);
+          break;
+        case 'help':
+          this.onHelp();
+          break;
         case 'auth':
-          await this.onAuth(fullCommand, command, args);
+          await this.onAuth(command, args);
           break;
         default:
           noop();
@@ -150,7 +151,6 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   }
 
   private async onAuth(
-    typedCommand: string,
     command: TerminalCommand,
     args: Array<string>,
   ): Promise<void> {
@@ -162,45 +162,42 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
 
     const argument = args[0];
 
-    // if (argument === 'status') {
-    //   this.printToStdOut(
-    //     typedCommand,
-    //     `Authentication status: ${this.authStore.isAuthenticated() ? 'authenticated' : 'unauthenticated'}`,
-    //   );
+    if (argument === 'status') {
+      this.printToStdOut(
+        `Authentication status: ${this.authStore.isAuthenticated() ? 'authenticated' : 'unauthenticated'}`,
+      );
 
-    //   return;
-    // }
+      return;
+    }
 
-    // if (argument === 'login') {
-    //   if (args.length < 3) {
-    //     this.printToStdOut(
-    //       typedCommand,
-    //       'Usage: auth login <email> <password>',
-    //     );
-    //     return;
-    //   }
+    if (argument === 'login') {
+      if (args.length < 3) {
+        this.printToStdOut('Usage: auth login <email> <password>');
 
-    //   const email = args[1];
-    //   const password = args[2];
+        return;
+      }
 
-    //   try {
-    //     this.printToStdOut(typedCommand, 'Authenticating...');
-    //     await this.authStore.login({ email, password });
+      const email = args[1];
+      const password = args[2];
 
-    //     if (this.authStore.isAuthenticated()) {
-    //       this.printToStdOut('', 'Authentication successful');
-    //     } else {
-    //       this.printToStdOut('', 'Authentication failed');
-    //     }
-    //   } catch (error) {
-    //     this.printToStdOut(
-    //       '',
-    //       `Authentication error: ${error instanceof Error ? error.message : 'Unknown error'}`,
-    //     );
-    //   }
+      try {
+        this.printToStdOut('Authenticating...');
 
-    //   return;
-    // }
+        await this.authStore.login({ email, password });
+
+        if (this.authStore.isAuthenticated()) {
+          this.printToStdOut('Authentication successful');
+        } else {
+          this.printToStdOut('Authentication failed');
+        }
+      } catch (error) {
+        this.printToStdOut(
+          `Authentication error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        );
+      }
+
+      return;
+    }
 
     this.printToStdOut(`Unknown argument: ${argument}`);
   }
@@ -261,6 +258,14 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
       ...terminalEvents,
       new TerminalEvent(this.currentPath()),
     ]);
+  }
+
+  private onWhoAmI(): void {
+    if (this.authStore.isAuthenticated()) {
+      this.printToStdOut(this.authStore.username() as string);
+    } else {
+      this.printToStdOut('guest');
+    }
   }
 
   private printToStdOut(stdout: string): void {

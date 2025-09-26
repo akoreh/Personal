@@ -5,6 +5,7 @@ export const SVG_ICON_NAMES = [
   'envelope',
   'github',
   'linkedin',
+  'terminal',
   'trash',
   'wifi',
   'x-mark',

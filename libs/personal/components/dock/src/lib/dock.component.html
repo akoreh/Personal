@@ -11,16 +11,20 @@
     }
 
     @for (window of windowManagerService.windows(); track window.id) {
-      <li>
+      <li class="h-9 w-9">
         <button type="button">
           <div class="relative h-9 w-9">
             @if (window.icon) {
               <ps-icon
-                class="text-folder stroke-window-border h-full w-full stroke-1"
+                class="text-window-border stroke-window-border h-full w-full stroke-1"
                 [icon]="window.icon"
               />
             } @else if (window.iconImg) {
-              <img fill alt="app icon" [ngSrc]="window.iconImg" />
+              <img
+                fill
+                [attr.alt]="window.title + ' icon'"
+                [ngSrc]="window.iconImg"
+              />
             }
           </div>
         </button>
@@ -28,7 +32,7 @@
     }
   </ul>
 
-  <div class="bg-window-border mx-4 h-full w-0.5"></div>
+  <!-- <div class="bg-window-border mx-4 h-full w-0.5"></div>
 
   <div class="flex items-center gap-x-3">
     <button class="mb-0.5" type="button">
@@ -37,5 +41,5 @@
         icon="trash"
       />
     </button>
-  </div>
+  </div> -->
 </div>

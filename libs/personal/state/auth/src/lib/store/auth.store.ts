@@ -36,11 +36,22 @@ export const AuthStore = signalStore(
   })),
   withMethods((store) => ({
     setAccessToken(accessToken: string): void {
-      patchState(store, (state) => ({
-        ...state,
-        accessToken,
-        isAuthenticated: !isNil(accessToken),
-      }));
+      try {
+        const payload = store.authService.decodeJWT(accessToken);
+
+        patchState(store, {
+          accessToken,
+          email: payload.email,
+          username: payload.username,
+          isAuthenticated: !isNil(accessToken),
+        });
+      } catch {
+        // If JWT decoding fails, just set the token without user info
+        patchState(store, {
+          accessToken,
+          isAuthenticated: !isNil(accessToken),
+        });
+      }
     },
 
     setRefreshToken(refreshToken: string): void {
@@ -50,7 +61,18 @@ export const AuthStore = signalStore(
       }));
     },
     async login(credentials: LoginCredentials): Promise<void> {
-      const res = await store.authService.login(credentials);
+      const { accessToken, refreshToken } =
+        await store.authService.login(credentials);
+
+      const payload = store.authService.decodeJWT(accessToken);
+
+      patchState(store, {
+        accessToken,
+        refreshToken,
+        email: payload.email,
+        username: payload.username,
+        isAuthenticated: true,
+      });
     },
   })),
   withHooks({

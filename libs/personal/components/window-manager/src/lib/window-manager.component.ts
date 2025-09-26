@@ -51,9 +51,9 @@ export class WindowManagerComponent implements OnInit {
       this.windowManagerService.openWindow(terminalAppTemplate, {
         title: 'Terminal',
         maximizable: false,
-        minimizable: false,
-        closable: false,
-        iconImg: '/assets/img/terminal.png',
+        minimizable: true,
+        closable: true,
+        icon: 'terminal',
       });
     }
   }
