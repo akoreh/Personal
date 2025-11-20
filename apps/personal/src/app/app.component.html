@@ -10,13 +10,14 @@
     style="height: calc(100vh - 23px); margin-top: 23px"
   >
     <div #boundary class="relative h-full w-full">
+      <div class="absolute inset-0">
+        <ps-desktop-manager />
+      </div>
       <div
         class="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
       >
         <ps-window-manager [boundary]="boundary" />
       </div>
-
-      <router-outlet />
     </div>
   </div>
 

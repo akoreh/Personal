@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { gsap } from 'gsap';
 
+import { DesktopManagerComponent } from '@po/personal/components/desktop-manager';
 import { DockComponent } from '@po/personal/components/dock';
 import { MenuBarComponent } from '@po/personal/components/menubar';
 import { WindowManagerComponent } from '@po/personal/components/window-manager';
@@ -12,10 +12,10 @@ import { AuthStateModule } from '@po/personal/state/auth';
   templateUrl: './app.component.html',
   imports: [
     AuthStateModule,
-    RouterOutlet,
     MenuBarComponent,
     DockComponent,
     WindowManagerComponent,
+    DesktopManagerComponent,
   ],
 })
 export class AppComponent implements OnInit {

@@ -13,4 +13,7 @@ export const dockItems: Array<DockItem> = [
     icon: 'envelope',
     link: 'mailto:korehdev@gmail.com',
   },
+  {
+    icon: 'terminal',
+  },
 ];
