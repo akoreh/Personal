@@ -4,8 +4,15 @@
     [minimizable]="window.minimizable"
     [maximizable]="window.maximizable"
     [closable]="window.closable"
+    [minimized]="window.minimized"
+    [maximized]="window.maximized"
+    [zIndex]="window.zIndex"
     [dragBoundary]="boundary()"
-    (close)="windowManagerService.closeWindow(window.id)"
+    (closeWindow)="windowManagerService.closeWindow(window.id)"
+    (minimizeWindow)="windowManagerService.minimizeWindow(window.id)"
+    (maximizeWindow)="windowManagerService.maximizeWindow(window.id)"
+    (restoreWindow)="windowManagerService.restoreWindow(window.id)"
+    (focusWindow)="windowManagerService.focusWindow(window.id)"
   >
     <ng-container *ngTemplateOutlet="window.content"></ng-container>
   </ps-window>

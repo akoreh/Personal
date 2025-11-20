@@ -1,10 +1,13 @@
 export const SVG_ICON_NAMES = [
   '',
   'archive-box-arrow-down',
+  'arrows-pointing-in',
+  'arrows-pointing-out',
   'battery-50',
   'envelope',
   'github',
   'linkedin',
+  'minus',
   'terminal',
   'trash',
   'wifi',

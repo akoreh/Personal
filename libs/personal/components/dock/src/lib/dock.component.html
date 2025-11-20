@@ -10,9 +10,14 @@
       </a>
     }
 
-    @for (window of windowManagerService.windows(); track window.id) {
+    @for (window of minimizedWindows(); track window.id) {
       <li class="h-9 w-9">
-        <button type="button">
+        <button
+          class="transition-transform hover:scale-110"
+          type="button"
+          [attr.title]="window.title"
+          (click)="onRestoreWindow(window.id)"
+        >
           <div class="relative h-9 w-9">
             @if (window.icon) {
               <ps-icon
@@ -26,6 +31,9 @@
                 [ngSrc]="window.iconImg"
               />
             }
+            <div
+              class="bg-window-border absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full"
+            ></div>
           </div>
         </button>
       </li>

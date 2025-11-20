@@ -1,7 +1,17 @@
 <div
-  class="relative flex min-h-96 min-w-96 flex-col"
+  class="absolute flex flex-col"
   cdkDrag
+  [ngClass]="{
+    hidden: minimized(),
+    'inset-0': maximized(),
+    'min-h-96': !maximized(),
+    'min-w-96': !maximized(),
+  }"
+  [style.z-index]="zIndex()"
+  [cdkDragDisabled]="maximized()"
   [cdkDragBoundary]="dragBoundary()"
+  (click)="onFocus()"
+  (mousedown)="onFocus()"
 >
   <div
     class="border-window-border relative z-20 flex flex-1 flex-col overflow-hidden rounded-xl border-[3px] border-solid"
@@ -20,17 +30,43 @@
       </div>
 
       @if (hasControls()) {
-        <div class="flex h-full items-center">
+        <div class="flex h-full items-center gap-1">
+          @if (minimizable()) {
+            <button
+              class="rounded px-1 hover:bg-black/10"
+              type="button"
+              (click)="onMinimize($event)"
+            >
+              <ps-icon class="h-4 w-4" icon="minus" />
+            </button>
+          }
+          @if (maximizable()) {
+            <button
+              class="rounded px-1 hover:bg-black/10"
+              type="button"
+              (click)="onMaximize($event)"
+            >
+              @if (maximized()) {
+                <ps-icon class="h-4 w-4" icon="arrows-pointing-in" />
+              } @else {
+                <ps-icon class="h-4 w-4" icon="arrows-pointing-out" />
+              }
+            </button>
+          }
           @if (closable()) {
-            <button type="button" (click)="onClose($event)">
-              <ps-icon class="h-5 w-5" icon="x-mark" />
+            <button
+              class="rounded px-1 hover:bg-black/10"
+              type="button"
+              (click)="onClose($event)"
+            >
+              <ps-icon class="h-4 w-4" icon="x-mark" />
             </button>
           }
         </div>
       }
     </div>
 
-    <div class="bg-window-light flex flex-1 flex-col">
+    <div class="bg-window-light flex flex-1 flex-col overflow-auto">
       <ng-content></ng-content>
     </div>
   </div>

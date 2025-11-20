@@ -47,14 +47,14 @@ export class WindowManagerComponent implements OnInit {
       });
     }
 
-    // if (terminalAppTemplate) {
-    //   this.windowManagerService.openWindow(terminalAppTemplate, {
-    //     title: 'Terminal',
-    //     maximizable: false,
-    //     minimizable: true,
-    //     closable: true,
-    //     icon: 'terminal',
-    //   });
-    // }
+    if (terminalAppTemplate) {
+      this.windowManagerService.openWindow(terminalAppTemplate, {
+        title: 'Terminal',
+        maximizable: true,
+        minimizable: true,
+        closable: true,
+        icon: 'terminal',
+      });
+    }
   }
 }

@@ -37,4 +37,20 @@ export class WindowManagerService {
     this.windowsStore.closeWindow(id);
     this.templateCache.delete(id);
   }
+
+  focusWindow(id: string): void {
+    this.windowsStore.focusWindow(id);
+  }
+
+  minimizeWindow(id: string): void {
+    this.windowsStore.minimizeWindow(id);
+  }
+
+  maximizeWindow(id: string): void {
+    this.windowsStore.maximizeWindow(id);
+  }
+
+  restoreWindow(id: string): void {
+    this.windowsStore.restoreWindow(id);
+  }
 }
