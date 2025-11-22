@@ -7,3 +7,7 @@ export interface AppMetadata {
   readonly appMinimizable?: boolean;
   readonly appMaximizable?: boolean;
 }
+
+export interface AppWithMetadata {
+  appMetadata: AppMetadata;
+}

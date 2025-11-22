@@ -40,6 +40,7 @@ module.exports = {
           orange: '#FFA552',
         },
         secondary: {
+          blue: '#30aec6',
           lightYellow: '#FFE3A1',
           lightRed: '#F2B8B8',
           mutedBlue: '#80BFFF',

@@ -20,6 +20,8 @@ export class WindowManagerService {
     // Get app metadata from the component class if it implements AppMetadata
     const metadata = this.getAppMetadata(component);
 
+    console.log(component, metadata);
+
     // Merge app metadata with overrides
     const config: WindowConfig = {
       title: metadata?.appTitle ?? 'Untitled',
@@ -34,20 +36,9 @@ export class WindowManagerService {
   }
 
   private getAppMetadata(component: Type<any>): AppMetadata | null {
-    // Check if the component class has the metadata properties
-    const prototype = component.prototype;
-    if (
-      prototype &&
-      'appTitle' in prototype &&
-      typeof prototype.appTitle === 'string'
-    ) {
-      return {
-        appTitle: prototype.appTitle,
-        appIcon: prototype.appIcon,
-        appClosable: prototype.appClosable,
-        appMinimizable: prototype.appMinimizable,
-        appMaximizable: prototype.appMaximizable,
-      };
+    // Check if the component class has a static appMetadata property
+    if ('appMetadata' in component && component.appMetadata) {
+      return component.appMetadata as AppMetadata;
     }
     return null;
   }

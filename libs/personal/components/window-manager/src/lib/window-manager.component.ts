@@ -16,7 +16,7 @@ import { WindowManagerService } from '@po/personal/state/window';
   imports: [WindowComponent],
 })
 export class WindowManagerComponent {
-  boundary = input.required<ElementRef<HTMLElement> | HTMLElement>();
+  readonly boundary = input.required<ElementRef<HTMLElement> | HTMLElement>();
 
   protected readonly windowManagerService = inject(WindowManagerService);
 }

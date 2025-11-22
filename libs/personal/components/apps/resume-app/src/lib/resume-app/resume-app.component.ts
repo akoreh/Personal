@@ -18,10 +18,12 @@ import { TechnicalSkillsComponent } from './components/resume-technical-skills/r
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResumeAppComponent implements AppMetadata {
-  readonly appTitle = 'Resume';
-  readonly appIcon = 'document-text' as const;
-  readonly appClosable = true;
-  readonly appMinimizable = true;
-  readonly appMaximizable = true;
+export class ResumeAppComponent {
+  static readonly appMetadata: AppMetadata = {
+    appTitle: 'Resume',
+    appIcon: 'document-text',
+    appClosable: true,
+    appMinimizable: true,
+    appMaximizable: true,
+  };
 }

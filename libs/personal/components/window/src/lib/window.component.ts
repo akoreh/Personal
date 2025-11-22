@@ -52,11 +52,8 @@ export class WindowComponent implements AfterViewInit {
   });
 
   ngAfterViewInit(): void {
-    // Center the window on first render
     const element = this.windowElement()?.nativeElement;
     if (!element) return;
-
-    console.log(this.dragBoundary);
 
     const boundary = this.dragBoundary();
     const boundaryElement =

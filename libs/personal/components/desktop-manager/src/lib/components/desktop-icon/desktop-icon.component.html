@@ -1,5 +1,6 @@
 <button
-  class="flex max-w-16 flex-col items-center gap-1 p-1 outline-none focus:outline-none focus-visible:outline-none"
+  class="flex max-w-16 cursor-pointer flex-col items-center gap-1 p-1 outline-none focus:outline-none focus-visible:outline-none"
+  cdkDrag
   [ngClass]="{
     'font-bold': isFocused(),
   }"
@@ -9,6 +10,8 @@
   [attr.aria-label]="name()"
   [attr.aria-selected]="isFocused() ? 'true' : 'false'"
   [attr.aria-describedby]="id + '-label'"
+  [cdkDragFreeDragPosition]="position()"
+  (cdkDragEnded)="onDragEnded($event)"
   (focus)="onFocus()"
   (blur)="onBlur()"
   (keydown)="onKeyDown($event)"
@@ -18,13 +21,13 @@
   <ps-icon class="h-12 w-12" data-testid="icon" [icon]="icon()" />
 
   <div
-    class="flex h-[12px] items-center justify-center rounded-sm px-1 py-0.5 text-center transition-all duration-100 ease-in"
+    class="flex h-[14px] items-center justify-center rounded-sm px-1 py-0.5 text-center transition-all duration-100 ease-in"
     [ngClass]="{
-      'bg-secondary-mutedBlue': isFocused(),
+      'bg-secondary-blue text-white': isFocused(),
     }"
   >
     <span
-      class="text-xs font-semibold"
+      class="select-none text-xs font-semibold"
       data-testid="name"
       [attr.id]="id + '-label'"
     >
