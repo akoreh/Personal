@@ -4,17 +4,8 @@ import { byTestId } from '@po/shared/testing';
 export class ContactInfoHarness extends ComponentHarness {
   static hostSelector = 'ps-resume-contact-info';
 
-  private readonly _getPhone = this.locatorFor(byTestId('phone'));
   private readonly _getEmail = this.locatorFor(byTestId('email'));
   private readonly _getLinkedIn = this.locatorFor(byTestId('linkedin'));
-
-  async getPhone(): Promise<string> {
-    return (await this._getPhone()).text();
-  }
-
-  async getPhoneHref(): Promise<string> {
-    return (await this._getPhone()).getAttribute('href');
-  }
 
   async getEmail(): Promise<string> {
     return (await this._getEmail()).text();

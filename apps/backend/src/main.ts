@@ -1,12 +1,15 @@
+// prettier-ignore-file
+import 'reflect-metadata';
+import './env';
+
 import { AppDataSource, setupMiddleware } from '@po/backend/core';
 import { EnvVar } from '@po/backend/enums';
 import { healthRouter } from '@po/backend/modules/health';
+import { getEnvVar } from '@po/backend/utilities';
 import express from 'express';
-import 'reflect-metadata';
 
-import './env';
 
-const port = parseInt((process.env[EnvVar.Port] || 3_000).toString(), 10);
+const port = parseInt(getEnvVar(EnvVar.Port), 10);
 
 const app = express();
 

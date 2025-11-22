@@ -5,3 +5,6 @@
 /.nx/workspace-data
 .angular
 /libs/assets
+
+# Backend main entry - needs reflect-metadata as first import
+/apps/backend/src/main.ts

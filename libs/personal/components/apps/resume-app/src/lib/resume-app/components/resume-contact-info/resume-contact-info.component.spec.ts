@@ -28,11 +28,6 @@ describe('ContactInfoComponent', () => {
     harness = await loader.getHarness(ContactInfoHarness);
   });
 
-  test('should display and use the correct phone number', async () => {
-    expect(await harness.getPhone()).toBe('📞 +40 746 446 885');
-    expect(await harness.getPhoneHref()).toBe('tel:+40746446885');
-  });
-
   test('should display and use the correct email', async () => {
     expect(await harness.getEmail()).toBe('📧 korehdev@gmail.com');
     expect(await harness.getEmailHref()).toBe('mailto:korehdev@gmail.com');
