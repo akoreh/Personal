@@ -88,12 +88,30 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - **Important:** When generating libraries with Nx, always manually fix:
   1. The path alias in `tsconfig.base.json` to follow the `@po/<category>/<name>` convention (e.g., `@po/backend/core` instead of `@personal/core`)
   2. The `name` field in `project.json` to follow the `<category>-<name>` convention (e.g., `backend-core` instead of just `core`)
+  3. **Add appropriate scope tags** to the `tags` array in `project.json`:
+     - Backend projects: `["scope:backend", "type:feature"]` (or `type:app`, `type:util`, etc.)
+     - Personal projects: `["scope:personal", "type:ui"]` (or `type:state`, `type:service`, etc.)
+     - Shared projects: `["scope:shared"]`
 - Each library/app has its own Jest config and test setup.
 - UI components: `libs/personal/components/`
 - State management: `libs/personal/state/`
 - Models/services: `libs/personal/`, `libs/shared/`
 - Backend libraries: `libs/backend/`
 - Use path aliases for cross-feature communication; avoid direct imports across boundaries.
+
+## Module Boundaries
+
+- **Strict scope enforcement:** ESLint enforces module boundaries via `@nx/enforce-module-boundaries` rule
+- **Backend scope** (`scope:backend`):
+  - Can only import from `scope:backend` and `scope:shared`
+  - Cannot import from `scope:personal`
+- **Personal scope** (`scope:personal`):
+  - Can only import from `scope:personal` and `scope:shared`
+  - Cannot import from `scope:backend`
+- **Shared scope** (`scope:shared`):
+  - Can only import from other `scope:shared` libraries
+  - Must remain framework-agnostic and reusable
+- Violations are caught during `nx lint` and will fail CI builds
 
 ## Integration Points
 

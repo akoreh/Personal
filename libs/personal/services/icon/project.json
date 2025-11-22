@@ -4,11 +4,16 @@
   "sourceRoot": "libs/personal/services/icon/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": [
+    "scope:personal",
+    "type:service"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "libs/personal/services/icon/jest.config.ts",
         "tsConfig": "libs/personal/services/icon/tsconfig.spec.json"

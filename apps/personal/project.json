@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/personal/src",
-  "tags": [],
+  "tags": ["scope:personal", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",

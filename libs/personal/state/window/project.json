@@ -4,11 +4,16 @@
   "sourceRoot": "libs/personal/state/window/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": [
+    "scope:personal",
+    "type:state"
+  ],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "libs/personal/state/window/jest.config.ts",
         "tsConfig": "libs/personal/state/window/tsconfig.spec.json"

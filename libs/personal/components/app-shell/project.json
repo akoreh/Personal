@@ -4,7 +4,7 @@
   "sourceRoot": "libs/personal/components/app-shell/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:personal", "type:ui"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/backend/core/src",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:backend", "type:feature"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -21,6 +21,9 @@
       "options": {
         "jestConfig": "libs/backend/core/jest.config.cts"
       }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
     }
   }
 }
