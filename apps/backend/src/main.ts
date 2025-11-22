@@ -1,5 +1,6 @@
-import { setupMiddleware } from '@po/backend/core';
+import { AppDataSource, setupMiddleware } from '@po/backend/core';
 import express from 'express';
+import 'reflect-metadata';
 
 import './env';
 
@@ -17,6 +18,18 @@ app.get('/robots.txt', (req, res) => {
 Disallow: /`);
 });
 
-app.listen(port, async () => {
-  console.log(`API listening on port ${port}`);
-});
+async function bootstrap() {
+  try {
+    await AppDataSource.initialize();
+    console.log('Database connection established');
+
+    app.listen(port, () => {
+      console.log(`API listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+bootstrap();

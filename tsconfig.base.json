@@ -64,7 +64,8 @@
       "@po/personal/components/apps/resume-app": [
         "libs/personal/components/apps/resume-app/src/index.ts"
       ],
-      "@po/backend/core": ["libs/backend/core/src/index.ts"]
+      "@po/backend/core": ["libs/backend/core/src/index.ts"],
+      "@po/backend/entities": ["libs/backend/entities/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
