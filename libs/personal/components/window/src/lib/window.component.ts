@@ -1,13 +1,17 @@
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { NgClass } from '@angular/common';
+import { NgClass, NgComponentOutlet } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Type,
   booleanAttribute,
   computed,
   input,
   output,
+  signal,
+  viewChild,
 } from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
@@ -16,10 +20,11 @@ import { IconComponent } from '@po/personal/components/icon';
   selector: 'ps-window',
   templateUrl: 'window.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, CdkDrag, CdkDragHandle, NgClass],
+  imports: [IconComponent, CdkDrag, CdkDragHandle, NgClass, NgComponentOutlet],
 })
-export class WindowComponent {
+export class WindowComponent implements AfterViewInit {
   readonly title = input<string | undefined>();
+  readonly component = input.required<Type<any>>();
   readonly closable = input(false, { transform: booleanAttribute });
   readonly minimizable = input(false, { transform: booleanAttribute });
   readonly maximizable = input(false, { transform: booleanAttribute });
@@ -39,6 +44,33 @@ export class WindowComponent {
   protected readonly hasControls = computed(
     () => this.minimizable() || this.maximizable() || this.closable(),
   );
+
+  private readonly windowElement = viewChild<ElementRef>('windowElement');
+  protected readonly initialPosition = signal<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+
+  ngAfterViewInit(): void {
+    // Center the window on first render
+    const element = this.windowElement()?.nativeElement;
+    if (!element) return;
+
+    console.log(this.dragBoundary);
+
+    const boundary = this.dragBoundary();
+    const boundaryElement =
+      boundary instanceof ElementRef ? boundary.nativeElement : boundary;
+
+    const boundaryRect = boundaryElement.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+
+    const centerX = (boundaryRect.width - elementRect.width) / 2;
+    const centerY = (boundaryRect.height - elementRect.height) / 2;
+
+    this.initialPosition.set({ x: centerX, y: centerY });
+    console.log(this.initialPosition());
+  }
 
   onClose(event: MouseEvent | TouchEvent): void {
     event.stopPropagation();

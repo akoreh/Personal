@@ -59,6 +59,9 @@
       "linter": "eslint",
       "unitTestRunner": "jest",
       "strict": false
+    },
+    "@nx/angular:component": {
+      "style": "scss"
     }
   },
   "useLegacyCache": false,

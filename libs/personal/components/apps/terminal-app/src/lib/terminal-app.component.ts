@@ -14,6 +14,7 @@ import { intervalToDuration } from 'date-fns';
 import { find, noop } from 'lodash-es';
 
 import { AuthStore } from '@po/personal/state/auth';
+import { AppMetadata } from '@po/personal/state/window';
 
 import { TerminalAppStatusBarComponent } from './components/terminal-app-status-bar/terminal-app-status-bar.component';
 import { terminalCommands } from './const/terminal-commands.const';
@@ -28,7 +29,15 @@ import { TerminalEvent } from './models/terminal-event.model';
   imports: [TerminalAppStatusBarComponent, FormsModule],
   providers: [DecimalPipe],
 })
-export class TerminalAppComponent implements OnInit, AfterViewInit {
+export class TerminalAppComponent
+  implements AppMetadata, OnInit, AfterViewInit
+{
+  readonly appTitle = 'Terminal';
+  readonly appIcon = 'terminal' as const;
+  readonly appClosable = true;
+  readonly appMinimizable = true;
+  readonly appMaximizable = true;
+
   protected readonly currentPath = signal<string>('~/Desktop');
 
   protected readonly terminalEvents = signal<TerminalEvent[]>([]);
@@ -38,10 +47,15 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   protected readonly isLoginFlow = signal<boolean>(false);
 
   private readonly _input = viewChild('input');
+  private readonly _container = viewChild<ElementRef>('container');
 
   private readonly availableCommands = terminalCommands.map(
     ({ command }) => command,
   );
+
+  private commandHistory: string[] = [];
+  private historyIndex = -1;
+  private tempCommand = '';
 
   private get input(): HTMLInputElement {
     return (this._input() as ElementRef<HTMLInputElement>)?.nativeElement;
@@ -59,11 +73,26 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   }
 
   async onExecCommand(): Promise<void> {
-    const fullCommand = this.command();
+    const fullCommand = this.command().trim();
+
+    if (!fullCommand) {
+      this.pushEmptyExecution();
+      return;
+    }
+
+    // Add to command history
+    if (
+      fullCommand &&
+      fullCommand !== this.commandHistory[this.commandHistory.length - 1]
+    ) {
+      this.commandHistory.push(fullCommand);
+    }
+    this.historyIndex = -1;
+    this.tempCommand = '';
 
     const { baseCommand, args } = this.parseCommand(fullCommand);
 
-    this.printToStdOut(`$ ${fullCommand}\n\n`);
+    this.printToStdOut(`$ ${fullCommand}`);
 
     const command = find(
       terminalCommands,
@@ -71,7 +100,7 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     );
 
     if (!command) {
-      this.printToStdOut(`command not found: ${baseCommand}`);
+      this.printToStdOut(`\ncommand not found: ${baseCommand}`);
     } else {
       switch (command.command) {
         case 'clear':
@@ -98,6 +127,39 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
         case 'auth':
           await this.onAuth(command, args);
           break;
+        case 'pwd':
+          this.onPwd();
+          break;
+        case 'cd':
+          this.onCd(args);
+          break;
+        case 'cat':
+          this.onCat(args);
+          break;
+        case 'echo':
+          this.onEcho(args);
+          break;
+        case 'date':
+          this.onDate();
+          break;
+        case 'env':
+          this.onEnv();
+          break;
+        case 'history':
+          this.onHistory();
+          break;
+        case 'about':
+          this.onAbout();
+          break;
+        case 'skills':
+          this.onSkills();
+          break;
+        case 'projects':
+          this.onProjects();
+          break;
+        case 'contact':
+          this.onContact();
+          break;
         default:
           noop();
           break;
@@ -107,6 +169,16 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
     this.pushEmptyExecution();
     this.cursorPos.set(0);
     this.command.set('');
+
+    // Auto-scroll to bottom
+    setTimeout(() => this.scrollToBottom(), 10);
+  }
+
+  private scrollToBottom(): void {
+    const container = this._container()?.nativeElement;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }
 
   protected onUpdateCursorPosition() {
@@ -118,29 +190,145 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
   }
 
   protected onKeyDown(event: KeyboardEvent): void {
-    if (this.isLoginFlow()) {
-      const isCommandC = this.isMacOS
-        ? event.metaKey && event.key === 'c'
-        : event.ctrlKey && event.key === 'c';
+    // Handle Ctrl+C / Cmd+C - Cancel current command
+    const isCommandC = this.isMacOS
+      ? event.metaKey && event.key === 'c'
+      : event.ctrlKey && event.key === 'c';
 
-      if (isCommandC) {
-        event.preventDefault();
-
-        this.isLoginFlow.set(false);
+    if (isCommandC) {
+      event.preventDefault();
+      this.command.set('');
+      this.cursorPos.set(0);
+      if (this.command()) {
+        this.printToStdOut(`$ ${this.command()}^C`);
+        this.pushEmptyExecution();
       }
+      return;
+    }
+
+    // Handle Ctrl+L / Cmd+L - Clear screen
+    const isCommandL = this.isMacOS
+      ? event.metaKey && event.key === 'l'
+      : event.ctrlKey && event.key === 'l';
+
+    if (isCommandL) {
+      event.preventDefault();
+      this.onClear();
+      this.command.set('');
+      this.cursorPos.set(0);
+      return;
+    }
+
+    // Handle Ctrl+U - Clear line
+    if (event.ctrlKey && event.key === 'u') {
+      event.preventDefault();
+      this.command.set('');
+      this.cursorPos.set(0);
+      this.input.value = '';
+      return;
+    }
+
+    // Handle Ctrl+A - Move to beginning
+    if (event.ctrlKey && event.key === 'a') {
+      event.preventDefault();
+      this.input.selectionStart = 0;
+      this.input.selectionEnd = 0;
+      this.cursorPos.set(0);
+      return;
+    }
+
+    // Handle Ctrl+E - Move to end
+    if (event.ctrlKey && event.key === 'e') {
+      event.preventDefault();
+      const len = this.command().length;
+      this.input.selectionStart = len;
+      this.input.selectionEnd = len;
+      this.cursorPos.set(len);
+      return;
+    }
+
+    // Handle Arrow Up - Previous command in history
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (this.commandHistory.length === 0) return;
+
+      if (this.historyIndex === -1) {
+        this.tempCommand = this.command();
+        this.historyIndex = this.commandHistory.length - 1;
+      } else if (this.historyIndex > 0) {
+        this.historyIndex--;
+      }
+
+      this.command.set(this.commandHistory[this.historyIndex]);
+      this.input.value = this.commandHistory[this.historyIndex];
+      setTimeout(() => {
+        this.input.selectionStart = this.input.value.length;
+        this.input.selectionEnd = this.input.value.length;
+        this.cursorPos.set(this.input.value.length);
+      });
+      return;
+    }
+
+    // Handle Arrow Down - Next command in history
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (this.historyIndex === -1) return;
+
+      if (this.historyIndex < this.commandHistory.length - 1) {
+        this.historyIndex++;
+        this.command.set(this.commandHistory[this.historyIndex]);
+        this.input.value = this.commandHistory[this.historyIndex];
+      } else {
+        this.historyIndex = -1;
+        this.command.set(this.tempCommand);
+        this.input.value = this.tempCommand;
+      }
+
+      setTimeout(() => {
+        this.input.selectionStart = this.input.value.length;
+        this.input.selectionEnd = this.input.value.length;
+        this.cursorPos.set(this.input.value.length);
+      });
+      return;
+    }
+
+    // Handle Tab - Command completion
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      const currentCmd = this.command().toLowerCase();
+      if (!currentCmd) return;
+
+      const matches = this.availableCommands.filter((cmd) =>
+        cmd.startsWith(currentCmd),
+      );
+
+      if (matches.length === 1) {
+        this.command.set(matches[0]);
+        this.input.value = matches[0];
+        setTimeout(() => {
+          this.input.selectionStart = matches[0].length;
+          this.input.selectionEnd = matches[0].length;
+          this.cursorPos.set(matches[0].length);
+        });
+      } else if (matches.length > 1) {
+        this.printToStdOut(`\n${matches.join('  ')}`);
+        this.pushEmptyExecution();
+      }
+      return;
     }
   }
 
   private onHelp(): void {
     this.printToStdOut(
-      `available commands: \n\n${this.availableCommands.join('\n')}`,
+      `\nAvailable commands:\n\n${this.availableCommands.join('\n')}`,
     );
   }
 
   private onCowSay(args: Array<string>): void {
+    const message = args.join(' ') || 'Hello!';
     this.printToStdOut(
-      ` ________
-< ${args.join(' ')} >
+      `\n ________
+< ${message} >
  --------
         \\   ^__^
          \\  (oo)\\_______
@@ -164,7 +352,7 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
 
     if (argument === 'status') {
       this.printToStdOut(
-        `Authentication status: ${this.authStore.isAuthenticated() ? 'authenticated' : 'unauthenticated'}`,
+        `\nAuthentication status: ${this.authStore.isAuthenticated() ? 'authenticated' : 'unauthenticated'}`,
       );
 
       return;
@@ -181,25 +369,25 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
       const password = args[2];
 
       try {
-        this.printToStdOut('Authenticating...');
+        this.printToStdOut('\nAuthenticating...');
 
         await this.authStore.login({ email, password });
 
         if (this.authStore.isAuthenticated()) {
-          this.printToStdOut('Authentication successful');
+          this.printToStdOut('\nAuthentication successful');
         } else {
-          this.printToStdOut('Authentication failed');
+          this.printToStdOut('\nAuthentication failed');
         }
       } catch (error) {
         this.printToStdOut(
-          `Authentication error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          `\nAuthentication error: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );
       }
 
       return;
     }
 
-    this.printToStdOut(`Unknown argument: ${argument}`);
+    this.printToStdOut(`\nUnknown argument: ${argument}`);
   }
 
   private onUptime(): void {
@@ -242,15 +430,16 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
       );
     }
 
-    this.printToStdOut(parts.join(', '));
+    this.printToStdOut('\n' + parts.join(', '));
   }
 
   private onClear(): void {
     this.terminalEvents.set([]);
+    this.pushEmptyExecution();
   }
 
   private onList(): void {
-    this.printToStdOut(`Projects`);
+    this.printToStdOut('\nProjects/');
   }
 
   private pushEmptyExecution(): void {
@@ -262,9 +451,9 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
 
   private onWhoAmI(): void {
     if (this.authStore.isAuthenticated()) {
-      this.printToStdOut(this.authStore.username() as string);
+      this.printToStdOut('\n' + (this.authStore.username() as string));
     } else {
-      this.printToStdOut('guest');
+      this.printToStdOut('\nguest');
     }
   }
 
@@ -280,6 +469,140 @@ export class TerminalAppComponent implements OnInit, AfterViewInit {
 
   private get isMacOS(): boolean {
     return /macintosh|mac os x/i.test(navigator.userAgent);
+  }
+
+  private onPwd(): void {
+    this.printToStdOut('\n' + this.currentPath());
+  }
+
+  private onCd(args: string[]): void {
+    if (!args.length || args[0] === '~') {
+      this.currentPath.set('~/Desktop');
+      this.printToStdOut('');
+    } else if (args[0] === '..') {
+      const parts = this.currentPath().split('/');
+      if (parts.length > 2) {
+        parts.pop();
+        this.currentPath.set(parts.join('/'));
+      }
+      this.printToStdOut('');
+    } else {
+      this.currentPath.set(`${this.currentPath()}/${args[0]}`);
+      this.printToStdOut('');
+    }
+  }
+
+  private onCat(args: string[]): void {
+    if (!args.length) {
+      this.printToStdOut('\ncat: missing file operand');
+      return;
+    }
+
+    const filename = args[0];
+    const files: Record<string, string> = {
+      'README.md': `# Welcome to my Portfolio Terminal\n\nThis is an interactive terminal portfolio.\nTry these commands:\n  - about\n  - skills\n  - projects\n  - contact`,
+      'skills.txt': 'TypeScript, Angular, React, Node.js, Python, Docker, AWS',
+      'contact.txt': 'Email: your.email@example.com\nGitHub: @yourusername',
+    };
+
+    if (files[filename]) {
+      this.printToStdOut('\n' + files[filename]);
+    } else {
+      this.printToStdOut(`\ncat: ${filename}: No such file or directory`);
+    }
+  }
+
+  private onEcho(args: string[]): void {
+    this.printToStdOut('\n' + args.join(' '));
+  }
+
+  private onDate(): void {
+    const now = new Date();
+    this.printToStdOut('\n' + now.toLocaleString());
+  }
+
+  private onEnv(): void {
+    const env = [
+      `USER=${this.authStore.isAuthenticated() ? this.authStore.username() : 'guest'}`,
+      `PATH=${this.currentPath()}`,
+      `SHELL=/bin/zsh`,
+      `TERM=xterm-256color`,
+      `HOME=~/Desktop`,
+    ];
+    this.printToStdOut('\n' + env.join('\n'));
+  }
+
+  private onHistory(): void {
+    if (this.commandHistory.length === 0) {
+      this.printToStdOut('\nNo commands in history');
+      return;
+    }
+    const history = this.commandHistory
+      .map((cmd, idx) => `  ${idx + 1}  ${cmd}`)
+      .join('\n');
+    this.printToStdOut('\n' + history);
+  }
+
+  private onAbout(): void {
+    this.printToStdOut(
+      `\n╔═══════════════════════════════════════╗\n` +
+        `║      PORTFOLIO TERMINAL v1.0          ║\n` +
+        `╚═══════════════════════════════════════╝\n\n` +
+        `Welcome to my interactive terminal portfolio!\n\n` +
+        `This is a fully functional terminal emulator built with:\n` +
+        `  • Angular 20+ with Signals\n` +
+        `  • TypeScript\n` +
+        `  • Nx Monorepo\n` +
+        `  • Tailwind CSS\n\n` +
+        `Type 'help' to see all available commands.`,
+    );
+  }
+
+  private onSkills(): void {
+    this.printToStdOut(
+      `\n🚀 Technical Skills\n\n` +
+        `Frontend:\n` +
+        `  • Angular, React, Vue.js\n` +
+        `  • TypeScript, JavaScript (ES6+)\n` +
+        `  • RxJS, NgRx, Redux\n` +
+        `  • HTML5, CSS3, SCSS, Tailwind\n\n` +
+        `Backend:\n` +
+        `  • Node.js, Express\n` +
+        `  • Python, FastAPI\n` +
+        `  • RESTful APIs, GraphQL\n\n` +
+        `Tools & Others:\n` +
+        `  • Git, Docker, Kubernetes\n` +
+        `  • AWS, Azure\n` +
+        `  • CI/CD, Jest, Cypress\n` +
+        `  • Nx, Monorepo Architecture`,
+    );
+  }
+
+  private onProjects(): void {
+    this.printToStdOut(
+      `\n📁 Notable Projects\n\n` +
+        `1. Terminal Portfolio (this!)\n` +
+        `   A fully interactive terminal-based portfolio\n` +
+        `   Tech: Angular, TypeScript, Nx\n\n` +
+        `2. Window Manager System\n` +
+        `   macOS-like window management in the browser\n` +
+        `   Tech: Angular, CDK, Signals\n\n` +
+        `3. Authentication System\n` +
+        `   JWT-based auth with secure token handling\n` +
+        `   Tech: Angular, RxJS, SignalStore\n\n` +
+        `Type 'cat README.md' for more info.`,
+    );
+  }
+
+  private onContact(): void {
+    this.printToStdOut(
+      `\n📫 Get in Touch\n\n` +
+        `Email:    your.email@example.com\n` +
+        `GitHub:   github.com/yourusername\n` +
+        `LinkedIn: linkedin.com/in/yourprofile\n` +
+        `Website:  yourwebsite.com\n\n` +
+        `Feel free to reach out for opportunities or collaborations!`,
+    );
   }
 
   private readonly parseCommand = (

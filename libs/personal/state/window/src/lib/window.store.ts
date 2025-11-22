@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { remove } from 'lodash-es';
 
@@ -5,6 +6,7 @@ import { WindowConfig } from './window-config.model';
 
 export interface AppWindow extends WindowConfig {
   id: string;
+  component: Type<any>;
   minimized: boolean;
   maximized: boolean;
   zIndex: number;
@@ -24,9 +26,10 @@ export const WindowsStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withMethods((store) => ({
-    openWindow(id: string, config: WindowConfig): void {
+    openWindow(id: string, component: Type<any>, config: WindowConfig): void {
       const window: AppWindow = {
         id,
+        component,
         minimized: false,
         maximized: false,
         zIndex: store.nextZIndex(),

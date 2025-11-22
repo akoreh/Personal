@@ -1,8 +1,8 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, Input } from '@angular/core';
 import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
 import { ISODateString } from '@po/shared/models';
-import { create } from 'lodash-es';
 
 import { TerminalAppStatusBarComponent } from './terminal-app-status-bar.component';
 import { TerminalAppStatusBarHarness } from './testing/terminal-app-status-bar.harness';

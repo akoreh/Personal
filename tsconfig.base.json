@@ -60,7 +60,10 @@
         "libs/shared/services/query-param/src/index.ts"
       ],
       "@po/shared/testing": ["libs/shared/testing/src/index.ts"],
-      "@po/shared/utilities": ["libs/shared/utilities/src/index.ts"]
+      "@po/shared/utilities": ["libs/shared/utilities/src/index.ts"],
+      "@po/personal/components/apps/resume-app": [
+        "libs/personal/components/apps/resume-app/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

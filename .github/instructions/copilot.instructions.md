@@ -86,6 +86,14 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Shared assets: `libs/assets/`
 - API proxy config: `apps/personal/proxy.conf.json`
 
+## Testing Enhancements
+
+- Add `data-testid` attributes to any DOM element you will assert in tests (links, buttons, sections, dynamic text nodes).
+- Prefer harnesses selecting elements via `byTestId` / `byTestIdIncludes` from `@po/shared/testing`.
+- Avoid querying by aria-label or raw CSS unless necessary for accessibility-specific assertions.
+- Keep harness APIs concise: expose semantic getters (e.g., `getPhoneText`) instead of leaking selectors.
+- When adding new components, include test ids during initial implementation to prevent later refactors.
+
 ## Patterns & Examples
 
 - **Add feature:** Generate library in `libs/personal/components/`, expose API via `src/index.ts`, update path aliases if needed.

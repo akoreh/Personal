@@ -1,12 +1,7 @@
-import {
-  Injectable,
-  Signal,
-  TemplateRef,
-  computed,
-  inject,
-} from '@angular/core';
+import { Injectable, Signal, Type, inject } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 
+import { AppMetadata } from './app-metadata.interface';
 import { WindowConfig } from './window-config.model';
 import { AppWindow, WindowsStore } from './window.store';
 
@@ -14,28 +9,51 @@ import { AppWindow, WindowsStore } from './window.store';
 export class WindowManagerService {
   private readonly windowsStore = inject(WindowsStore);
 
-  private readonly templateCache = new Map<string, TemplateRef<any>>();
+  readonly windows: Signal<Array<AppWindow>> = this.windowsStore.windows;
 
-  readonly windows: Signal<Array<AppWindow & { content: TemplateRef<any> }>> =
-    computed(() => {
-      const windows = this.windowsStore.windows();
-
-      return windows.map((window) => ({
-        ...window,
-        content: this.templateCache.get(window.id) as TemplateRef<any>,
-      }));
-    });
-
-  openWindow(content: TemplateRef<any>, config: WindowConfig): void {
+  openWindow(
+    component: Type<any>,
+    configOverrides?: Partial<WindowConfig>,
+  ): void {
     const id = uuidv4();
 
-    this.templateCache.set(id, content);
-    this.windowsStore.openWindow(id, config);
+    // Get app metadata from the component class if it implements AppMetadata
+    const metadata = this.getAppMetadata(component);
+
+    // Merge app metadata with overrides
+    const config: WindowConfig = {
+      title: metadata?.appTitle ?? 'Untitled',
+      icon: metadata?.appIcon,
+      closable: metadata?.appClosable ?? true,
+      minimizable: metadata?.appMinimizable ?? true,
+      maximizable: metadata?.appMaximizable ?? true,
+      ...configOverrides,
+    };
+
+    this.windowsStore.openWindow(id, component, config);
+  }
+
+  private getAppMetadata(component: Type<any>): AppMetadata | null {
+    // Check if the component class has the metadata properties
+    const prototype = component.prototype;
+    if (
+      prototype &&
+      'appTitle' in prototype &&
+      typeof prototype.appTitle === 'string'
+    ) {
+      return {
+        appTitle: prototype.appTitle,
+        appIcon: prototype.appIcon,
+        appClosable: prototype.appClosable,
+        appMinimizable: prototype.appMinimizable,
+        appMaximizable: prototype.appMaximizable,
+      };
+    }
+    return null;
   }
 
   closeWindow(id: string): void {
     this.windowsStore.closeWindow(id);
-    this.templateCache.delete(id);
   }
 
   focusWindow(id: string): void {

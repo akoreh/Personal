@@ -1,12 +1,13 @@
 <div class="relative h-full w-full">
   <div class="absolute right-0 top-0">
-    <ul class="flex flex-col gap-6">
-      @for (folder of folders; track folder) {
-        <li class="flex flex-col items-center gap-1">
-          <div class="folder"></div>
-          <span class="text-sm">Projects</span>
-        </li>
-      }
+    <ul class="flex flex-col gap-6 p-4">
+      <li>
+        <ps-app-shell
+          name="Resume"
+          icon="document-text"
+          (open)="onOpenResumeApp()"
+        />
+      </li>
     </ul>
   </div>
 </div>

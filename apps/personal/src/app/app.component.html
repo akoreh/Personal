@@ -13,10 +13,10 @@
       <div class="absolute inset-0">
         <ps-desktop-manager />
       </div>
-      <div
-        class="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2"
-      >
-        <ps-window-manager [boundary]="boundary" />
+      <div class="pointer-events-none absolute inset-0 z-20">
+        <div class="relative">
+          <ps-window-manager [boundary]="boundary" />
+        </div>
       </div>
     </div>
   </div>

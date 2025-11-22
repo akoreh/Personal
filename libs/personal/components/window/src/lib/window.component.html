@@ -1,13 +1,14 @@
 <div
-  class="absolute flex flex-col"
+  #windowElement
+  class="pointer-events-auto absolute flex min-h-96 min-w-96 flex-col"
   cdkDrag
   [ngClass]="{
     hidden: minimized(),
     'inset-0': maximized(),
-    'min-h-96': !maximized(),
-    'min-w-96': !maximized(),
+    'max-h-[80vh] max-w-[80vw]': !maximized(),
   }"
   [style.z-index]="zIndex()"
+  [cdkDragFreeDragPosition]="initialPosition()"
   [cdkDragDisabled]="maximized()"
   [cdkDragBoundary]="dragBoundary()"
   (click)="onFocus()"
@@ -66,8 +67,8 @@
       }
     </div>
 
-    <div class="bg-window-light flex flex-1 flex-col overflow-auto">
-      <ng-content></ng-content>
+    <div class="bg-window-light flex flex-1 overflow-auto">
+      <ng-container *ngComponentOutlet="component()" />
     </div>
   </div>
 

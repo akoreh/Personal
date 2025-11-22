@@ -4,6 +4,7 @@ export const SVG_ICON_NAMES = [
   'arrows-pointing-in',
   'arrows-pointing-out',
   'battery-50',
+  'document-text',
   'envelope',
   'github',
   'linkedin',

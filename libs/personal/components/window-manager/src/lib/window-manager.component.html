@@ -1,6 +1,7 @@
 @for (window of windowManagerService.windows(); track window.id) {
   <ps-window
     [title]="window.title"
+    [component]="window.component"
     [minimizable]="window.minimizable"
     [maximizable]="window.maximizable"
     [closable]="window.closable"
@@ -13,21 +14,5 @@
     (maximizeWindow)="windowManagerService.maximizeWindow(window.id)"
     (restoreWindow)="windowManagerService.restoreWindow(window.id)"
     (focusWindow)="windowManagerService.focusWindow(window.id)"
-  >
-    <ng-container *ngTemplateOutlet="window.content"></ng-container>
-  </ps-window>
+  />
 }
-
-<ng-template #underMaintenanceContent>
-  <div
-    class="pointer-events-none flex h-full w-full flex-1 select-none items-center justify-center px-4 font-semibold xl:px-12"
-  >
-    <h1 class="text-window-border text-3xl xl:text-5xl">Under Maintenance</h1>
-  </div>
-</ng-template>
-
-<ng-template #terminalApp>
-  <div class="flex h-full w-full flex-1">
-    <ps-terminal-app class="flex-1" />
-  </div>
-</ng-template>

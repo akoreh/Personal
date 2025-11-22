@@ -1,5 +1,13 @@
 .ps-terminal-app {
- .terminal-input {
-   all: unset;
- }
+  font-family: 'Courier New', Courier, monospace;
+
+  pre {
+    margin: 0;
+    padding: 0.25rem 0;
+    font-family: inherit;
+  }
+
+  input {
+    font-family: inherit;
+  }
 }
