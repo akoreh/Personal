@@ -12,6 +12,12 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Prefer type inference when the type is obvious
 - Avoid the `any` type; use `unknown` when type is uncertain
 
+## Code Style
+
+- Do NOT write comments for obvious code (e.g., `// Sanitize request body` above `req.body = sanitize(req.body)`)
+- Only add comments for complex business logic, non-obvious algorithms, or important context that isn't clear from the code itself
+- Prefer self-documenting code with clear variable and function names over explanatory comments
+
 ## Angular Best Practices
 
 - Always use standalone components over NgModules
@@ -73,11 +79,20 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 ## Project-Specific Conventions
 
-- TypeScript path aliases in `tsconfig.base.json` (e.g., `@po/personal/components/app-shell`).
+- TypeScript path aliases in `tsconfig.base.json` follow the `@po/<category>/<name>` pattern:
+  - `@po/personal/components/*` - Personal UI components
+  - `@po/personal/state/*` - State management
+  - `@po/personal/services/*` - Personal services
+  - `@po/shared/*` - Shared utilities, models, services
+  - `@po/backend/*` - Backend libraries
+- **Important:** When generating libraries with Nx, always manually fix:
+  1. The path alias in `tsconfig.base.json` to follow the `@po/<category>/<name>` convention (e.g., `@po/backend/core` instead of `@personal/core`)
+  2. The `name` field in `project.json` to follow the `<category>-<name>` convention (e.g., `backend-core` instead of just `core`)
 - Each library/app has its own Jest config and test setup.
 - UI components: `libs/personal/components/`
 - State management: `libs/personal/state/`
 - Models/services: `libs/personal/`, `libs/shared/`
+- Backend libraries: `libs/backend/`
 - Use path aliases for cross-feature communication; avoid direct imports across boundaries.
 
 ## Integration Points

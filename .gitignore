@@ -47,3 +47,4 @@ apps/backend/.env
 .github/instructions
 .github/instructions/nx.instructions.md
 .github/copilot-instructions.md
+.env
