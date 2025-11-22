@@ -13,6 +13,7 @@
     "express": "*",
     "express-rate-limit": "*",
     "helmet": "*",
-    "validator": "*"
+    "validator": "*",
+    "pg": "^8.11.5"
   }
 }

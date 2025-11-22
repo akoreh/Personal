@@ -1,17 +1,14 @@
+import { EnvVar } from '@po/backend/enums';
+import { getEnvVar } from '@po/backend/utilities';
 import { isNil } from 'lodash';
 
-export const isDev = () => {
-  return process.env['NODE_ENV'] === 'development';
-};
-
-export const isProduction = () => {
-  return process.env['NODE_ENV'] === 'production';
-};
+export const isDev = () => getEnvVar(EnvVar.NodeEnv) === 'development';
+export const isProduction = () => getEnvVar(EnvVar.NodeEnv) === 'production';
 
 export const isHosted = () => {
-  const hostingEnv = process.env['HOSTING_ENV'];
+  const hostingEnv = getEnvVar(EnvVar.HostingEnv);
 
   return !isNil(hostingEnv) && hostingEnv !== 'local';
 };
 
-export const frontendUrl = () => process.env['FRONTEND_URL'];
+export const frontendUrl = () => getEnvVar(EnvVar.FrontendUrl);

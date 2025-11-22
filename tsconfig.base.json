@@ -65,7 +65,12 @@
         "libs/personal/components/apps/resume-app/src/index.ts"
       ],
       "@po/backend/core": ["libs/backend/core/src/index.ts"],
-      "@po/backend/entities": ["libs/backend/entities/src/index.ts"]
+      "@po/backend/entities": ["libs/backend/entities/src/index.ts"],
+      "@po/backend/modules/health": [
+        "libs/backend/modules/health/src/index.ts"
+      ],
+      "@po/backend/utilities": ["libs/backend/utilities/src/index.ts"],
+      "@po/backend/enums": ["libs/backend/enums/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

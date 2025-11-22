@@ -1,17 +1,21 @@
 import { AppDataSource, setupMiddleware } from '@po/backend/core';
+import { EnvVar } from '@po/backend/enums';
+import { healthRouter } from '@po/backend/modules/health';
 import express from 'express';
 import 'reflect-metadata';
 
 import './env';
 
-const port = parseInt((process.env['PORT'] || 3_000).toString(), 10);
+const port = parseInt((process.env[EnvVar.Port] || 3_000).toString(), 10);
 
 const app = express();
 
 setupMiddleware(app);
 
-// Middleware
+// API Routes
+app.use('/api/v1/health', healthRouter);
 
+// Utility Routes
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send(`User-agent: *
