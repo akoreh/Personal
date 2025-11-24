@@ -31,26 +31,25 @@ export class IconComponent {
 
   constructor() {
     effect(() => {
-      const icon = this.iconResource.value();
+      const icon = this.iconResource.value() as SVGElement;
 
-      if (this.icon() === 'trash') {
-        console.log('icon', icon);
+      if (!icon) {
+        return;
       }
 
-      if (icon) {
-        if (this.fill()) {
-          icon.setAttribute('fill', this.fill());
-        }
-
-        this.setSvg(icon);
+      if (this.fill()) {
+        icon.setAttribute('fill', this.fill());
       }
+
+      this.setSvg(icon);
     });
   }
 
   private readonly iconResource = resource({
-    request: () => ({ icon: this.icon() }),
-    loader: ({ request }) =>
-      lastValueFrom(this.iconService.getSvgIcon(request.icon)),
+    params: () => ({ icon: this.icon() }),
+    loader: ({ params }) => {
+      return lastValueFrom(this.iconService.getSvgIcon(params.icon));
+    },
   });
 
   private readonly elementRef = inject(ElementRef) as ElementRef<HTMLElement>;
@@ -59,15 +58,12 @@ export class IconComponent {
 
   private setSvg(svg: SVGElement): void {
     const host = this.elementRef.nativeElement;
-
-    if (this.icon() === 'trash') {
-      console.log('host', host);
-    }
+    const clone = svg.cloneNode(true);
 
     if (host.firstChild) {
-      host.replaceChild(svg, host.firstChild);
+      host.replaceChild(clone, host.firstChild);
     }
 
-    host.appendChild(svg);
+    host.appendChild(clone);
   }
 }

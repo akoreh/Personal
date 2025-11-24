@@ -1,44 +1,61 @@
 <div
   class="bg-background border-window-border flex h-14 items-center rounded-lg border-2 border-solid px-6 py-2"
+  data-testid="dock"
 >
-  <ul class="flex flex-1 justify-end gap-x-3">
-    <li class="mt-1">
-      <a href="https://github.com/akoreh/Personal/tree/main" target="_blank">
-        <ps-icon class="w-9" icon="github" />
-      </a>
-    </li>
-    <li class="mt-1">
-      <a
-        href="https://www.linkedin.com/in/andrei-koreh-71084b169/"
-        target="_blank"
-      >
-        <ps-icon class="w-9" icon="linkedin" />
-      </a>
-    </li>
-    <li class="mb-0.5">
-      <a href="mailto:korehdev@gmail.com" target="_blank">
-        <ps-icon class="w-11" icon="envelope" />
-      </a>
-    </li>
+  <ul class="flex flex-1 items-center justify-end gap-x-3">
+    @for (dockItem of dockItems; track dockItem.icon) {
+      @if (dockItem.link) {
+        <a
+          data-testid="dockLink"
+          target="_blank"
+          [attr.data-icon]="dockItem.icon"
+          [attr.href]="dockItem.link"
+        >
+          <div class="h-9 w-9">
+            <ps-icon class="w-full" [icon]="dockItem.icon" />
+          </div>
+        </a>
+      }
+    }
+
+    @for (window of minimizedWindows(); track window.id) {
+      <li class="h-9 w-9">
+        <button
+          class="transition-transform hover:scale-110"
+          type="button"
+          [attr.title]="window.title"
+          (click)="onRestoreWindow(window.id)"
+        >
+          <div class="relative h-9 w-9">
+            @if (window.icon) {
+              <ps-icon
+                class="text-window-border stroke-window-border h-full w-full stroke-1"
+                [icon]="window.icon"
+              />
+            } @else if (window.iconImg) {
+              <img
+                fill
+                [attr.alt]="window.title + ' icon'"
+                [ngSrc]="window.iconImg"
+              />
+            }
+            <div
+              class="bg-window-border absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full"
+            ></div>
+          </div>
+        </button>
+      </li>
+    }
   </ul>
 
-  <div class="bg-window-border mx-4 h-full w-0.5"></div>
+  <!-- <div class="bg-window-border mx-4 h-full w-0.5"></div>
 
   <div class="flex items-center gap-x-3">
-    <!--    @for (window of windowManagerService.windows(); track window.id) {-->
-    <!--      <button class="mb-0.5" type="button">-->
-    <!--        <ps-icon-->
-    <!--          class="text-folder stroke-window-border w-9 stroke-1"-->
-    <!--          icon="trash"-->
-    <!--        />-->
-    <!--      </button>-->
-    <!--    }-->
-
     <button class="mb-0.5" type="button">
       <ps-icon
         class="text-folder stroke-window-border w-9 stroke-1"
         icon="trash"
       />
     </button>
-  </div>
+  </div> -->
 </div>

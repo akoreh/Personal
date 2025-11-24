@@ -17,6 +17,7 @@ module.exports = [
     },
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
+      'no-empty': ['off'],
       'no-restricted-imports': [
         'error',
         {
@@ -29,8 +30,8 @@ module.exports = [
           ],
         },
       ],
-      'no-unused-vars': ['off'], // or "@typescript-eslint/no-unused-vars": "off",
-      'unused-imports/no-unused-imports': ['error'],
+      'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+      'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',
         {
@@ -66,8 +67,16 @@ module.exports = [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
           depConstraints: [
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:backend',
+              onlyDependOnLibsWithTags: ['scope:backend', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:personal',
+              onlyDependOnLibsWithTags: ['scope:personal', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:shared',
+              onlyDependOnLibsWithTags: ['scope:shared'],
             },
           ],
         },
@@ -78,5 +87,12 @@ module.exports = [
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     // Override or add rules here
     rules: {},
+  },
+  {
+    files: ['**/*.component.html'],
+    rules: {
+      '@angular-eslint/template/click-events-have-key-events': ['off'],
+      '@angular-eslint/template/interactive-supports-focus': ['off'],
+    },
   },
 ];

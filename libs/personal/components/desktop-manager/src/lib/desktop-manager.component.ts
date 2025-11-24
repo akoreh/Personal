@@ -1,16 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { AppShellComponent } from '@po/personal/components/app-shell';
 import { WindowManagerService } from '@po/personal/state/window';
+
+import { DesktopIconComponent } from './components/desktop-icon/desktop-icon.component';
 
 @Component({
   selector: 'ps-desktop-manager',
   templateUrl: './desktop-manager.component.html',
+  styleUrl: 'desktop-manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AppShellComponent],
+  imports: [DesktopIconComponent],
 })
 export class DesktopManagerComponent {
-  private readonly windowManager = inject(WindowManagerService);
+  private readonly windowManagerService = inject(WindowManagerService);
 
-  onOpenReelDownloader(): void {}
+  protected onOpenResumeApp(): void {
+    this.windowManagerService.openApp('resume');
+  }
 }

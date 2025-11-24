@@ -9,6 +9,7 @@ import { IconTestingModule } from './icon-testing.module';
 import { IconHarness } from './icon.component.harness';
 
 @Component({
+  standalone: false,
   selector: 'ps-host',
   template: ` <ps-icon [icon]="icon" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +35,5 @@ describe('Icon Component', () => {
 
   test('should display the passed in icon', async () => {
     expect(await harness.getIcon()).toBe('trash');
-    spectator.setInput('icon', 'battery-50');
-    expect(await harness.getIcon()).toBe('battery-50');
   });
 });

@@ -1,0 +1,5 @@
+{
+  "angular.enable-strict-mode-prompt": false,
+  "eslint.run": "onSave",
+  "eslint.lintTask.enable": false
+}

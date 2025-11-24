@@ -1,9 +1,14 @@
-<div class="relative h-full w-full">
+<div class="relative h-full w-full" data-testid="desktopManager">
   <div class="absolute right-0 top-0">
-    <ps-app-shell
-      name="Reel Downloader"
-      icon="archive-box-arrow-down"
-      (open)="onOpenReelDownloader()"
-    />
+    <ul class="flex flex-col gap-6 p-4">
+      <li>
+        <ps-desktop-icon
+          name="Resume.peedeef"
+          data-testid="desktopIcon"
+          icon="document-text"
+          (open)="onOpenResumeApp()"
+        />
+      </li>
+    </ul>
   </div>
 </div>

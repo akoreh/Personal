@@ -1,0 +1,48 @@
+<div
+  #container
+  class="ps-terminal-app flex h-full w-full flex-1 flex-col overflow-y-auto scroll-smooth p-2"
+  (click)="onFocusInput()"
+>
+  <div class="flex flex-col gap-2">
+    @for (event of terminalEvents(); track event.id) {
+      <div>
+        <ps-terminal-app-status-bar
+          class="pointer-events-none select-none"
+          [path]="event.path"
+          [date]="event.createdAt"
+        />
+
+        @if (event.stdOut; as stdout) {
+          <pre
+            class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed"
+            >{{ stdout }}</pre
+          >
+        }
+      </div>
+    }
+  </div>
+
+  <div class="mt-2" cdkTrapFocus>
+    <div class="relative w-full">
+      <input
+        #input
+        class="w-full cursor-default bg-transparent font-mono text-sm caret-transparent outline-none"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        type="text"
+        [(ngModel)]="command"
+        (input)="onUpdateCursorPosition()"
+        (click)="onUpdateCursorPosition()"
+        (keyup)="onUpdateCursorPosition()"
+        (keydown)="onKeyDown($event)"
+        (keydown.enter)="onExecCommand()"
+      />
+      <div
+        class="animate-blink pointer-events-none absolute left-0 top-0 h-[1.4em] w-[0.6ch] bg-black"
+        [style.left]="cursorPos() * 0.6 + 'ch'"
+      ></div>
+    </div>
+  </div>
+</div>

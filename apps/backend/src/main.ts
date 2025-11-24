@@ -1,27 +1,42 @@
-import chalk from 'chalk';
+// prettier-ignore-file
+import 'reflect-metadata';
+import './env';
+
+import { AppDataSource, setupMiddleware } from '@po/backend/core';
+import { EnvVar } from '@po/backend/enums';
+import { healthRouter } from '@po/backend/modules/health';
+import { getEnvVar } from '@po/backend/utilities';
 import express from 'express';
 
-import { appConfig } from './config/app.config';
-import { registerAppMiddlewares } from './middlewares/app.middleware';
-import { Logger } from './services/logger.service';
+
+const port = parseInt(getEnvVar(EnvVar.Port), 10);
 
 const app = express();
 
-registerAppMiddlewares(app);
+setupMiddleware(app);
 
-app.get('/', (req, res) => {
-  res.send('Working');
+// API Routes
+app.use('/api/v1/health', healthRouter);
+
+// Utility Routes
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *
+Disallow: /`);
 });
 
-app.listen(appConfig.port, async () => {
-  console.log();
+async function bootstrap() {
+  try {
+    await AppDataSource.initialize();
+    console.log('Database connection established');
 
-  console.log(chalk.magentaBright('🚀🚀🚀'));
-  console.log(chalk.cyanBright(`[APP READY] ${Logger.timestamp()}`));
-  console.log(
-    chalk.magentaBright(
-      `API ready on ${appConfig.host}:${appConfig.port} in ${appConfig.env} mode`,
-    ),
-  );
-  console.log(chalk.magentaBright('🚀🚀🚀'));
-});
+    app.listen(port, () => {
+      console.log(`API listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+bootstrap();

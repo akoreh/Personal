@@ -18,6 +18,9 @@
       "@po/personal/components/app-shell": [
         "libs/personal/components/app-shell/src/index.ts"
       ],
+      "@po/personal/components/apps/terminal-app": [
+        "libs/personal/components/apps/terminal-app/src/index.ts"
+      ],
       "@po/personal/components/desktop-manager": [
         "libs/personal/components/desktop-manager/src/index.ts"
       ],
@@ -39,13 +42,17 @@
       "@po/personal/components/window-manager": [
         "libs/personal/components/window-manager/src/index.ts"
       ],
+      "@po/personal/environment": ["libs/personal/environment/src/index.ts"],
+      "@po/personal/models": ["libs/personal/models/src/index.ts"],
       "@po/personal/services/icon": [
         "libs/personal/services/icon/src/index.ts"
       ],
       "@po/personal/services/icon/testing": [
         "libs/personal/services/icon/testing/src/index.ts"
       ],
+      "@po/personal/state/auth": ["libs/personal/state/auth/src/index.ts"],
       "@po/personal/state/window": ["libs/personal/state/window/src/index.ts"],
+      "@po/shared/models": ["libs/shared/models/src/index.ts"],
       "@po/shared/services/local-storage": [
         "libs/shared/services/local-storage/src/index.ts"
       ],
@@ -53,7 +60,17 @@
         "libs/shared/services/query-param/src/index.ts"
       ],
       "@po/shared/testing": ["libs/shared/testing/src/index.ts"],
-      "@po/shared/utilities": ["libs/shared/utilities/src/index.ts"]
+      "@po/shared/utilities": ["libs/shared/utilities/src/index.ts"],
+      "@po/personal/components/apps/resume-app": [
+        "libs/personal/components/apps/resume-app/src/index.ts"
+      ],
+      "@po/backend/core": ["libs/backend/core/src/index.ts"],
+      "@po/backend/entities": ["libs/backend/entities/src/index.ts"],
+      "@po/backend/modules/health": [
+        "libs/backend/modules/health/src/index.ts"
+      ],
+      "@po/backend/utilities": ["libs/backend/utilities/src/index.ts"],
+      "@po/backend/enums": ["libs/backend/enums/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

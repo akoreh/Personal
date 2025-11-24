@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
   signal,
@@ -19,13 +18,10 @@ import { interval } from 'rxjs';
   imports: [DatePipe],
 })
 export class MenuBarTimeComponent {
-  protected readonly now = computed(() => this._now());
-  protected readonly showColons = computed(() => this._showColons());
+  protected readonly now = signal(new Date());
+  protected readonly showColons = signal(true);
 
   private readonly isTest = inject(IS_TEST, { optional: true });
-
-  private readonly _now = signal(new Date());
-  private readonly _showColons = signal(true);
 
   constructor() {
     if (!this.isTest) {
@@ -39,8 +35,8 @@ export class MenuBarTimeComponent {
         .pipe(untilDestroyed(this))
         .subscribe({
           next: () => {
-            this._now.set(new Date());
-            this._showColons.set(!this._showColons());
+            this.now.set(new Date());
+            this.showColons.set(!this.showColons());
           },
         });
     });

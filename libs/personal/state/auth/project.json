@@ -1,0 +1,26 @@
+{
+  "name": "personal-state-auth",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/personal/state/auth/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [
+    "scope:personal",
+    "type:state"
+  ],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "libs/personal/state/auth/jest.config.ts",
+        "tsConfig": "libs/personal/state/auth/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
