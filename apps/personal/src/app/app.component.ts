@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { gsap } from 'gsap';
 
-import { DesktopManagerComponent } from '@po/personal/components/desktop-manager';
 import { DockComponent } from '@po/personal/components/dock';
 import { MenuBarComponent } from '@po/personal/components/menubar';
 import { WindowManagerComponent } from '@po/personal/components/window-manager';
@@ -15,11 +15,13 @@ import { AuthStateModule } from '@po/personal/state/auth';
     MenuBarComponent,
     DockComponent,
     WindowManagerComponent,
-    DesktopManagerComponent,
+    RouterOutlet,
   ],
 })
 export class AppComponent implements OnInit {
   protected readonly isDev = true;
+  protected readonly boundary =
+    viewChild.required<ElementRef<HTMLElement>>('desktopArea');
 
   private readonly loadingProgressDuration = this.isDev ? 0 : 1.5; //1.5s
 

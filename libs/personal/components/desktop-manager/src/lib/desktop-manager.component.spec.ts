@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
 import 'zone.js/testing';
 
-import { ResumeAppComponent } from '@po/personal/components/apps/resume-app';
 import { IconTestingModule } from '@po/personal/components/icon/testing';
 import { WindowManagerService } from '@po/personal/state/window';
 
@@ -30,7 +29,7 @@ describe('DesktopManagerComponent', () => {
       {
         provide: WindowManagerService,
         useFactory: () => ({
-          openWindow: jest.fn(),
+          openApp: jest.fn(),
         }),
       },
     ],
@@ -50,17 +49,14 @@ describe('DesktopManagerComponent', () => {
     let openSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      openSpy = jest.spyOn(
-        spectator.inject(WindowManagerService),
-        'openWindow',
-      );
+      openSpy = jest.spyOn(spectator.inject(WindowManagerService), 'openApp');
     });
 
     test('should be able to open the resume app', async () => {
       await harness.openApp('Resume.peedeef');
 
       expect(openSpy).toHaveBeenCalledTimes(1);
-      expect(openSpy).toHaveBeenCalledWith(ResumeAppComponent);
+      expect(openSpy).toHaveBeenCalledWith('resume');
     });
   });
 });

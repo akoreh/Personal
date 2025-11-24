@@ -9,13 +9,13 @@
     class="flex w-full flex-col"
     style="height: calc(100vh - 23px); margin-top: 23px"
   >
-    <div #boundary class="relative h-full w-full">
+    <div #desktopArea class="relative h-full w-full">
       <div class="absolute inset-0">
-        <ps-desktop-manager />
+        <router-outlet />
       </div>
       <div class="pointer-events-none absolute inset-0 z-20">
         <div class="relative">
-          <ps-window-manager [boundary]="boundary" />
+          <ps-window-manager [boundary]="boundary()" />
         </div>
       </div>
     </div>
