@@ -4,6 +4,7 @@ import './env';
 
 import { AppDataSource, setupMiddleware } from '@po/backend/core';
 import { EnvVar } from '@po/backend/enums';
+import { authRouter } from '@po/backend/modules/auth';
 import { healthRouter } from '@po/backend/modules/health';
 import { getEnvVar } from '@po/backend/utilities';
 import express from 'express';
@@ -16,6 +17,7 @@ const app = express();
 setupMiddleware(app);
 
 // API Routes
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/health', healthRouter);
 
 // Utility Routes

@@ -1,6 +1,3 @@
-/**
- * Available environment variables used in the backend.
- */
 export enum EnvVar {
   NodeEnv = 'NODE_ENV',
   Port = 'PORT',
@@ -13,4 +10,9 @@ export enum EnvVar {
   PgSsl = 'PG_SSL',
   HostingEnv = 'HOSTING_ENV',
   FrontendUrl = 'FRONTEND_URL',
+  JwtSecret = 'JWT_SECRET',
+  JwtExpiresIn = 'JWT_EXPIRES_IN',
+  JwtRefreshSecret = 'JWT_REFRESH_SECRET',
+  JwtRefreshExpiresIn = 'JWT_REFRESH_EXPIRES_IN',
+  PasswordSaltRounds = 'PW_SALT_ROUNDS',
 }

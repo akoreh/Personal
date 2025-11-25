@@ -25,29 +25,6 @@ const generalLimiter = rateLimit({
   },
 });
 
-// const authLimiter = rateLimit({
-//   windowMs: fifteenMin, // 15 minutes
-//   limit: 3, // Only 3 login attempts per 15 minutes
-//   standardHeaders: 'draft-8',
-//   legacyHeaders: false,
-//   message: {
-//     errorCode: 'TooManyAuthRequests',
-//     errorMessage: 'Too many authentication attempts, please try again later.',
-//   },
-//   skipSuccessfulRequests: true,
-// });
-
-// const registerLimiter = rateLimit({
-//   windowMs: 60 * 60 * 1000, // 1 hour
-//   limit: 3, // Only 3 registration attempts per hour
-//   standardHeaders: 'draft-8',
-//   legacyHeaders: false,
-//   message: {
-//     errorCode: 'TooManyRegistrations',
-//     errorMessage: 'Too many registration attempts, please try again later.',
-//   },
-// });
-
 const configuredHelmet = helmet({
   contentSecurityPolicy: {
     directives: {
@@ -80,10 +57,6 @@ export const setupMiddleware = (app: Express): Express => {
   app.use(validateRequestSize);
   app.use(sanitizeInput);
   app.use(preventInjection);
-
-  //TODO: Apply specific rate limiters to auth routes
-  //   app.use('/grocee/v1/auth/login', authLimiter);
-  //   app.use('/grocee/v1/auth/register', registerLimiter);
 
   app.use(
     bodyParser.json({

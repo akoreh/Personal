@@ -1,4 +1,5 @@
 const { composePlugins, withNx } = require('@nx/webpack');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = composePlugins(withNx(), (config) => {
   return {
@@ -8,10 +9,13 @@ module.exports = composePlugins(withNx(), (config) => {
       ...config.output,
       libraryTarget: 'commonjs2',
     },
-    externals: {
+    externals: [
       // Exclude all node_modules from bundle
-      ...require('webpack-node-externals')(),
-    },
+      nodeExternals({
+        // Ensure native modules like bcrypt are treated as external
+        allowlist: [],
+      }),
+    ],
     optimization: {
       minimize: false,
     },
