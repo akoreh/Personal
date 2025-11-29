@@ -7,24 +7,24 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
+import { LoginPayload } from '@po/shared/models';
 import { isNil } from 'lodash-es';
 
-import { LoginCredentials } from '../models/login-credentials.model';
 import { AuthService } from '../services/auth.service';
 
 interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
+  userId: string | null;
   email: string | null;
-  username: string | null;
   isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
   accessToken: null,
   refreshToken: null,
+  userId: null,
   email: null,
-  username: null,
   isAuthenticated: false,
 };
 
@@ -41,8 +41,8 @@ export const AuthStore = signalStore(
 
         patchState(store, {
           accessToken,
+          userId: payload.userId,
           email: payload.email,
-          username: payload.username,
           isAuthenticated: !isNil(accessToken),
         });
       } catch {
@@ -60,19 +60,23 @@ export const AuthStore = signalStore(
         refreshToken,
       }));
     },
-    async login(credentials: LoginCredentials): Promise<void> {
-      const { accessToken, refreshToken } =
+    async login(credentials: LoginPayload): Promise<void> {
+      const { accessToken, refreshToken, user } =
         await store.authService.login(credentials);
-
-      const payload = store.authService.decodeJWT(accessToken);
 
       patchState(store, {
         accessToken,
         refreshToken,
-        email: payload.email,
-        username: payload.username,
+        userId: user.id,
+        email: user.email,
         isAuthenticated: true,
       });
+    },
+
+    logout(): void {
+      store.authService.logout();
+
+      patchState(store, initialState);
     },
   })),
   withHooks({

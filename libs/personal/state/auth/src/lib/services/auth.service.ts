@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import {
+  DecodedAuthToken,
+  LoginPayload,
+  LoginResponse,
+} from '@po/shared/models';
 import { LocalStorageService } from '@po/shared/services/local-storage';
 import { firstValueFrom, tap } from 'rxjs';
 
 import { environment } from '@po/personal/environment';
-
-import { JWTPayload } from '../models/jwt-payload.model';
-import { LoginCredentials } from '../models/login-credentials.model';
-import { LoginResponse } from '../models/login-response.model';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
     refreshToken: 'refreshToken',
   };
 
-  login(credentials: LoginCredentials): Promise<LoginResponse> {
+  login(credentials: LoginPayload): Promise<LoginResponse> {
     return firstValueFrom(
       this.http.post<LoginResponse>(`${this.url}/login`, credentials).pipe(
         tap(({ accessToken, refreshToken }) => {
@@ -61,7 +62,7 @@ export class AuthService {
    * @param token - The JWT token to decode
    * @returns The decoded payload object
    */
-  decodeJWT(token: string): JWTPayload {
+  decodeJWT(token: string): DecodedAuthToken {
     try {
       const parts = token.split('.');
 

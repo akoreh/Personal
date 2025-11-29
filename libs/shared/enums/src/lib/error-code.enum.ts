@@ -30,4 +30,5 @@ export enum ErrorCode {
   // Server errors (SRV)
   InternalError = 'SRV001',
   DatabaseError = 'SRV002',
+  RequestTimeout = 'SRV003',
 }

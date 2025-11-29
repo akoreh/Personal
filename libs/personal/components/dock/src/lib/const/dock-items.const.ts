@@ -1,3 +1,5 @@
+import { AppId } from '@po/personal/enums';
+
 import { DockItem } from '../models/dock-item.model';
 
 export const dockItems: Array<DockItem> = [
@@ -15,5 +17,6 @@ export const dockItems: Array<DockItem> = [
   },
   {
     icon: 'terminal',
+    appId: AppId.Terminal,
   },
 ];

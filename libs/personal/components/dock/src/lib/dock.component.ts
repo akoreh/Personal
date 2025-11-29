@@ -9,13 +9,14 @@ import {
 import { IconComponent } from '@po/personal/components/icon';
 import { WindowManagerService } from '@po/personal/state/window';
 
+import { DockItemComponent } from './components/dock-item/dock-item.component';
 import { dockItems } from './const/dock-items.const';
 
 @Component({
   selector: 'ps-dock',
   templateUrl: 'dock.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, NgOptimizedImage],
+  imports: [IconComponent, NgOptimizedImage, DockItemComponent],
 })
 export class DockComponent {
   protected readonly windowManagerService = inject(WindowManagerService);
@@ -29,5 +30,9 @@ export class DockComponent {
   protected onRestoreWindow(id: string): void {
     this.windowManagerService.restoreWindow(id);
     this.windowManagerService.focusWindow(id);
+  }
+
+  protected onOpenApp(appId: string): void {
+    this.windowManagerService.openApp(appId);
   }
 }

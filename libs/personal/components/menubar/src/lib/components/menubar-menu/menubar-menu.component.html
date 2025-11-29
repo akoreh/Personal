@@ -1,0 +1,34 @@
+<button
+  #trigger="cdkOverlayOrigin"
+  class="flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-sm transition-colors hover:bg-black/10"
+  cdkOverlayOrigin
+  data-testid="menubarMenuButton"
+  type="button"
+  (click)="toggleMenu()"
+>
+  <ps-icon class="h-[14px] w-[14px]" icon="pineapple" />
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayOffsetY]="8"
+  (backdropClick)="closeMenu()"
+>
+  <div
+    class="bg-secondary-yellow border-window-border min-w-[150px] rounded-md border-2 border-solid shadow-lg"
+    data-testid="menubarMenuDropdown"
+  >
+    <button
+      class="text-window-border w-full px-4 py-2 text-left text-sm hover:bg-black/10"
+      data-testid="menubarMenuAction"
+      type="button"
+      (click)="handleAction()"
+    >
+      {{ isAuthenticated() ? 'Logout' : 'Login' }}
+    </button>
+  </div>
+</ng-template>

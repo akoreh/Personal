@@ -1,21 +1,34 @@
 <div
-  class="bg-background border-window-border flex h-14 items-center rounded-lg border-2 border-solid px-6 py-2"
+  class="bg-background border-window-border flex h-16 items-center rounded-lg border-2 border-solid px-6 py-2"
   data-testid="dock"
 >
   <ul class="flex flex-1 items-center justify-end gap-x-3">
     @for (dockItem of dockItems; track dockItem.icon) {
-      @if (dockItem.link) {
-        <a
-          data-testid="dockLink"
-          target="_blank"
-          [attr.data-icon]="dockItem.icon"
-          [attr.href]="dockItem.link"
-        >
-          <div class="h-9 w-9">
-            <ps-icon class="w-full" [icon]="dockItem.icon" />
-          </div>
-        </a>
-      }
+      <ps-dock-item>
+        @if (dockItem.link) {
+          <a
+            data-testid="dockLink"
+            target="_blank"
+            [attr.data-icon]="dockItem.icon"
+            [attr.href]="dockItem.link"
+          >
+            <div class="h-8 w-8">
+              <ps-icon class="w-full" [icon]="dockItem.icon" />
+            </div>
+          </a>
+        } @else if (dockItem.appId) {
+          <button
+            data-testid="dockAppButton"
+            type="button"
+            [attr.data-app]="dockItem.appId"
+            (click)="onOpenApp(dockItem.appId)"
+          >
+            <div class="h-8 w-8">
+              <ps-icon class="w-full" [icon]="dockItem.icon" />
+            </div>
+          </button>
+        }
+      </ps-dock-item>
     }
 
     @for (window of minimizedWindows(); track window.id) {

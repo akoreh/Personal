@@ -3,16 +3,15 @@ import { User } from '@po/backend/entities';
 import { JwtError } from '@po/backend/enums';
 import { buildError } from '@po/backend/utilities';
 import { ErrorCode } from '@po/shared/enums';
-import { AuthTokenPayload } from '@po/shared/models';
+import {
+  AuthTokenPayload,
+  LoginPayload,
+  LoginResponse,
+  RegisterPayload,
+} from '@po/shared/models';
 import { Request, Response } from 'express';
 
-import {
-  AuthResponseDto,
-  LoginDto,
-  RefreshTokenDto,
-  RegisterDto,
-  TokenResponseDto,
-} from './models/auth.model';
+import { RefreshTokenDto, TokenResponseDto } from './models/auth.model';
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -25,7 +24,7 @@ export class AuthController {
 
   async register(req: Request, res: Response): Promise<void> {
     try {
-      const { email, password }: RegisterDto = req.body;
+      const { email, password }: RegisterPayload = req.body;
 
       const existingUser = await this.findUserByEmail(email);
 
@@ -48,7 +47,7 @@ export class AuthController {
 
   async login(req: Request, res: Response): Promise<void> {
     try {
-      const { email, password }: LoginDto = req.body;
+      const { email, password }: LoginPayload = req.body;
 
       const user = await this.findUserByEmail(email);
       if (!user) {
@@ -157,7 +156,7 @@ export class AuthController {
     };
   }
 
-  private buildAuthResponse(user: User): AuthResponseDto {
+  private buildAuthResponse(user: User): LoginResponse {
     const tokenPayload = this.createTokenPayload(user);
     const tokens = this.generateTokens(tokenPayload);
 
