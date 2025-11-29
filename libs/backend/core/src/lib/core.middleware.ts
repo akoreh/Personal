@@ -1,10 +1,13 @@
+import { EnvVar } from '@po/backend/enums';
+import { buildError, getEnvVar } from '@po/backend/utilities';
+import { ErrorCode } from '@po/shared/enums';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { Express } from 'express';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 
-import { frontendUrl, isHosted } from './backend-config';
+import { isHosted } from './backend-config';
 import {
   preventInjection,
   sanitizeInput,
@@ -12,24 +15,19 @@ import {
   validateRequestSize,
 } from './security.middleware';
 
-const fifteenMin = 15 * 60 * 1000;
-
 const generalLimiter = rateLimit({
-  windowMs: fifteenMin, // 15 minutes
+  windowMs: 15 * 60 * 1000, // 15 minutes
   limit: 100, // General API calls
   standardHeaders: 'draft-8',
   legacyHeaders: false,
-  message: {
-    errorCode: 'TooManyRequests',
-    errorMessage: 'Too many requests, please try again later.',
-  },
+  message: buildError(ErrorCode.TooManyRequests),
 });
 
 const configuredHelmet = helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"], // For Swagger UI
+      styleSrc: ["'self'", "'unsafe-inline'"], // For Swagger
       scriptSrc: ["'self'"],
       imgSrc: ["'self'", 'data:', 'https:'],
       fontSrc: ["'self'"],
@@ -75,10 +73,9 @@ export const setupMiddleware = (app: Express): Express => {
 
   app.use((req, res, next) => {
     res.setTimeout(30_000, () => {
-      res.status(408).json({
-        errorCode: 'RequestTimeout',
-        errorMessage: 'Request timeout',
-      });
+      res
+        .status(408)
+        .json(buildError(ErrorCode.RequestTimeout, undefined, req.path));
     });
     next();
   });
@@ -121,7 +118,7 @@ export const setupMiddleware = (app: Express): Express => {
 
     app.use(
       cors({
-        origin: frontendUrl(),
+        origin: getEnvVar(EnvVar.FrontendUrl),
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,

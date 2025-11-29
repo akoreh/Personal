@@ -1,0 +1,21 @@
+{
+  "name": "personal-components-form-field",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/personal/components/form-field/src",
+  "prefix": "ps",
+  "projectType": "library",
+  "tags": ["scope:personal", "type:ui"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/personal/components/form-field/jest.config.cts",
+        "tsConfig": "libs/personal/components/form-field/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -7,4 +7,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/backend',
+  testMatch: ['<rootDir>/e2e/**/*e2e.spec.ts'],
 };

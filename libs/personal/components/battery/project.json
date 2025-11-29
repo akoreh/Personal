@@ -1,0 +1,21 @@
+{
+  "name": "personal-components-battery",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/personal/components/battery/src",
+  "prefix": "ps",
+  "projectType": "library",
+  "tags": ["scope:personal", "type:ui"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/personal/components/battery/jest.config.cts",
+        "tsConfig": "libs/personal/components/battery/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

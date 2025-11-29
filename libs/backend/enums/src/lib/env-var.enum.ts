@@ -15,4 +15,5 @@ export enum EnvVar {
   JwtRefreshSecret = 'JWT_REFRESH_SECRET',
   JwtRefreshExpiresIn = 'JWT_REFRESH_EXPIRES_IN',
   PasswordSaltRounds = 'PW_SALT_ROUNDS',
+  SwaggerEnabled = 'SWAGGER',
 }

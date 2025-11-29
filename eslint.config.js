@@ -89,6 +89,12 @@ module.exports = [
     rules: {},
   },
   {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@angular-eslint/prefer-standalone': ['off'],
+    },
+  },
+  {
     files: ['**/*.component.html'],
     rules: {
       '@angular-eslint/template/click-events-have-key-events': ['off'],

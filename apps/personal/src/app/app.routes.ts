@@ -8,12 +8,9 @@ const openAppsResolver: ResolveFn<boolean> = async (
 ) => {
   const windowManager = inject(WindowManagerService);
 
-  // Get apps from query params
   const appsParam = route.queryParams['apps'];
   const appIds = appsParam ? appsParam.split(',').filter(Boolean) : [];
 
-  // Open each app and wait for all to complete
-  // Don't update URL since we're already loading from URL
   if (appIds.length > 0) {
     await Promise.all(
       appIds.map((id: string) => windowManager.openApp(id, {}, false)),
@@ -23,7 +20,7 @@ const openAppsResolver: ResolveFn<boolean> = async (
   return true;
 };
 
-export const APP_ROUTES: Routes = [
+export const appRoutes: Routes = [
   {
     path: '',
     loadComponent: () =>

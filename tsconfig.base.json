@@ -33,6 +33,9 @@
       "@po/personal/components/icon/testing": [
         "libs/personal/components/icon/testing/src/index.ts"
       ],
+      "@po/personal/components/battery": [
+        "libs/personal/components/battery/src/index.ts"
+      ],
       "@po/personal/components/menubar": [
         "libs/personal/components/menubar/src/index.ts"
       ],
@@ -72,7 +75,21 @@
       "@po/backend/utilities": ["libs/backend/utilities/src/index.ts"],
       "@po/backend/enums": ["libs/backend/enums/src/index.ts"],
       "@po/backend/modules/auth": ["libs/backend/modules/auth/src/index.ts"],
-      "@po/shared/enums": ["libs/shared/enums/src/index.ts"]
+      "@po/shared/enums": ["libs/shared/enums/src/index.ts"],
+      "@po/backend/swagger": ["libs/backend/swagger/src/index.ts"],
+      "@po/personal/components/input": [
+        "libs/personal/components/input/src/index.ts"
+      ],
+      "@po/personal/components/form-field": [
+        "libs/personal/components/form-field/src/index.ts"
+      ],
+      "@po/personal/components/form-field/testing": [
+        "libs/personal/components/form-field/src/index-testing.ts"
+      ],
+      "@po/personal/directives/tooltip": [
+        "libs/personal/directives/tooltip/src/index.ts"
+      ],
+      "@po/personal/enums": ["libs/personal/enums/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

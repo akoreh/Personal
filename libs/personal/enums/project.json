@@ -1,0 +1,21 @@
+{
+  "name": "personal-enums",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/personal/enums/src",
+  "prefix": "ps",
+  "projectType": "library",
+  "tags": ["scope:personal", "type:util"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/personal/enums/jest.config.cts",
+        "tsConfig": "libs/personal/enums/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

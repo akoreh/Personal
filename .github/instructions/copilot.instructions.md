@@ -92,6 +92,16 @@ You are an expert in TypeScript, Angular, and scalable web application developme
      - Backend projects: `["scope:backend", "type:feature"]` (or `type:app`, `type:util`, etc.)
      - Personal projects: `["scope:personal", "type:ui"]` (or `type:state`, `type:service`, etc.)
      - Shared projects: `["scope:shared"]`
+  4. **Update the library's ESLint config** (`eslint.config.cjs`) to disable `@angular-eslint/prefer-standalone` for spec files. Add this block at the end of the config array:
+     ```javascript
+     {
+       files: ['**/*.spec.ts'],
+       rules: {
+         '@angular-eslint/prefer-standalone': ['off'],
+       },
+     },
+     ```
+     This allows test `HostComponent` wrappers to use `standalone: false`.
 - Each library/app has its own Jest config and test setup.
 - UI components: `libs/personal/components/`
 - State management: `libs/personal/state/`
