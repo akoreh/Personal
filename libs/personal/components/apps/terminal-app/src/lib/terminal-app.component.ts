@@ -451,7 +451,7 @@ export class TerminalAppComponent
 
   private onWhoAmI(): void {
     if (this.authStore.isAuthenticated()) {
-      this.printToStdOut('\n' + (this.authStore.username() as string));
+      this.printToStdOut('\n' + (this.authStore.email() as string));
     } else {
       this.printToStdOut('\nguest');
     }
@@ -523,7 +523,7 @@ export class TerminalAppComponent
 
   private onEnv(): void {
     const env = [
-      `USER=${this.authStore.isAuthenticated() ? this.authStore.username() : 'guest'}`,
+      `USER=${this.authStore.isAuthenticated() ? this.authStore.email() : 'guest'}`,
       `PATH=${this.currentPath()}`,
       `SHELL=/bin/zsh`,
       `TERM=xterm-256color`,

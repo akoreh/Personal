@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.container {
+  ::ng-deep {
+    & > *:not(:first-child) {
+      display: none;
+    }
+  }
+}

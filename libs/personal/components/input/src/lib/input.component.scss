@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+input:focus {
+  box-shadow: 0 0 0 2px rgba(87, 164, 255, 0.2);
+}
+
+input:disabled {
+  background-color: #f1ede6;
+}

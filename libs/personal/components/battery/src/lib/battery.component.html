@@ -1,0 +1,22 @@
+@let level = this.level();
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+  <path
+    fill-rule="evenodd"
+    d="M3.75 6.75a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-.037c.856-.174 1.5-.93 1.5-1.838v-2.25c0-.907-.644-1.664-1.5-1.837V9.75a3 3 0 0 0-3-3h-15Zm15 1.5a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5h-15a1.5 1.5 0 0 1-1.5-1.5v-6a1.5 1.5 0 0 1 1.5-1.5h15Z"
+    clip-rule="evenodd"
+  />
+
+  <rect
+    [ngClass]="{
+      'fill-primary-red': level <= 35,
+      'fill-primary-orange': level <= 50,
+      'fill-accent-green': level > 50,
+    }"
+    x="3.75"
+    y="9.75"
+    height="6"
+    rx="0.75"
+    [attr.width]="fillWidth()"
+  />
+</svg>
