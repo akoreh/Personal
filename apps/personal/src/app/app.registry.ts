@@ -3,14 +3,29 @@ import { AppDefinition } from '@po/personal/state/window';
 
 export const appDefinitions: Array<AppDefinition> = [
   {
+    id: AppId.Auth,
+    route: 'auth',
+    metadata: {
+      title: 'Authenticator',
+      icon: 'key',
+      closable: true,
+      minimizable: false,
+      maximizable: false,
+    },
+    loadComponent: () =>
+      import('@po/personal/components/apps/auth-app').then(
+        (m) => m.AuthAppComponent,
+      ),
+  },
+  {
     id: AppId.Resume,
     route: 'resume',
     metadata: {
-      appTitle: 'Resume',
-      appIcon: 'document-text',
-      appClosable: true,
-      appMinimizable: true,
-      appMaximizable: true,
+      title: 'Resume',
+      icon: 'document-text',
+      closable: true,
+      minimizable: true,
+      maximizable: true,
     },
     loadComponent: () =>
       import('@po/personal/components/apps/resume-app').then(
@@ -21,11 +36,11 @@ export const appDefinitions: Array<AppDefinition> = [
     id: AppId.Terminal,
     route: 'terminal',
     metadata: {
-      appTitle: 'Terminal',
-      appIcon: 'terminal',
-      appClosable: true,
-      appMinimizable: true,
-      appMaximizable: true,
+      title: 'Terminal',
+      icon: 'terminal',
+      closable: true,
+      minimizable: true,
+      maximizable: true,
     },
     loadComponent: () =>
       import('@po/personal/components/apps/terminal-app').then(

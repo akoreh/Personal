@@ -14,6 +14,8 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inconsolata', ...defaultTheme.fontFamily.sans],
+        'press-start': ['"Press Start 2P"', 'monospace'],
+        vt323: ['VT323', 'monospace'],
       },
       zIndex: {
         cover: 9_998,
@@ -29,6 +31,7 @@ module.exports = {
       colors: {
         background: '#f7ecda',
         folder: '#fece7b',
+        danger: '#C00',
         window: {
           light: '#F1EDE6',
           border: '#4e402d',

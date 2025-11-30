@@ -2,10 +2,13 @@ import { Type } from '@angular/core';
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { remove } from 'lodash-es';
 
+import { AppId } from '@po/personal/enums';
+
 import { WindowConfig } from './window-config.model';
 
 export interface AppWindow extends WindowConfig {
   id: string;
+  appId: AppId;
   component: Type<any>;
   minimized: boolean;
   maximized: boolean;

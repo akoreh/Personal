@@ -14,7 +14,6 @@ import { intervalToDuration } from 'date-fns';
 import { find, noop } from 'lodash-es';
 
 import { AuthStore } from '@po/personal/state/auth';
-import { AppMetadata } from '@po/personal/state/window';
 
 import { TerminalAppStatusBarComponent } from './components/terminal-app-status-bar/terminal-app-status-bar.component';
 import { terminalCommands } from './const/terminal-commands.const';
@@ -29,15 +28,7 @@ import { TerminalEvent } from './models/terminal-event.model';
   imports: [TerminalAppStatusBarComponent, FormsModule],
   providers: [DecimalPipe],
 })
-export class TerminalAppComponent
-  implements AppMetadata, OnInit, AfterViewInit
-{
-  readonly appTitle = 'Terminal';
-  readonly appIcon = 'terminal' as const;
-  readonly appClosable = true;
-  readonly appMinimizable = true;
-  readonly appMaximizable = true;
-
+export class TerminalAppComponent implements OnInit, AfterViewInit {
   protected readonly currentPath = signal<string>('~/Desktop');
 
   protected readonly terminalEvents = signal<TerminalEvent[]>([]);

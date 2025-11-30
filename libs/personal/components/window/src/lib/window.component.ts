@@ -66,7 +66,6 @@ export class WindowComponent implements AfterViewInit {
     const centerY = (boundaryRect.height - elementRect.height) / 2;
 
     this.initialPosition.set({ x: centerX, y: centerY });
-    console.log(this.initialPosition());
   }
 
   onClose(event: MouseEvent | TouchEvent): void {

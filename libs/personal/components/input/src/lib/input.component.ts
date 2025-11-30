@@ -2,12 +2,21 @@ import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DoCheck,
   forwardRef,
+  inject,
   input,
   model,
-  signal,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+
+import {
+  CanUpdateErrorState,
+  FormFieldControl,
+  mixinErrorState,
+} from '@po/personal/components/form-field';
+
+const InputBase = mixinErrorState(class {});
 
 @Component({
   selector: 'ps-input',
@@ -17,51 +26,65 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   imports: [NgClass],
   providers: [
     {
-      provide: NG_VALUE_ACCESSOR,
+      provide: FormFieldControl,
       useExisting: forwardRef(() => InputComponent),
-      multi: true,
     },
   ],
   host: {
     class: 'block',
   },
 })
-export class InputComponent implements ControlValueAccessor {
+export class InputComponent
+  extends InputBase
+  implements
+    DoCheck,
+    ControlValueAccessor,
+    FormFieldControl,
+    CanUpdateErrorState
+{
   static nextId = 0;
 
   protected readonly id = `ps-input-${InputComponent.nextId++}`;
 
   readonly value = model<string>();
   readonly label = input<string>();
-  readonly placeholder = input<string>('');
+  readonly placeholder = input.required<string>();
   readonly type = input<'text' | 'email' | 'password'>('text');
   readonly disabled = model(false);
-  readonly error = input<string>();
 
-  protected readonly isFocused = signal(false);
-  protected readonly isTouched = signal(false);
+  constructor() {
+    super();
 
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
+  private readonly ngControl = inject(NgControl, { optional: true });
+
+  private onChange?: (value: string) => void;
+  private onTouched?: () => void;
+
+  ngDoCheck(): void {
+    if (this.ngControl) {
+      this.updateErrorState();
+    }
+  }
 
   protected onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
-    this.value.set(target.value);
-    this.onChange(target.value);
-  }
 
-  protected onFocus(): void {
-    this.isFocused.set(true);
+    this.value.set(target.value);
+
+    if (this.onChange) {
+      this.onChange(target.value);
+    }
   }
 
   protected onBlur(): void {
-    this.isFocused.set(false);
-    this.isTouched.set(true);
-    this.onTouched();
-  }
-
-  writeValue(value: string): void {
-    this.value.set(value || '');
+    if (this.onTouched) {
+      this.onTouched();
+    }
   }
 
   registerOnChange(fn: (value: string) => void): void {
@@ -70,6 +93,10 @@ export class InputComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  writeValue(value: string): void {
+    this.value.set(value || '');
   }
 
   setDisabledState(isDisabled: boolean): void {

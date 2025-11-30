@@ -1,0 +1,21 @@
+{
+  "name": "personal-components-apps-auth-app",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/personal/components/apps/auth-app/src",
+  "prefix": "ps",
+  "projectType": "library",
+  "tags": ["scope:personal", "type:ui"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/personal/components/apps/auth-app/jest.config.cts",
+        "tsConfig": "libs/personal/components/apps/auth-app/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

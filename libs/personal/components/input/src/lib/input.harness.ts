@@ -1,8 +1,18 @@
-import { ComponentHarness } from '@angular/cdk/testing';
+import {
+  BaseHarnessFilters,
+  ComponentHarness,
+  HarnessPredicate,
+} from '@angular/cdk/testing';
 import { byTestId } from '@po/shared/testing';
 
 export class InputHarness extends ComponentHarness {
   static hostSelector = 'ps-input';
+
+  static with(
+    options: BaseHarnessFilters = {},
+  ): HarnessPredicate<InputHarness> {
+    return new HarnessPredicate(InputHarness, options);
+  }
 
   private getInput = this.locatorFor(byTestId('input'));
 

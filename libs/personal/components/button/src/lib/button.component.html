@@ -1,0 +1,30 @@
+<button
+  class="btn"
+  psButton
+  [ngClass]="{
+    primary: variant() === 'primary',
+    secondary: variant() === 'secondary',
+    danger: variant() === 'danger',
+    warning: variant() === 'warning',
+    success: variant() === 'success',
+    info: variant() === 'info',
+    lg: size() === 'lg',
+    sm: size() === 'sm',
+    md: size() === 'md',
+    'btn-active pointer-events-none opacity-50': disabled(),
+  }"
+  data-testid="btn"
+  type="button"
+  [disabled]="disabled()"
+  (clicked)="clicked.emit()"
+>
+  <div class="btn-inner block h-full">
+    <span class="content-wrapper">
+      <span class="btn-content">
+        <span class="btn-content-inner" data-testid="innerContent">
+          <ng-content />
+        </span>
+      </span>
+    </span>
+  </div>
+</button>

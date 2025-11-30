@@ -48,6 +48,8 @@ export async function bootstrap() {
     const port = parseInt(getEnvVar(EnvVar.Port), 10);
     const app = createApp();
 
+    console.info(`Hosting Environment: ${getEnvVar(EnvVar.HostingEnv)}` )
+
     app.listen(port, () => {
       console.log(`API listening on port ${port}`);
     });

@@ -89,7 +89,14 @@
       "@po/personal/directives/tooltip": [
         "libs/personal/directives/tooltip/src/index.ts"
       ],
-      "@po/personal/enums": ["libs/personal/enums/src/index.ts"]
+      "@po/personal/enums": ["libs/personal/enums/src/index.ts"],
+      "@po/personal/components/apps/auth-app": [
+        "libs/personal/components/apps/auth-app/src/index.ts"
+      ],
+      "@po/shared/validators": ["libs/shared/validators/src/index.ts"],
+      "@po/personal/components/button": [
+        "libs/personal/components/button/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

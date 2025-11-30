@@ -3,27 +3,26 @@
     <label
       class="text-window-border text-sm font-medium"
       data-testid="inputLabel"
-      [for]="id"
+      [for]="id + '-input'"
     >
       {{ label() }}
     </label>
   }
 
   <input
-    class="text-window-border border-window-border bg-background focus:border-primary-blue placeholder:text-accent-gray w-full rounded-md border-2 border-solid px-3 py-2 text-sm outline-none transition-colors"
+    class="text-window-border bg-background placeholder:text-accent-gray w-full rounded-md border-2 border-solid px-3 py-2 text-sm outline-none transition-colors"
     [ngClass]="{
-      'border-primary-red': error() && isTouched(),
-      'border-primary-blue': isFocused() && !error(),
+      'border-window-border focus:border-primary-blue': !hasError(),
+      'border-primary-red focus:border-primary-red': hasError(),
       'cursor-not-allowed opacity-50': disabled(),
     }"
     data-testid="input"
-    [id]="id"
+    [id]="id + '-input'"
     [type]="type()"
     [placeholder]="placeholder()"
     [disabled]="disabled()"
-    [value]="value()"
+    [value]="value() || ''"
     (input)="onInput($event)"
-    (focus)="onFocus()"
     (blur)="onBlur()"
   />
 </div>

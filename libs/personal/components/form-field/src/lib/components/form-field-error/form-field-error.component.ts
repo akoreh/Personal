@@ -7,6 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   host: {
     role: 'alert',
     'aria-live': 'assertive',
+    class: 'h-4',
   },
 })
 export class FormFieldErrorComponent {}

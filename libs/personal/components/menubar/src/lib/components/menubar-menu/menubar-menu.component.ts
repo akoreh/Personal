@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
+import { AppId } from '@po/personal/enums';
 import { AuthStore } from '@po/personal/state/auth';
+import { WindowManagerService } from '@po/personal/state/window';
 
 @Component({
   selector: 'ps-menubar-menu',
@@ -23,6 +25,7 @@ export class MenuBarMenuComponent {
   protected readonly id = `ps-menubar-menu-${MenuBarMenuComponent.nextId++}`;
 
   private readonly authStore = inject(AuthStore);
+  protected readonly windowManagerService = inject(WindowManagerService);
 
   protected readonly isOpen = signal(false);
   protected readonly isAuthenticated = computed(() =>
@@ -41,8 +44,7 @@ export class MenuBarMenuComponent {
     if (this.isAuthenticated()) {
       this.authStore.logout();
     } else {
-      // TODO: Open login dialog/modal
-      console.log('Login clicked');
+      this.windowManagerService.openApp(AppId.Auth);
     }
     this.closeMenu();
   }

@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
+import { AppId } from '@po/personal/enums';
 import { WindowManagerService } from '@po/personal/state/window';
 
 import { DockItemComponent } from './components/dock-item/dock-item.component';
@@ -32,7 +33,7 @@ export class DockComponent {
     this.windowManagerService.focusWindow(id);
   }
 
-  protected onOpenApp(appId: string): void {
+  protected onOpenApp(appId: AppId): void {
     this.windowManagerService.openApp(appId);
   }
 }

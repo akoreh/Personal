@@ -3,11 +3,11 @@ import { Type } from '@angular/core';
 import { SvgIconName } from '@po/personal/services/icon';
 
 export interface AppMetadata {
-  readonly appTitle: string;
-  readonly appIcon?: SvgIconName;
-  readonly appClosable?: boolean;
-  readonly appMinimizable?: boolean;
-  readonly appMaximizable?: boolean;
+  readonly title: string;
+  readonly icon?: SvgIconName;
+  readonly closable?: boolean;
+  readonly minimizable?: boolean;
+  readonly maximizable?: boolean;
 }
 
 export interface AppWithMetadata {

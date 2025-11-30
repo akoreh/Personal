@@ -1,0 +1,42 @@
+<div class="p-4">
+  <div class="flex flex-col gap-11">
+    <div class="flex gap-5">
+      <ps-input placeholder="PX" [(value)]="px" />
+      <ps-input placeholder="REM" [disabled]="true" [value]="rem()" />
+    </div>
+
+    <form [formGroup]="form">
+      <ps-form-field>
+        <ps-input name="email" placeholder="Email" formControlName="email" />
+
+        @if (form.controls.email.errors?.['required']) {
+          <ps-form-field-error> The email is required </ps-form-field-error>
+        } @else if (form.controls.email.errors?.['email']) {
+          <ps-form-field-error> The email is invalid </ps-form-field-error>
+        }
+      </ps-form-field>
+
+      <ps-form-field>
+        <ps-input
+          name="password"
+          placeholder="Password"
+          formControlName="password"
+          type="password"
+        />
+
+        @if (form.controls.password.errors?.['required']) {
+          <ps-form-field-error> The password is required </ps-form-field-error>
+        }
+      </ps-form-field>
+    </form>
+
+    <div class="flex flex-col gap-11">
+      <ps-button variant="primary"> Primary </ps-button>
+      <ps-button variant="danger" size="lg"> Danger </ps-button>
+      <ps-button variant="success" size="sm"> Small Success </ps-button>
+      <ps-button variant="primary" [loading]="true"> Submit </ps-button>
+
+      <ps-button disabled> Disabled </ps-button>
+    </div>
+  </div>
+</div>

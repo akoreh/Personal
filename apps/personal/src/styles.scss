@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply font-vt323;
+}
+
 #loading {
   overflow: hidden;
   background: #2d112b;

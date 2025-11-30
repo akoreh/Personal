@@ -1,7 +1,7 @@
 import { ErrorCode } from '@po/shared/enums';
 import { ApiErrorResponse } from '@po/shared/models';
 
-const defaultErrorMessages: Record<ErrorCode, string> = {
+const defaultErrorMessages: Partial<Record<ErrorCode, string>> = {
   [ErrorCode.MissingToken]: 'Authorization token is required',
   [ErrorCode.InvalidTokenFormat]: 'Invalid authorization token format',
   [ErrorCode.TokenExpired]: 'Authorization token has expired',
@@ -39,7 +39,8 @@ export function buildError(
 ): ApiErrorResponse {
   return {
     errorCode,
-    errorMessage: message ?? defaultErrorMessages[errorCode],
+    errorMessage:
+      message || defaultErrorMessages[errorCode] || 'Something went wrong',
     timestamp: new Date().toISOString(),
     ...(path && { path }),
   };

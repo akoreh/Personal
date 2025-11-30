@@ -18,7 +18,7 @@ import { FormFieldControl } from './directives/form-field.directive';
   imports: [NgClass],
 })
 export class FormFieldComponent implements AfterContentInit {
-  protected readonly showErrors = computed(() => {
+  protected readonly showError = computed(() => {
     const control = this.control();
 
     if (isNil(control)) {

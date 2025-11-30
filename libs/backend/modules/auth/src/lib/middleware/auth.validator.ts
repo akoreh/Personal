@@ -2,6 +2,7 @@ import { buildError } from '@po/backend/utilities';
 import { ErrorCode } from '@po/shared/enums';
 import { ApiErrorResponse } from '@po/shared/models';
 import { isEmptyString } from '@po/shared/utilities';
+import { validatePassword as isValidPassword } from '@po/shared/validators';
 import { NextFunction, Request, Response } from 'express';
 import { isNil } from 'lodash-es';
 import validator from 'validator';
@@ -23,27 +24,7 @@ export function validatePassword(password: string): ApiErrorResponse | null {
     return buildError(ErrorCode.MissingPassword);
   }
 
-  if (password.length < 8) {
-    return buildError(ErrorCode.WeakPassword);
-  }
-
-  // Check for at least one uppercase letter
-  if (!/[A-Z]/.test(password)) {
-    return buildError(ErrorCode.WeakPassword);
-  }
-
-  // Check for at least one lowercase letter
-  if (!/[a-z]/.test(password)) {
-    return buildError(ErrorCode.WeakPassword);
-  }
-
-  // Check for at least one number
-  if (!/[0-9]/.test(password)) {
-    return buildError(ErrorCode.WeakPassword);
-  }
-
-  // Check for at least one special character
-  if (!/[!@#$%^&*(),.?":{}|<>_\-+=[\]\\/'`~;]/.test(password)) {
+  if (!isValidPassword(password)) {
     return buildError(ErrorCode.WeakPassword);
   }
 
