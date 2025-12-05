@@ -4,9 +4,15 @@
       <li>
         <ps-desktop-icon
           name="Resume.peedeef"
-          data-testid="desktopIcon"
-          icon="document-text"
-          (open)="onOpenResumeApp()"
+          [icon]="resumeApp.metadata.icon"
+          (open)="windowManager.openApp(resumeApp.id)"
+        />
+      </li>
+      <li>
+        <ps-desktop-icon
+          name="JS Engine"
+          [icon]="jsEngineApp.metadata.icon"
+          (open)="windowManager.openApp(jsEngineApp.id)"
         />
       </li>
     </ul>

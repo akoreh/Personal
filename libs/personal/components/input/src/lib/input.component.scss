@@ -2,10 +2,49 @@
   display: block;
 }
 
-input:focus {
-  box-shadow: 0 0 0 2px rgba(87, 164, 255, 0.2);
+.sketchy-input {
+  border-width: 3px;
+  border-radius: 4px 6px 5px 7px;
+  box-shadow: 3px 3px 0 0 rgba(78, 64, 45, 0.9);
+
+  &:hover:not(:disabled),
+  &:focus {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 0 rgba(78, 64, 45, 0.9);
+  }
 }
 
-input:disabled {
-  background-color: #f1ede6;
+.input-error {
+  animation: error-bounce 0.4s ease;
+  background-color: #fff5f5 !important;
+  box-shadow: 4px 4px 0 0 rgba(242, 106, 106, 0.9) !important;
+
+  &:focus {
+    box-shadow: 6px 6px 0 0 rgba(242, 106, 106, 0.9) !important;
+  }
+}
+
+.input-disabled {
+  background-color: #f0ebe0 !important;
+  box-shadow: 2px 2px 0 0 rgba(78, 64, 45, 0.9) !important;
+
+  &:hover {
+    transform: none !important;
+  }
+}
+
+@keyframes error-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-3px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-2px);
+  }
 }

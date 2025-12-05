@@ -1,0 +1,66 @@
+<div class="flex flex-col gap-6 p-4">
+  <h2 class="font-press-start text-lg text-gray-800">PX ↔ REM Converter</h2>
+
+  <div class="flex items-center gap-3">
+    <label class="text-sm font-semibold text-gray-700" for="baseFontSize">
+      Base Font Size:
+    </label>
+    <div class="w-20">
+      <ps-input
+        id="baseFontSize"
+        min="1"
+        placeholder="16"
+        type="integer"
+        [value]="baseFontSize().toString()"
+        (input)="onBaseFontSizeChange($event)"
+      />
+    </div>
+    <span class="text-sm text-gray-500">px</span>
+  </div>
+
+  <div class="grid grid-cols-2 gap-6">
+    <div class="shadow-retro">
+      <div class="mb-2 flex items-center justify-between">
+        <span class="font-press-start text-sm text-gray-700">PX</span>
+        @if (pxValue()) {
+          <button
+            class="cursor-pointer border-none bg-transparent p-1 text-base transition-transform hover:scale-110 active:scale-95"
+            title="Copy px value"
+            type="button"
+            (click)="copyToClipboard(pxValue(), 'px')"
+          >
+            📋
+          </button>
+        }
+      </div>
+      <ps-input
+        placeholder="Enter px"
+        type="text"
+        [(value)]="pxValue"
+        (valueChange)="onPxChange($any($event))"
+      />
+    </div>
+
+    <div class="shadow-retro">
+      <div class="mb-2 flex items-center justify-between">
+        <span class="font-press-start text-sm text-gray-700">REM</span>
+        @if (remValue()) {
+          <button
+            class="cursor-pointer border-none bg-transparent p-1 text-base transition-transform hover:scale-110 active:scale-95"
+            title="Copy rem value"
+            type="button"
+            (click)="copyToClipboard(remValue(), 'rem')"
+          >
+            📋
+          </button>
+        }
+      </div>
+      <ps-input
+        placeholder="Enter rem"
+        type="text"
+        [(value)]="remValue"
+        (valueChange)="onRemChange($any($event))"
+      />
+    </div>
+  </div>
+</div>

@@ -39,6 +39,19 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - DO NOT use `ngStyle`, use `style` bindings instead
 
+## Styling
+
+- **ALWAYS use Tailwind classes directly in templates** - this is the preferred method
+- Only write SCSS files if absolutely necessary (e.g., complex animations, pseudo-elements that can't be handled with Tailwind)
+- Keep all styling inline with Tailwind utility classes for better maintainability
+- Use `ps-button` component for all buttons instead of native `<button>` elements
+- Use `ps-input` component for all inputs instead of native `<input>` elements
+- Button variants: `primary`, `secondary`, `success`, `danger`, etc.
+- Example:
+  ```html
+  <ps-button variant="primary" (clicked)="doSomething()">Click Me</ps-button> <ps-input placeholder="Enter text" type="text" [(value)]="myValue" />
+  ```
+
 ## State Management
 
 - Use signals for local component state

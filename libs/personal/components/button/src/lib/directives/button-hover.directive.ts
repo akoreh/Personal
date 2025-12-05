@@ -49,6 +49,7 @@ export class ButtonDirective {
 
   protected onMouseLeave(): void {
     this.removePreviousHoverClass();
+    this.previousHoverClass = undefined;
     this.removeClass(this.activeClass);
   }
 

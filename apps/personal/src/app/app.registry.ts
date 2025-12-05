@@ -4,7 +4,6 @@ import { AppDefinition } from '@po/personal/state/window';
 export const appDefinitions: Array<AppDefinition> = [
   {
     id: AppId.Auth,
-    route: 'auth',
     metadata: {
       title: 'Authenticator',
       icon: 'key',
@@ -19,10 +18,9 @@ export const appDefinitions: Array<AppDefinition> = [
   },
   {
     id: AppId.Resume,
-    route: 'resume',
     metadata: {
       title: 'Resume',
-      icon: 'document-text',
+      icon: 'resume',
       closable: true,
       minimizable: true,
       maximizable: true,
@@ -34,7 +32,6 @@ export const appDefinitions: Array<AppDefinition> = [
   },
   {
     id: AppId.Terminal,
-    route: 'terminal',
     metadata: {
       title: 'Terminal',
       icon: 'terminal',
@@ -45,6 +42,48 @@ export const appDefinitions: Array<AppDefinition> = [
     loadComponent: () =>
       import('@po/personal/components/apps/terminal-app').then(
         (m) => m.TerminalAppComponent,
+      ),
+  },
+  {
+    id: AppId.ComponentGallery,
+    metadata: {
+      title: 'Component Gallery',
+      icon: 'cube',
+      closable: true,
+      minimizable: true,
+      maximizable: true,
+    },
+    loadComponent: () =>
+      import('@po/personal/components/apps/component-gallery').then(
+        (m) => m.ComponentGalleryAppComponent,
+      ),
+  },
+  {
+    id: AppId.DevTools,
+    metadata: {
+      title: 'Dev Tools',
+      icon: 'code',
+      closable: true,
+      minimizable: true,
+      maximizable: true,
+    },
+    loadComponent: () =>
+      import('@po/personal/components/apps/dev-tools').then(
+        (m) => m.DevToolsComponent,
+      ),
+  },
+  {
+    id: AppId.JsEngine,
+    metadata: {
+      title: 'JS Engine Visualizer',
+      icon: 'engine',
+      closable: true,
+      minimizable: true,
+      maximizable: true,
+    },
+    loadComponent: () =>
+      import('@po/personal/components/apps/js-visualizer-app').then(
+        (m) => m.JsEngineAppComponent,
       ),
   },
 ];

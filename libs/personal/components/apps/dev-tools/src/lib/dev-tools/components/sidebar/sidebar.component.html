@@ -1,0 +1,18 @@
+<div
+  class="bg-window-bg flex flex-col gap-1 border-r-2 border-gray-300 p-2"
+  style="width: 180px; height: 100%"
+>
+  @for (item of items(); track item.id) {
+    <button
+      class="hover:bg-secondary-lightYellow flex cursor-pointer items-center gap-2 rounded-md border-2 border-transparent px-3 py-2 text-left text-sm font-semibold text-gray-700 transition-all hover:border-gray-300"
+      type="button"
+      [class.bg-primary-yellow]="activeItemId() === item.id"
+      [class.border-gray-400]="activeItemId() === item.id"
+      [class.text-gray-900]="activeItemId() === item.id"
+      (click)="selectItem(item.id)"
+    >
+      <span class="text-base">{{ item.icon }}</span>
+      <span class="truncate">{{ item.label }}</span>
+    </button>
+  }
+</div>

@@ -1,7 +1,7 @@
 <button
-  class="btn"
   psButton
   [ngClass]="{
+    btn: true,
     primary: variant() === 'primary',
     secondary: variant() === 'secondary',
     danger: variant() === 'danger',
@@ -12,17 +12,25 @@
     sm: size() === 'sm',
     md: size() === 'md',
     'btn-active pointer-events-none opacity-50': disabled(),
+    'loader-btn': loader(),
+    'state-loading': loading() && loader(),
   }"
   data-testid="btn"
   type="button"
-  [disabled]="disabled()"
+  [disabled]="disabled() || loading()"
   (clicked)="clicked.emit()"
 >
-  <div class="btn-inner block h-full">
+  <div class="btn-inner">
     <span class="content-wrapper">
       <span class="btn-content">
         <span class="btn-content-inner" data-testid="innerContent">
-          <ng-content />
+          @if (loading() && loader()) {
+            <span class="loading-text" data-testid="loaderText"
+              >Loading <span class="bouncing-dots" aria-hidden="true"></span
+            ></span>
+          } @else {
+            <ng-content />
+          }
         </span>
       </span>
     </span>

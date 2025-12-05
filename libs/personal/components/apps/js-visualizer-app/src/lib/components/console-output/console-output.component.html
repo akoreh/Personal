@@ -1,0 +1,18 @@
+<div
+  class="border-ps-accent-green shadow-retro flex h-full flex-col rounded-lg border-2 p-4"
+>
+  <h3 class="text-ps-accent-green mb-4 text-lg font-bold">Console Output</h3>
+  <div class="flex flex-1 flex-col gap-1 overflow-y-auto font-mono text-sm">
+    @if (output().length === 0) {
+      <div class="text-ps-text-muted py-8 text-center italic">
+        No output yet
+      </div>
+    }
+
+    @for (line of output(); track $index) {
+      <div class="text-ps-accent-green">
+        <span class="text-ps-text-muted">> </span>{{ line }}
+      </div>
+    }
+  </div>
+</div>

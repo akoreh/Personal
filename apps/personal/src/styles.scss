@@ -143,13 +143,15 @@ body {
   }
 }
 
-/* Custom scrollbar styling for retro OS vibe */
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: #f26a6a #f7ecda;
 }
 
-/* Webkit browsers (Chrome, Safari, Edge) */
 *::-webkit-scrollbar {
   width: 14px;
   height: 14px;

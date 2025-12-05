@@ -1,0 +1,78 @@
+<div class="bg-ps-background flex h-full w-full flex-col gap-4 p-6">
+  <div
+    class="bg-ps-background-secondary border-ps-primary-yellow flex flex-col items-center gap-y-10 rounded-lg border-2 p-4"
+  >
+    <h2 class="text-ps-primary-yellow text-2xl font-bold">
+      JavaScript Event Loop Visualizer
+    </h2>
+    <div class="flex gap-2">
+      <ps-button
+        variant="primary"
+        [disabled]="!canStepBackward()"
+        (clicked)="stepBackward()"
+      >
+        Previous
+      </ps-button>
+      <ps-button variant="success" (clicked)="togglePlayPause()">
+        {{ isPlaying() ? 'Pause' : 'Play' }}
+      </ps-button>
+      <ps-button
+        variant="primary"
+        [disabled]="!canStepForward()"
+        (clicked)="stepForward()"
+      >
+        Next
+      </ps-button>
+      <ps-button variant="danger" (clicked)="reset()"> Reset </ps-button>
+    </div>
+  </div>
+
+  <!-- Current step description -->
+  <div
+    class="bg-ps-secondary-yellow border-ps-primary-orange rounded-lg border-2 p-4 text-center shadow-sm"
+  >
+    <p class="text-ps-text text-lg font-semibold">
+      <span class="text-ps-primary-orange"
+        >Step {{ state().currentStep + 1 }}:</span
+      >
+      {{ currentDescription() }}
+    </p>
+  </div>
+
+  <!-- Main content grid -->
+  <div class="grid min-h-0 flex-1 grid-cols-2 gap-4">
+    <!-- Left column: Code and Console -->
+    <div class="flex min-h-0 flex-col gap-4">
+      <div class="min-h-0 flex-1">
+        <ps-code-display [code]="code" />
+      </div>
+      <div class="min-h-0 flex-1">
+        <ps-console-output [output]="state().consoleOutput" />
+      </div>
+    </div>
+
+    <!-- Right column: Call Stack and Queues -->
+    <div class="flex min-h-0 gap-4">
+      <div class="w-1/2">
+        <ps-call-stack [stack]="state().callStack" />
+      </div>
+      <div class="flex w-1/2 flex-col gap-3">
+        <ps-task-queue
+          class="h-1/2"
+          title="Macrotask Queue"
+          titleColor="text-ps-primary-red"
+          itemBgColor="bg-ps-secondary-red"
+          [queue]="state().macrotaskQueue"
+        />
+
+        <ps-task-queue
+          class="h-1/2"
+          title="Microtask Queue"
+          titleColor="text-ps-accent-green"
+          itemBgColor="bg-ps-accent-green/20"
+          [queue]="state().microtaskQueue"
+        />
+      </div>
+    </div>
+  </div>
+</div>

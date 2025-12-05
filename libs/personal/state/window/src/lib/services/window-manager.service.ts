@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { AppId } from '@po/personal/enums';
 
+import { WindowConfig } from '../models/window-config.model';
+import { AppWindow, WindowsStore } from '../window.store';
 import { AppRegistryService } from './app-registry.service';
-import { WindowConfig } from './window-config.model';
-import { AppWindow, WindowsStore } from './window.store';
 
 @Injectable({ providedIn: 'root' })
 export class WindowManagerService {
@@ -42,6 +42,7 @@ export class WindowManagerService {
       closable: appDef.metadata.closable ?? true,
       minimizable: appDef.metadata.minimizable ?? true,
       maximizable: appDef.metadata.maximizable ?? true,
+      size: appDef.metadata.size,
     };
 
     this.windowsStore.openWindow(id, component, config);

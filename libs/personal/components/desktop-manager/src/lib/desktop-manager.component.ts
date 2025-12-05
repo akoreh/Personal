@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { AppId } from '@po/personal/enums';
-import { WindowManagerService } from '@po/personal/state/window';
+import {
+  AppRegistryService,
+  WindowManagerService,
+} from '@po/personal/state/window';
 
 import { DesktopIconComponent } from './components/desktop-icon/desktop-icon.component';
 
@@ -13,9 +16,12 @@ import { DesktopIconComponent } from './components/desktop-icon/desktop-icon.com
   imports: [DesktopIconComponent],
 })
 export class DesktopManagerComponent {
-  private readonly windowManagerService = inject(WindowManagerService);
+  protected readonly AppId = AppId;
 
-  protected onOpenResumeApp(): void {
-    this.windowManagerService.openApp(AppId.Resume);
-  }
+  protected readonly windowManager = inject(WindowManagerService);
+
+  private readonly appRegistry = inject(AppRegistryService);
+
+  protected readonly resumeApp = this.appRegistry.getApp(AppId.Resume);
+  protected readonly jsEngineApp = this.appRegistry.getApp(AppId.JsEngine);
 }

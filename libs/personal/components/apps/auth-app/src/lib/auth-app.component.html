@@ -1,10 +1,5 @@
-<div class="p-4">
+<div class="h-full w-full p-4">
   <div class="flex flex-col gap-11">
-    <div class="flex gap-5">
-      <ps-input placeholder="PX" [(value)]="px" />
-      <ps-input placeholder="REM" [disabled]="true" [value]="rem()" />
-    </div>
-
     <form [formGroup]="form">
       <ps-form-field>
         <ps-input name="email" placeholder="Email" formControlName="email" />
@@ -29,14 +24,5 @@
         }
       </ps-form-field>
     </form>
-
-    <div class="flex flex-col gap-11">
-      <ps-button variant="primary"> Primary </ps-button>
-      <ps-button variant="danger" size="lg"> Danger </ps-button>
-      <ps-button variant="success" size="sm"> Small Success </ps-button>
-      <ps-button variant="primary" [loading]="true"> Submit </ps-button>
-
-      <ps-button disabled> Disabled </ps-button>
-    </div>
   </div>
 </div>

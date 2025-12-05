@@ -4,7 +4,8 @@ import { remove } from 'lodash-es';
 
 import { AppId } from '@po/personal/enums';
 
-import { WindowConfig } from './window-config.model';
+import { WindowConfig } from './models/window-config.model';
+import { WindowSize } from './types/window-size.type';
 
 export interface AppWindow extends WindowConfig {
   id: string;
@@ -13,6 +14,7 @@ export interface AppWindow extends WindowConfig {
   minimized: boolean;
   maximized: boolean;
   zIndex: number;
+  size: WindowSize;
 }
 
 interface WindowsState {
@@ -36,6 +38,7 @@ export const WindowsStore = signalStore(
         minimized: false,
         maximized: false,
         zIndex: store.nextZIndex(),
+        size: 'md',
         ...config,
       };
 

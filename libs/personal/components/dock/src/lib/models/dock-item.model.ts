@@ -5,4 +5,5 @@ export interface DockItem {
   icon: SvgIconName;
   link?: string;
   appId?: AppId;
+  tooltip?: string;
 }

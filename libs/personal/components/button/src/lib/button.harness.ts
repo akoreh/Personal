@@ -19,4 +19,10 @@ export class ButtonHarness extends ComponentHarness {
   async click(): Promise<void> {
     return (await this.getButton()).click();
   }
+
+  async isLoading(): Promise<boolean> {
+    const locator = this.locatorForOptional(byTestId('loaderText'));
+
+    return !!(await locator());
+  }
 }

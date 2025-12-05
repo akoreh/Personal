@@ -5,9 +5,9 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  OnDestroy,
   inject,
   input,
-  OnDestroy,
 } from '@angular/core';
 
 import { TooltipComponent } from './tooltip.component';
@@ -60,14 +60,14 @@ export class TooltipDirective implements OnDestroy {
           originY: 'top',
           overlayX: 'center',
           overlayY: 'bottom',
-          offsetY: -8,
+          offsetY: -12,
         },
         {
           originX: 'center',
           originY: 'bottom',
           overlayX: 'center',
           overlayY: 'top',
-          offsetY: 8,
+          offsetY: 12,
         },
       ]);
 

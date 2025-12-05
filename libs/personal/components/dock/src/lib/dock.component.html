@@ -1,35 +1,91 @@
 <div
-  class="bg-background border-window-border flex h-16 items-center rounded-lg border-2 border-solid px-6 py-2"
+  class="bg-window-bg border-window-border flex h-16 items-center rounded-lg border-2 border-solid bg-opacity-40 px-6 py-2"
   data-testid="dock"
 >
   <ul class="flex flex-1 items-center justify-end gap-x-3">
-    @for (dockItem of dockItems; track dockItem.icon) {
-      <ps-dock-item>
-        @if (dockItem.link) {
-          <a
-            data-testid="dockLink"
-            target="_blank"
-            [attr.data-icon]="dockItem.icon"
-            [attr.href]="dockItem.link"
-          >
-            <div class="h-8 w-8">
-              <ps-icon class="w-full" [icon]="dockItem.icon" />
-            </div>
-          </a>
-        } @else if (dockItem.appId) {
-          <button
-            data-testid="dockAppButton"
-            type="button"
-            [attr.data-app]="dockItem.appId"
-            (click)="onOpenApp(dockItem.appId)"
-          >
-            <div class="h-8 w-8">
-              <ps-icon class="w-full" [icon]="dockItem.icon" />
-            </div>
-          </button>
-        }
-      </ps-dock-item>
-    }
+    <ps-dock-item>
+      <a
+        psTooltip="GitHub"
+        data-testid="dockLink"
+        target="_blank"
+        href="https://github.com/akoreh/Personal/tree/main"
+        data-icon="github"
+      >
+        <div class="h-8 w-8">
+          <ps-icon class="w-full" icon="github" />
+        </div>
+      </a>
+    </ps-dock-item>
+
+    <ps-dock-item>
+      <a
+        psTooltip="LinkedIn"
+        data-testid="dockLink"
+        target="_blank"
+        href="https://www.linkedin.com/in/andrei-koreh-71084b169/"
+        data-icon="linkedin"
+      >
+        <div class="h-8 w-8">
+          <ps-icon class="w-full" icon="linkedin" />
+        </div>
+      </a>
+    </ps-dock-item>
+
+    <ps-dock-item>
+      <a
+        psTooltip="Email"
+        data-testid="dockLink"
+        target="_blank"
+        href="mailto:korehdev@gmail.com"
+        data-icon="envelope"
+      >
+        <div class="h-8 w-8">
+          <ps-icon class="w-full" icon="envelope" />
+        </div>
+      </a>
+    </ps-dock-item>
+
+    <ps-dock-item>
+      <button
+        psTooltip="Terminal"
+        data-testid="dockAppButton"
+        data-app="terminal"
+        type="button"
+        (click)="onOpenApp(AppId.Terminal)"
+      >
+        <div class="h-8 w-8">
+          <ps-icon class="w-full" icon="terminal" />
+        </div>
+      </button>
+    </ps-dock-item>
+
+    <ps-dock-item>
+      <button
+        psTooltip="Component Gallery"
+        data-testid="dockAppButton"
+        data-app="component-gallery"
+        type="button"
+        (click)="onOpenApp(AppId.ComponentGallery)"
+      >
+        <div class="h-8 w-8">
+          <ps-icon class="w-full" icon="cube" />
+        </div>
+      </button>
+    </ps-dock-item>
+
+    <ps-dock-item>
+      <button
+        psTooltip="Dev Tools"
+        data-testid="dockAppButton"
+        data-app="dev-tools"
+        type="button"
+        (click)="onOpenApp(AppId.DevTools)"
+      >
+        <div class="h-8 w-8">
+          <ps-icon class="w-full" icon="code" />
+        </div>
+      </button>
+    </ps-dock-item>
 
     @for (window of minimizedWindows(); track window.id) {
       <li class="h-9 w-9">

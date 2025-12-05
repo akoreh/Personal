@@ -1,4 +1,3 @@
-/* eslint-disable @angular-eslint/prefer-standalone */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
@@ -58,8 +57,8 @@ describe('DesktopIconComponent', () => {
 
   test('should display the passed in icon', async () => {
     expect(await harness.getIcon()).toBe('battery-50');
-    spectator.setInput('icon', 'document-text');
-    expect(await harness.getIcon()).toBe('document-text');
+    spectator.setInput('icon', 'resume');
+    expect(await harness.getIcon()).toBe('resume');
   });
 
   describe('Opening', () => {

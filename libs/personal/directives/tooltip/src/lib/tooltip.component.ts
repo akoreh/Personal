@@ -13,6 +13,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'block',
+    '[style.z-index]': '10000',
   },
 })
 export class TooltipComponent {

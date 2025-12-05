@@ -24,6 +24,8 @@ module.exports = {
       },
       backgroundImage: {
         'vintage-gradient': 'linear-gradient(to right, #C3A5E6, #F1A1B4)',
+        'background-gradient':
+          'linear-gradient(135deg, #f7ecda 0%, #ffe8c8 50%, #ffd9b3 100%)',
       },
       height: {
         dscreen: ['100vh /* fallback for Opera, IE and etc. */', '100dvh'],
@@ -33,6 +35,7 @@ module.exports = {
         folder: '#fece7b',
         danger: '#C00',
         window: {
+          bg: '#f8f4ec',
           light: '#F1EDE6',
           border: '#4e402d',
         },

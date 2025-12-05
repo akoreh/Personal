@@ -29,6 +29,9 @@ import { InputComponent } from '@po/personal/components/input';
     InputComponent,
     ButtonComponent,
   ],
+  host: {
+    class: 'flex-1',
+  },
 })
 export class AuthAppComponent {
   protected readonly form = new FormGroup({

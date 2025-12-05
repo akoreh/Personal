@@ -1,0 +1,85 @@
+<div>
+  @for (size of sizes; track size) {
+    <div class="mb-8 last:mb-0">
+      <h3 class="mb-4 text-xl font-semibold text-gray-600">Size: {{ size }}</h3>
+      <div class="@sm:grid-cols-2 @xl:grid-cols-3 grid grid-cols-1 gap-4">
+        @for (variant of variants; track variant) {
+          <div
+            class="flex flex-col items-center gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+            style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+          >
+            <div
+              class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+            >
+              {{ variant }}
+            </div>
+            <ps-button [variant]="variant" [size]="size">
+              {{ variant }}
+            </ps-button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="mb-8">
+    <h3 class="mb-4 text-xl font-semibold text-gray-600">
+      Loader Buttons (Auto)
+    </h3>
+    <p class="mb-4 text-sm text-gray-500">
+      Loading state toggles randomly every 1.5–4.5 seconds
+    </p>
+    <div class="@sm:grid-cols-2 @xl:grid-cols-3 grid grid-cols-1 gap-4">
+      @for (variant of autoToggleVariants; track variant) {
+        <div
+          class="flex flex-col items-center gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+          style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+        >
+          <div
+            class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+          >
+            {{ variant }}
+          </div>
+          <ps-button
+            loader
+            size="md"
+            [variant]="variant"
+            [loading]="loadingStates()[variant]"
+          >
+            {{ variant }}
+          </ps-button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h3 class="mb-4 text-xl font-semibold text-gray-600">
+      Loader Buttons (Manual)
+    </h3>
+    <p class="mb-4 text-sm text-gray-500">Click to toggle loading state</p>
+    <div class="grid grid-cols-3 gap-4">
+      @for (variant of manualToggleVariants; track variant) {
+        <div
+          class="flex flex-col items-center gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+          style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+        >
+          <div
+            class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+          >
+            {{ variant }}
+          </div>
+          <ps-button
+            loader
+            size="md"
+            [variant]="variant"
+            [loading]="loadingStates()[variant]"
+            (clicked)="toggleLoading(variant)"
+          >
+            {{ variant }}
+          </ps-button>
+        </div>
+      }
+    </div>
+  </div>
+</div>

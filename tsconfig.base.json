@@ -96,6 +96,15 @@
       "@po/shared/validators": ["libs/shared/validators/src/index.ts"],
       "@po/personal/components/button": [
         "libs/personal/components/button/src/index.ts"
+      ],
+      "@po/personal/components/apps/component-gallery": [
+        "libs/personal/components/apps/component-gallery/src/index.ts"
+      ],
+      "@po/personal/components/apps/dev-tools": [
+        "libs/personal/components/apps/dev-tools/src/index.ts"
+      ],
+      "@po/personal/components/apps/js-visualizer-app": [
+        "libs/personal/components/apps/js-visualizer-app/src/index.ts"
       ]
     }
   },

@@ -21,7 +21,8 @@ export class ButtonComponent {
   readonly variant = input<ButtonVariant>('primary');
   readonly size = input<ButtonSize>('md');
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly loading = input(false);
+  readonly loader = input(false, { transform: booleanAttribute });
+  readonly loading = input(false, { transform: booleanAttribute });
 
   readonly clicked = output<void>();
 }

@@ -1,0 +1,193 @@
+<div>
+  <div class="mb-8">
+    <h3 class="mb-4 text-xl font-semibold text-gray-600">Input Types</h3>
+    <div class="@sm:grid-cols-2 grid grid-cols-1 gap-6">
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Text
+        </div>
+        <ps-input placeholder="Enter text" type="text" [(value)]="textValue" />
+        <div class="text-xs text-gray-500">
+          Value: {{ textValue() }}<br />
+          Type:
+          <span class="font-semibold">{{ getValueType(textValue()) }}</span>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Password
+        </div>
+        <ps-input
+          placeholder="Enter password"
+          type="password"
+          [(value)]="passwordValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ passwordValue() }}<br />
+          Type:
+          <span class="font-semibold">{{ getValueType(passwordValue()) }}</span>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Integer
+        </div>
+        <ps-input
+          placeholder="Enter whole number"
+          type="integer"
+          [(value)]="numberValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ numberValue() }}<br />
+          Type:
+          <span class="font-semibold">{{ getValueType(numberValue()) }}</span>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Double (Decimal)
+        </div>
+        <ps-input
+          placeholder="Enter decimal number"
+          type="double"
+          [(value)]="doubleValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ doubleValue() }}<br />
+          Type:
+          <span class="font-semibold">{{ getValueType(doubleValue()) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h3 class="mb-4 text-xl font-semibold text-gray-600">Input States</h3>
+    <div class="grid grid-cols-2 gap-6">
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Disabled
+        </div>
+        <ps-input
+          placeholder="Disabled input"
+          type="text"
+          [disabled]="true"
+          [(value)]="disabledValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ disabledValue() }}<br />
+          Type:
+          <span class="font-semibold">{{ getValueType(disabledValue()) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-8">
+    <h3 class="mb-4 text-xl font-semibold text-gray-600">
+      Min/Max Constraints (Number Type)
+    </h3>
+    <div class="grid grid-cols-2 gap-6">
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Min Value (10)
+        </div>
+        <ps-input
+          placeholder="Enter number >= 10"
+          type="integer"
+          [min]="10"
+          [(value)]="numberWithMinValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ numberWithMinValue() }}<br />
+          Type:
+          <span class="font-semibold">{{
+            getValueType(numberWithMinValue())
+          }}</span>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Max Value (100)
+        </div>
+        <ps-input
+          placeholder="Enter number <= 100"
+          type="integer"
+          [max]="100"
+          [(value)]="numberWithMaxValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ numberWithMaxValue() }}<br />
+          Type:
+          <span class="font-semibold">{{
+            getValueType(numberWithMaxValue())
+          }}</span>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-2 rounded-lg border-2 border-gray-300 bg-white p-4"
+        style="box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)"
+      >
+        <div
+          class="text-center text-xs font-semibold uppercase tracking-wider text-gray-500"
+        >
+          Range (0-50)
+        </div>
+        <ps-input
+          placeholder="Enter number 0-50"
+          type="integer"
+          [min]="0"
+          [max]="50"
+          [(value)]="numberWithRangeValue"
+        />
+        <div class="text-xs text-gray-500">
+          Value: {{ numberWithRangeValue() }}<br />
+          Type:
+          <span class="font-semibold">{{
+            getValueType(numberWithRangeValue())
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

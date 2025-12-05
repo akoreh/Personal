@@ -3,10 +3,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   DoCheck,
+  computed,
   forwardRef,
   inject,
   input,
   model,
+  numberAttribute,
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
@@ -15,6 +17,8 @@ import {
   FormFieldControl,
   mixinErrorState,
 } from '@po/personal/components/form-field';
+
+import { InputType } from './types/input.type';
 
 const InputBase = mixinErrorState(class {});
 
@@ -32,6 +36,7 @@ const InputBase = mixinErrorState(class {});
   ],
   host: {
     class: 'block',
+    '[attr.data-type]': 'type()',
   },
 })
 export class InputComponent
@@ -46,11 +51,40 @@ export class InputComponent
 
   protected readonly id = `ps-input-${InputComponent.nextId++}`;
 
-  readonly value = model<string>();
-  readonly label = input<string>();
   readonly placeholder = input.required<string>();
-  readonly type = input<'text' | 'email' | 'password'>('text');
+
+  readonly value = model<string | number>();
   readonly disabled = model(false);
+
+  readonly label = input<string>();
+  readonly type = input<InputType>('text');
+
+  readonly min = input(null, { transform: numberAttribute });
+  readonly max = input(null, { transform: numberAttribute });
+
+  protected readonly internalType = computed(() => {
+    const type = this.type();
+
+    if (type === 'double' || type === 'integer') {
+      return 'text';
+    }
+
+    return type;
+  });
+
+  protected readonly inputMode = computed(() => {
+    const type = this.type();
+
+    if (type === 'integer') {
+      return 'numeric';
+    }
+
+    if (type === 'double') {
+      return 'decimal';
+    }
+
+    return 'text';
+  });
 
   constructor() {
     super();
@@ -62,7 +96,7 @@ export class InputComponent
 
   private readonly ngControl = inject(NgControl, { optional: true });
 
-  private onChange?: (value: string) => void;
+  private onChange?: (value: string | number) => void;
   private onTouched?: () => void;
 
   ngDoCheck(): void {
@@ -73,11 +107,35 @@ export class InputComponent
 
   protected onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
+    const originalValue = target.value;
+    let value: string | number = originalValue;
 
-    this.value.set(target.value);
+    const type = this.type();
+
+    if (type === 'integer') {
+      value = value.replace(/[^0-9]/g, '');
+      value = parseInt(value, 10);
+
+      if (value.toString() !== originalValue) {
+        target.value = value.toString();
+      }
+    }
+
+    // // For double type, allow decimals
+    // else if (this.type() === 'double') {
+    //   value = value.replace(/[^0-9.]/g, '');
+    //   // Ensure only one decimal point
+    //   const parts = value.split('.');
+    //   if (parts.length > 2) {
+    //     value = parts[0] + '.' + parts.slice(1).join('');
+    //     target.value = value;
+    //   }
+    // }
+
+    this.value.set(value);
 
     if (this.onChange) {
-      this.onChange(target.value);
+      this.onChange(value);
     }
   }
 
@@ -86,8 +144,52 @@ export class InputComponent
       this.onTouched();
     }
   }
+  protected onKeyDown(event: KeyboardEvent): void {
+    const type = this.type();
+    const key = event.key;
 
-  registerOnChange(fn: (value: string) => void): void {
+    // Allow control keys
+    if (
+      key === 'Backspace' ||
+      key === 'Delete' ||
+      key === 'Tab' ||
+      key === 'Escape' ||
+      key === 'Enter' ||
+      key === 'ArrowLeft' ||
+      key === 'ArrowRight' ||
+      key === 'ArrowUp' ||
+      key === 'ArrowDown' ||
+      key === 'Home' ||
+      key === 'End' ||
+      event.ctrlKey ||
+      event.metaKey // Allow Ctrl/Cmd combinations
+    ) {
+      return;
+    }
+
+    if (type === 'integer') {
+      // Only allow digits
+      if (!/^[0-9]$/.test(key)) {
+        event.preventDefault();
+      }
+    } else if (type === 'double') {
+      const target = event.target as HTMLInputElement;
+      const currentValue = target.value;
+
+      // Allow digits and decimal point
+      if (!/^[0-9.]$/.test(key)) {
+        event.preventDefault();
+        return;
+      }
+
+      // Prevent multiple decimal points
+      if (key === '.' && currentValue.includes('.')) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  registerOnChange(fn: (value: string | number) => void): void {
     this.onChange = fn;
   }
 
@@ -95,8 +197,8 @@ export class InputComponent
     this.onTouched = fn;
   }
 
-  writeValue(value: string): void {
-    this.value.set(value || '');
+  writeValue(value: string | number): void {
+    this.value.set(value ?? '');
   }
 
   setDisabledState(isDisabled: boolean): void {

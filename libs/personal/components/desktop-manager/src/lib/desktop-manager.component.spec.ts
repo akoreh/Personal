@@ -1,10 +1,10 @@
-/* eslint-disable @angular-eslint/prefer-standalone */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
 import 'zone.js/testing';
 
 import { IconTestingModule } from '@po/personal/components/icon/testing';
+import { AppId } from '@po/personal/enums';
 import { WindowManagerService } from '@po/personal/state/window';
 
 import { DesktopManagerComponent } from './desktop-manager.component';
@@ -42,7 +42,7 @@ describe('DesktopManagerComponent', () => {
   });
 
   test('should display the correct apps', async () => {
-    expect(await harness.getApps()).toEqual(['Resume.peedeef']);
+    expect(await harness.getApps()).toEqual(['Resume.peedeef', 'JS Engine']);
   });
 
   describe('Opening apps', () => {
@@ -56,7 +56,14 @@ describe('DesktopManagerComponent', () => {
       await harness.openApp('Resume.peedeef');
 
       expect(openSpy).toHaveBeenCalledTimes(1);
-      expect(openSpy).toHaveBeenCalledWith('resume');
+      expect(openSpy).toHaveBeenCalledWith(AppId.Resume);
+    });
+
+    test('should be able to open the JS Engine app', async () => {
+      await harness.openApp('JS Engine');
+
+      expect(openSpy).toHaveBeenCalledTimes(1);
+      expect(openSpy).toHaveBeenCalledWith(AppId.JsEngine);
     });
   });
 });

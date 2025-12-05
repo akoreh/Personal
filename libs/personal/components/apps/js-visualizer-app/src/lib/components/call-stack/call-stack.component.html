@@ -1,0 +1,18 @@
+<div
+  class="bg-ps-background-secondary border-ps-primary-yellow shadow-retro flex h-full flex-col rounded-lg border-2 p-4"
+>
+  <h3 class="text-ps-primary-red mb-4 text-lg font-bold">Call Stack</h3>
+  <div class="flex flex-1 flex-col-reverse gap-2 overflow-y-auto">
+    @if (stack().length === 0) {
+      <div class="text-ps-text-muted py-8 text-center italic">Empty</div>
+    }
+    @for (item of stack(); track $index) {
+      <div
+        class="bg-ps-primary-yellow border-ps-accent-gray rounded border-2 px-4 py-3 font-mono text-sm shadow-sm"
+        [class.animate-pulse]="$index === stack().length - 1"
+      >
+        {{ item }}
+      </div>
+    }
+  </div>
+</div>

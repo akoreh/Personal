@@ -75,13 +75,13 @@
       }
     </div>
 
-    <div class="bg-window-light flex flex-1 overflow-auto">
+    <div class="bg-window-bg @container flex flex-1 overflow-auto">
       <ng-container *ngComponentOutlet="component()" />
     </div>
   </div>
 
   <div
-    class="bg-window-border pointer-events-none absolute left-1.5 top-1.5 z-10 h-full w-full rounded-xl"
+    class="bg-window-border pointer-events-none absolute left-1.5 top-1.5 z-10 h-full w-full rounded-xl bg-opacity-90"
     aria-hidden="true"
   ></div>
 </div>

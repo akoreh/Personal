@@ -1,0 +1,61 @@
+<div class="bg-window-bg flex h-full min-w-[1500px]">
+  <nav
+    class="w-64 flex-shrink-0 border-r-2 border-gray-300 bg-white p-4"
+    style="box-shadow: 2px 0 0 rgba(0, 0, 0, 0.1)"
+  >
+    <h2 class="mb-6 text-2xl font-bold text-gray-800">Components</h2>
+    <ul class="space-y-2">
+      <li>
+        <button
+          class="w-full rounded-lg px-4 py-3 text-left font-semibold transition-all"
+          [style.box-shadow]="
+            activeSection() === 'buttons' ? '2px 2px 0 rgba(0,0,0,0.2)' : null
+          "
+          type="button"
+          [class.bg-primary]="activeSection() === 'buttons'"
+          [class.text-gray-800]="activeSection() === 'buttons'"
+          [class.text-gray-600]="activeSection() !== 'buttons'"
+          [class.hover:bg-gray-100]="activeSection() !== 'buttons'"
+          (click)="selectSection('buttons')"
+        >
+          Buttons
+        </button>
+      </li>
+      <li>
+        <button
+          class="w-full rounded-lg px-4 py-3 text-left font-semibold transition-all"
+          [style.box-shadow]="
+            activeSection() === 'inputs' ? '2px 2px 0 rgba(0,0,0,0.2)' : null
+          "
+          type="button"
+          [class.bg-primary]="activeSection() === 'inputs'"
+          [class.text-gray-800]="activeSection() === 'inputs'"
+          [class.text-gray-600]="activeSection() !== 'inputs'"
+          [class.hover:bg-gray-100]="activeSection() !== 'inputs'"
+          (click)="selectSection('inputs')"
+        >
+          Inputs
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-1 overflow-y-auto p-8">
+    <div class="mx-auto max-w-[1500px]">
+      <h1 class="mb-8 text-4xl font-bold text-gray-800">
+        @if (activeSection() === 'buttons') {
+          Button Gallery
+        } @else if (activeSection() === 'inputs') {
+          Input Gallery
+        }
+      </h1>
+
+      @if (activeSection() === 'buttons') {
+        <ps-button-gallery />
+      } @else if (activeSection() === 'inputs') {
+        <ps-input-gallery />
+      }
+    </div>
+  </div>
+</div>

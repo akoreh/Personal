@@ -14,6 +14,7 @@ describe('ButtonComponent', () => {
       [variant]="variant"
       [size]="size"
       [disabled]="disabled"
+      [loading]="loading"
       (clicked)="onClicked($event)"
       >{{ label }}</ps-button
     >`,
@@ -33,6 +34,7 @@ describe('ButtonComponent', () => {
 
     @Input() size: 'sm' | 'md' | 'lg' = 'md';
     @Input() disabled = false;
+    @Input() loading = false;
 
     onClicked(event: unknown): void {
       noop(event);
@@ -100,6 +102,25 @@ describe('ButtonComponent', () => {
 
         expect(clickSpy).toHaveBeenCalledTimes(1);
       });
+
+      test('should NOT emit when loading', async () => {
+        expect(await harness.isLoading()).toBe(false);
+        spectator.setInput('loading', true);
+        expect(await harness.isLoading()).toBe(true);
+
+        await harness.click();
+        await harness.click();
+        await harness.click();
+
+        expect(clickSpy).not.toHaveBeenCalled();
+
+        spectator.setInput('loading', false);
+
+        await harness.click();
+        await harness.click();
+
+        expect(clickSpy).toHaveBeenCalledTimes(2);
+      });
     });
   });
 
@@ -132,6 +153,10 @@ describe('ButtonComponent', () => {
 
     test('should NOT be disabled by default', async () => {
       expect(await harness.isDisabled()).toBe(false);
+    });
+
+    test('should NOT be in a loading state by default', async () => {
+      expect(await harness.isLoading()).toBe(false);
     });
   });
 });

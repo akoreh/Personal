@@ -1,0 +1,19 @@
+<div
+  class="bg-ps-background-secondary border-ps-primary-blue shadow-retro flex h-full flex-col rounded-lg border-2 p-4"
+>
+  <h3 class="mb-4 text-lg font-bold" [class]="titleColor()">{{ title() }}</h3>
+  <div class="flex flex-1 flex-col gap-2 overflow-y-auto">
+    @if (queue().length === 0) {
+      <div class="text-ps-text-muted py-8 text-center italic">Empty</div>
+    }
+    @for (item of queue(); track $index) {
+      <div
+        class="border-ps-accent-gray rounded border-2 px-4 py-3 font-mono text-sm shadow-sm"
+        [class]="itemBgColor()"
+        [class.animate-pulse]="$index === 0"
+      >
+        {{ item }}
+      </div>
+    }
+  </div>
+</div>

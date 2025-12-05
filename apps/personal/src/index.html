@@ -18,25 +18,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Andrei Koreh's personal website" />
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-0PY5PRD4YP"
-    ></script>
-    <script>
-      if (location.href.includes('akoreh')) {
-        window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-          dataLayer.push(arguments);
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
+
+    <!-- Structured Data for Sitelinks Search Box -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Andrei Koreh",
+        "url": "https://akoreh.com/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://akoreh.com/?apps={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
         }
+      }
+    </script>
 
-        gtag('js', new Date());
-        gtag('config', 'G-0PY5PRD4YP');
+    <!-- Structured Data for Organization/Person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Andrei Koreh",
+        "url": "https://akoreh.com/",
+        "sameAs": [
+          "https://github.com/akoreh",
+          "https://www.linkedin.com/in/andrei-koreh-71084b169"
+        ]
       }
     </script>
   </head>
-  <body class="bg-background">
+  <body class="bg-background-gradient">
     <div id="loading">
       <div class="boxLoading"></div>
       <div class="progress"></div>

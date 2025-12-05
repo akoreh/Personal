@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-y-1">
   @if (label()) {
     <label
-      class="text-window-border text-sm font-medium"
+      class="text-window-border text-sm font-medium tracking-wide"
       data-testid="inputLabel"
       [for]="id + '-input'"
     >
@@ -10,18 +10,22 @@
   }
 
   <input
-    class="text-window-border bg-background placeholder:text-accent-gray w-full rounded-md border-2 border-solid px-3 py-2 text-sm outline-none transition-colors"
+    class="sketchy-input text-window-border placeholder:text-window-border focus:border-primary-blue w-full border-solid bg-[#fffef8] px-3 py-2 text-sm outline-none transition-all duration-150 placeholder:opacity-70 focus:bg-white"
     [ngClass]="{
-      'border-window-border focus:border-primary-blue': !hasError(),
-      'border-primary-red focus:border-primary-red': hasError(),
-      'cursor-not-allowed opacity-50': disabled(),
+      'border-window-border': !hasError(),
+      'border-primary-red input-error': hasError(),
+      'input-disabled cursor-not-allowed opacity-50': disabled(),
     }"
     data-testid="input"
+    [attr.inputmode]="inputMode()"
+    [attr.min]="min()"
+    [attr.max]="max()"
     [id]="id + '-input'"
-    [type]="type()"
+    [type]="internalType()"
     [placeholder]="placeholder()"
     [disabled]="disabled()"
-    [value]="value() || ''"
+    [value]="value() ?? ''"
+    (keydown)="onKeyDown($event)"
     (input)="onInput($event)"
     (blur)="onBlur()"
   />

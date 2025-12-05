@@ -7,22 +7,26 @@ import {
 } from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
+import { TooltipDirective } from '@po/personal/directives/tooltip';
 import { AppId } from '@po/personal/enums';
 import { WindowManagerService } from '@po/personal/state/window';
 
 import { DockItemComponent } from './components/dock-item/dock-item.component';
-import { dockItems } from './const/dock-items.const';
 
 @Component({
   selector: 'ps-dock',
   templateUrl: 'dock.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconComponent, NgOptimizedImage, DockItemComponent],
+  imports: [
+    IconComponent,
+    NgOptimizedImage,
+    DockItemComponent,
+    TooltipDirective,
+  ],
 })
 export class DockComponent {
   protected readonly windowManagerService = inject(WindowManagerService);
-
-  protected readonly dockItems = dockItems;
+  protected readonly AppId = AppId;
 
   protected readonly minimizedWindows = computed(() =>
     this.windowManagerService.windows().filter((window) => window.minimized),

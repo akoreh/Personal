@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 
 import { IconComponent } from '@po/personal/components/icon';
+import { WindowSize } from '@po/personal/state/window';
 
 @Component({
   selector: 'ps-window',
@@ -25,6 +26,7 @@ import { IconComponent } from '@po/personal/components/icon';
 export class WindowComponent implements AfterViewInit {
   readonly title = input<string | undefined>();
   readonly component = input.required<Type<any>>();
+  readonly size = input<WindowSize>('md');
   readonly closable = input(false, { transform: booleanAttribute });
   readonly minimizable = input(false, { transform: booleanAttribute });
   readonly maximizable = input(false, { transform: booleanAttribute });
@@ -44,6 +46,28 @@ export class WindowComponent implements AfterViewInit {
   protected readonly hasControls = computed(
     () => this.minimizable() || this.maximizable() || this.closable(),
   );
+
+  protected readonly windowWidth = computed(() => {
+    const size = this.size();
+    const widthMap: Record<WindowSize, string> = {
+      sm: 'min(20rem, 90vw)',
+      md: 'min(30rem, 90vw)',
+      lg: 'min(40rem, 90vw)',
+      xl: 'min(50rem, 90vw)',
+    };
+    return widthMap[size];
+  });
+
+  protected readonly windowHeight = computed(() => {
+    const size = this.size();
+    const heightMap: Record<WindowSize, string> = {
+      sm: 'min(16rem, 50vh)',
+      md: 'min(24rem, 60vh)',
+      lg: 'min(30rem, 65vh)',
+      xl: 'min(36rem, 70vh)',
+    };
+    return heightMap[size];
+  });
 
   private readonly windowElement = viewChild<ElementRef>('windowElement');
   protected readonly initialPosition = signal<{ x: number; y: number }>({
